@@ -1,0 +1,56 @@
+[
+    {
+        "title": "Home",
+        "class": "hidden-sm",
+        "href": "/",
+        "submenu": null
+    },
+    {
+        "title": "Appunti di Gustour",
+        "href": "/news/",
+        "class": null,
+        "submenu": null
+    },
+    {
+        "title": "Scelte di Gusto",
+        "href": "/prodotti/",
+        "class": null,
+        "submenu": null
+    },
+    {
+        "title": "Centri Commerciali",
+        "href": "/pagina/centri-commerciali",
+        "class": null,
+        "submenu": null
+    },
+    {
+        "title": "Magic Sponsor",
+        "href": "/lp/magic-sponsor",
+        "class": null,
+        "submenu": null
+    },
+    {
+        "title": "Ricette e Lugohi",
+        "class": "mega-menu-title",
+        "href": "#",
+        "submenu": [
+            {
+                "title": "Ricette",
+                "href": "/ricette/",
+                "submenu": null,
+                "class": null
+            },
+            {
+                "title": "Luoghi",
+                "href": "/luoghi",
+                "submenu": null,
+                "class": null
+            }
+        ]
+    }
+]
+
+/**
+regex news ^\/news\/(list+\/([a-z-_0-9\]+)?)?$
+regex home ^\/$
+regex pagina ^\/pagina\/slug$

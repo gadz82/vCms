@@ -1,0 +1,44 @@
+.portfolio-overlay.volantino a{
+	left:55%;
+}
+.portfolio-image.volantino{
+	height:300px;
+	background-size: cover;
+	background-position:top center;
+}
+.portfolio-desc{
+	min-height: 190px;
+}
+
+.wowbook-fontawesome .wowbook-control-thumbnails i:before{
+	content: "\f0ca";
+}
+.wowbook-lightbox > .wowbook-close {
+	color: #fff;
+	background: transparent;
+	border: 0;
+	font-size: 25px;
+	height: 1.8em;
+}
+.clear{
+	display:inline-block;
+}
+
+@media(max-width: 768px){
+	ul.portfolio-filter{
+		width:100%
+	}
+	ul.portfolio-filter li{
+		width:33%;
+		margin-bottom:0px;
+	}
+	#page-menu nav li.current a{
+		border-radius: 0px !important;
+		background-color: transparent;
+	}
+}
+@media(max-width: 480px){
+	.portfolio-desc{
+		min-height: auto;
+	}
+}

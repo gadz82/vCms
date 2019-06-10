@@ -1,0 +1,59 @@
+	
+	<div id="box-content-lavorazione-pregressa">
+	
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box box-solid">
+					<div class="box-header with-border">
+						<i class="fa fa-history"></i>
+						<h3 class="box-title">Lavorazione pregressa</h3>
+						<span class="fa fa-chevron-down fa-fw pull-right"></span>
+	                </div>
+	                
+	                <div class="box-body">
+	                	<div class="row">
+							<div class="col-xs-12">
+								{% for history in controller_data_history %}
+									{% if loop.first %}
+										<div class="table-responsive table-custom">
+											<table id="table-history" class="table table-responsive table-bordered table-hover text-center" cellspacing="0" width="100%">
+												<thead>
+						                    		<tr>
+						                      			<th>Azione</th>
+						                      			<th>Stato</th>
+						                      			<th>Nota</th>
+						                      			<th>Data</th>
+						                      			<th>Utente</th>
+						                    		</tr>
+						                    	</thead>
+						                    	<tbody>
+						                    	{% endif %}
+						                    		<tr>
+						                    			<td><button type="button" class="btn bg-maroon btn-sm btn-flat btn-show-history" data-history="{{ history.id }}"><i class="fa fa-search"></i></button></td>
+						                    			<td>{{ history.TipologieStato<!-- CONTROLLER_NAME_SINGOLARE !-->.descrizione|e }}</td>
+						                      			{% if history.nota|length > 50 %}
+						                      				<td>{{ substr(history.nota, 0,50)|e ~ '...' }}</td>
+						                      			{% else %}
+						                      				<td>{{ history.nota|default('- - -') }}</td>
+						                      			{% endif %}
+						                      			<td>{{ history.data_aggiornamento }}</td>
+						                      			<td>{{ history.Utenti.nome_utente }}</td>
+						                    		</tr>
+						                    	{% if loop.last %}
+						        				</tbody>
+						        			</table>
+					        			</div>
+					    			{% endif %}
+					    		{% else %}
+                    				<p>Nessuna lavorazione pregressa disponibile per questo <!-- TITOLO_SINGOLARE_LOWERCASE !-->.</p>
+								{% endfor %}
+							</div>
+						</div>
+	                </div>
+	                
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="box-modal-history"></div>

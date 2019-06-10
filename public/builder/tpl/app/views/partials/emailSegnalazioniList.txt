@@ -1,0 +1,71 @@
+<div class="row">
+
+	<div class="col-xs-12">
+		<div class="box box-solid">
+			<div class="box-header with-border">
+				<i class="fa fa-envelope"></i>
+				<h3 class="box-title">Email segnalazioni</h3>
+				<span class="fa fa-chevron-down fa-fw pull-right"></span>
+			</div>
+			
+			<div>
+				<div class="box-body">
+					<div class="row">
+						<div class="col-xs-12">
+							{% for email in controller_data_email_segnalazioni %}
+							{% if loop.first %}
+								<div class="table-responsive table-custom">
+									<table id="table-email-segnalazioni" class="table table-responsive table-bordered table-hover text-center" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>Azione</th>
+												<th>Destinatari</th>
+												<th>Messaggio</th>
+												<th>Data</th>
+												<th>Utente</th>
+											</tr>
+										</thead>
+										<tbody>
+							{% endif %}
+								<tr>
+									<td><button type="button" class="btn bg-maroon btn-sm btn-flat btn-show-email-segnalazione" data-email-segnalazione="{{ email.id }}"><i class="fa fa-search"></i></button></td>
+									<td>
+										{% for ind_email,dest in email.destinatari %}
+											{{ dest }}
+											{% if !loop.last %}
+												-
+											{% endif %}
+										{% endfor %}
+									</td>
+									{% if email.messaggio|length > 50 %}
+										<td>{{ substr(email.messaggio, 0,50)|e ~ '...' }}</td>
+									{% else %}
+										<td>{{ email.messaggio|default('- - -') }}</td>
+									{% endif %}
+									<td>{{ email.data_creazione }}</td>
+									<td>{{ email.Utenti.nome_utente }}</td>
+								</tr>
+							{% if loop.last %}
+										</tbody>
+									</table>
+								</div>
+							{% endif %}
+							{% else %}
+								<p>Nessuna email di segnalazione inviata.</p>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+				<div class="box box-footer">
+					<div class="row">
+						<div class="col-xs-12 text-right">
+							<button data-target="#segnala-problematica-modal" data-toggle="modal" class="btn bg-purple btn-flat" type="button"><i class="fa fa-envelope fa-fw"></i> Segnala problematica</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+</div>

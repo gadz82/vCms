@@ -1,0 +1,56 @@
+
+	<div class="modal modal_custom fade" id="show-email-segnalazioni-modal" tabindex="-1" role="dialog" aria-labelledby="show-email-segnalazioni-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="show-email-segnalazioni-modal-label"><i class="fa fa-envelope"></i>Dettaglio email segnalazione</h4>
+				</div>
+				
+				<div class="modal-body">
+					    
+					<div class="box-body">            
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="row">
+									<div class="col-md-2 col-xs-12 text-right"><small><strong>Destinatari</strong></small></div>
+									<div class="col-md-10 col-xs-12">
+										{% for email,dest in email_segnalazione.destinatari %}
+											<p>{{ dest }} [{{ email }}]</p>
+										{% endfor %}
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-md-2 col-xs-12 text-right"><small><strong>Messaggio</strong></small></div>
+									<div class="col-md-10 col-xs-12">
+										<p>{{ email_segnalazione.messaggio|e|nl2br }}</p>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-md-2 col-xs-12 text-right"><small><strong>Data invio</strong></small></div>
+									<div class="col-md-10 col-xs-12">
+										<p>{{ email_segnalazione.data_creazione }}</p>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-md-2 col-xs-12 text-right"><small><strong>Utente</strong></small></div>
+									<div class="col-md-10 col-xs-12">
+										<p>{{ email_segnalazione.Utenti.nome_utente|e }}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+										
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline" data-dismiss="modal">Chiudi</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>

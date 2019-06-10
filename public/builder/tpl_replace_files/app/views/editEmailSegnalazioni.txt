@@ -1,0 +1,5 @@
+
+
+	<div id="box-content-email-segnalazioni">{{ partial("partials/<!-- ROUTE !-->/emailSegnalazioniList", ['controller_data_email_segnalazioni': controller_data_email_segnalazioni]) }}</div>
+	<div id="box-modal-segnala-problematica">{{ partial("partials/<!-- ROUTE !-->/emailSegnalazioniModal") }}</div>
+	<div id="box-modal-email-segnalazione"></div>

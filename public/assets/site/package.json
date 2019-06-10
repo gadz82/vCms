@@ -1,0 +1,11 @@
+{
+  "name": "gustour-frontend",
+  "version": "0.0.1",
+  "license": "MIT",
+  "devDependencies": {
+    "autoprefixer": "latest",
+    "grunt": "~0.4.5",
+    "grunt-contrib-sass": "latest",
+    "grunt-contrib-watch": "latest"
+  }
+}

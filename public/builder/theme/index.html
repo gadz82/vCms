@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="MarchiAuto - Builder">
+<meta name="author" content="MarchiAuto - Builder">
+
+<title>CMS.IO | Builder</title>
+
+<link href="assets/admin/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="assets/admin/plugins/iCheck/square/blue.css" rel="stylesheet">
+<link href="assets/admin/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+<link href="assets/admin/builder/theme/css/index.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">CMS.IO | Builder</a>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
+
+				<div class="page-header">
+					<h1>Crea lo Scaffold per l'admin di CMS.IO</h1>
+					<p class="lead">
+						Compila il seguente form per generare
+						<mark>CONTROLLER</mark>
+						,
+						<mark>FORM</mark>
+						,
+						<mark>VIEW</mark>
+						,
+						<mark>PARTIAL</mark>
+						e
+						<mark>JS</mark>
+						necessari ad una nuova sezione del CMS.
+					</p>
+					<div role="alert" class="alert alert-danger">
+						<strong>Attenzione!</strong> Ricordati di creare prima tutte le
+						tabelle e i permessi nel DB.
+					</div>
+				</div>
+
+				<form id="form-builder" name="form-builder" class="form"
+					method="POST" autocomplete="off">
+
+					<div class="col-xs-12">
+
+						<div class="col-md-6">
+
+							<h3 class="text-primary">CONTROLLER</h3>
+
+							<div class="form-group">
+								<label for="controller_name">Nome del Controller <small>(es.
+										"WebsiteDomini")</small></label> <input type="text" class="form-control"
+									name="controller_name" placeholder="Nome del Controller"
+									tabindex="1" required>
+							</div>
+							<div class="form-group">
+								<label for="controller_name_singolare">Nome del
+									Controller - Singolare <small>(es. "WebsiteDominio")</small>
+								</label> <input type="text" class="form-control"
+									name="controller_name_singolare"
+									placeholder="Nome del Controller - Singolare" tabindex="2"
+									required>
+							</div>
+
+							<div class="form-group">
+								<label for="titolo_plurale">Titolo - Plurale <small>(es.
+										"Website Domini")</small></label> <input type="text" class="form-control"
+									name="titolo_plurale" placeholder="Titolo - Plurale"
+									tabindex="3" required>
+							</div>
+							<div class="form-group">
+								<label for="titolo_singolare">Titolo - Singolare <small>(es.
+										"Website Dominio")</small></label> <input type="text" class="form-control"
+									name="titolo_singolare" placeholder="Titolo - Singolare"
+									tabindex="4" required>
+							</div>
+						</div>
+
+						<div class="col-md-6">
+
+							<h3 class="text-primary">RICERCA</h3>
+
+							<div class="form-group">
+								<label for="join_ricerca_tabella">Tabella join <small>(es.
+										"website" - la tabella da mettere in join con "ordini")</small></label> <input
+									type="text" class="form-control" name="join_ricerca_tabella"
+									placeholder="Tabella join" tabindex="5">
+							</div>
+							<div class="form-group">
+								<label for="join_ricerca_alias">Tabella join - Alias <small>(es.
+										"w" - l'alias della tabella da mettere in join con "ordini")</small></label> <input
+									type="text" class="form-control" name="join_ricerca_alias"
+									placeholder="Tabella join - Alias" tabindex="6">
+							</div>
+
+							<div class="form-group">
+								<label for="join_ricerca_campo">Tabella join - Campo <small>(es.
+										"id_website" - il campo da mettere in join con "ordini")</small></label> <input
+									type="text" class="form-control" name="join_ricerca_campo"
+									placeholder="Tabella join - Campo" tabindex="7">
+							</div>
+							<div class="form-group">
+								<label for="render_pagina_object">Controller collegato <small>(es.
+										"Website->" - i controller che collegano questo a "Ordini")</small></label> <input
+									type="text" class="form-control" name="render_pagina_object"
+									placeholder="Controller collegato" tabindex="8">
+							</div>
+						</div>
+
+					</div>
+
+					<div class="col-xs-12">
+						<hr>
+					</div>
+
+					<div class="col-xs-12">
+
+						<div class="col-md-6">
+
+							<h3 class="text-primary">MENU</h3>
+
+							<div class="form-group">
+								<label for="controller_name">Nome del menu padre <small>(es.
+										"Siti web")</small></label> <input type="text" class="form-control"
+									name="descrizione_menu_padre" placeholder="Nome del menu padre"
+									tabindex="9">
+							</div>
+							<div class="form-group">
+								<label for="controller_name">Nome del menu <small>(es.
+										"Domini")</small></label> <input type="text" class="form-control"
+									name="descrizione_menu" placeholder="Nome del menu"
+									tabindex="9">
+							</div>
+							<div class="form-group">
+								<label for="controller_name_singolare">Icona menu <small>(es.
+										"fa-bullhorn")</small></label> <input type="text" class="form-control"
+									name="icona_menu" placeholder="Icona menu" tabindex="10">
+							</div>
+
+						</div>
+
+						<div class="col-md-6">
+
+							<h3 class="text-primary">OPZIONI</h3>
+
+							<div class="col-xs-12">
+								<label class="label_checkbox"><input name="history"
+									type="checkbox"><span>Crea history</span></label>
+							</div>
+							<div class="col-xs-12 hidden">
+								<label class="label_checkbox"><input
+									name="email_segnalazioni" type="checkbox"><span>Crea
+										email segnalazioni</span></label>
+							</div>
+							<div class="col-xs-12">
+								<label class="label_checkbox"><input name="permessi"
+									type="checkbox"><span>Crea permessi</span></label>
+							</div>
+							<div class="col-xs-12">
+								<label class="label_checkbox"><input name="menu"
+									type="checkbox"><span>Crea menu</span></label>
+							</div>
+							<div class="col-xs-12">
+								<label class="label_checkbox"><input name="override"
+									type="checkbox"><span>Sovrascrivi file presenti</span></label>
+							</div>
+
+						</div>
+
+					</div>
+
+					<button type="submit" class="btn btn-primary pull-right">Genera!</button>
+
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="pull-right hidden-xs">
+					<strong>Version</strong> 0.1
+				</div>
+				<strong>2019-2020 Francesco Marchesini</strong>
+			</div>
+		</div>
+	</footer>
+
+	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="plugins/iCheck/icheck.min.js"></script>
+	<script type="text/javascript"
+		src="plugins/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript" src="builder/theme/js/index.js"></script>
+
+</body>
+</html>

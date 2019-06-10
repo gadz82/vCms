@@ -1,0 +1,58 @@
+
+	<div class="modal modal_custom fade" id="show-history-modal" tabindex="-1" role="dialog" aria-labelledby="show-history-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="show-history-modal-label"><i class="fa fa-history"></i>Dettaglio lavorazione pregessa</h4>
+				</div>
+							
+				<div class="modal-body">
+					    
+					<div class="box-body">            
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="row">
+									<div class="col-md-3 col-xs-12 text-right"><small><strong>Stato <!-- TITOLO_SINGOLARE_LOWERCASE !--></strong></small></div>
+									<div class="col-md-9 col-xs-12"><p>{{ <!-- ROUTE !-->_history.TipologieStato<!-- CONTROLLER_NAME_SINGOLARE !-->.descrizione|e }}</p></div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-md-3 col-xs-12 text-right"><small><strong>Tipo <!-- TITOLO_SINGOLARE_LOWERCASE !--></strong></small></div>
+									<div class="col-md-9 col-xs-12"><p>{{ <!-- ROUTE !-->_history.Tipologie<!-- CONTROLLER_NAME_SINGOLARE !-->.descrizione|e }}</p></div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-md-3 col-xs-12 text-right"><small><strong>Nota</strong></small></div>
+									<div class="col-md-9 col-xs-12">
+										<div class="box_scroll">
+											<p>{{ <!-- ROUTE !-->_history.nota|e|nl2br|default('- - -') }}</p>
+										</div>
+									</div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-md-3 col-xs-12 text-right"><small><strong>Data cambio stato</strong></small></div>
+									<div class="col-md-9 col-xs-12"><p>{{ <!-- ROUTE !-->_history.data_cambio_stato }}</p></div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-md-3 col-xs-12 text-right"><small><strong>Data aggiornamento</strong></small></div>
+									<div class="col-md-9 col-xs-12"><p>{{ <!-- ROUTE !-->_history.data_aggiornamento }}</p></div>
+								</div>
+								<hr>
+								<div class="row">
+									<div class="col-md-3 col-xs-12 text-right"><small><strong>Utente</strong></small></div>
+									<div class="col-md-9 col-xs-12"><p>{{ <!-- ROUTE !-->_history.Utenti.nome_utente|e }}</p></div>
+								</div>
+							</div>
+						</div>
+					</div>
+										
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-outline" data-dismiss="modal">Chiudi</button>
+				</div>				
+			</div>
+		</div>
+	</div>

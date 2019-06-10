@@ -1,0 +1,44 @@
+	
+	$('#table-history').dataTable({
+		"lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "Tutti"]],
+		"language": {
+			"url": "/plugins/datatables/i18n/Italian.json"
+		},
+		"sDom": '<"row"><"row"<"col-xs-12"rt>><"row"<"col-lg-3 visible-lg"i><"col-lg-6 col-xs-12"p><"col-lg-3 visible-lg"f>>',
+		"sPaginationType": "full_numbers"
+	});
+	
+	$('.btn-show-history').on('click',function(){
+		
+		var id = $(this).data('history');
+		
+		$('#box-modal-history').empty();
+		
+		$.ajax({
+			url: '/<!-- ROUTE !-->_history/search/',
+			type: 'POST',
+			data: {id:id},
+			cache: false,
+			success: function(data){
+				$('#box-modal-history').html(data.data);
+				
+				
+				$('#box-modal-history input[type="checkbox"]').iCheck({
+					checkboxClass: 'icheckbox_square-blue',
+					radioClass: 'iradio_square-blue',
+					increaseArea: '20%' // optional
+				});
+				
+				$('#box-modal-history .box_scroll').slimScroll({
+					height: '',
+                    maxHeight: '120px',
+			    });
+				
+				$('#show-history-modal').modal({show:true});
+			}
+		});
+		
+	});
+	
+	$('#box-content-lavorazione-pregressa .box-header > span').trigger('click');
+	

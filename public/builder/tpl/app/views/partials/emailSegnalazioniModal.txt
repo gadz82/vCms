@@ -1,0 +1,49 @@
+
+	<div class="modal modal_custom fade" id="segnala-problematica-modal" tabindex="-1" role="dialog" aria-labelledby="segnala-problematica-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="segnala-problematica-modal-label"><i class="fa fa-envelope"></i>Segnala problematica</h4>
+				</div>
+				
+				{{ form('<!-- ROUTE !-->_email_segnalazioni/create', 'method':'post', 'autocomplete':'off', 'id':'form-invia-segnalazione', 'class':'') }}
+				
+				<div class="modal-body">
+					    
+					<div class="box-body">            
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="form_msg"></div>
+							</div>
+							<div class="col-xs-12">
+								<div class="row">
+									<input type="hidden" name="id_<!-- NOME_SINGOLARE !-->" value="{{ controller_data.id }}" />
+									<div class="col-md-2 col-xs-12 text-right"><small><strong>Destinatario</strong></small></div>
+									<div class="col-md-10 col-xs-12">
+										<p>Referente interno (admin@myera.eu)</p>
+									</div>
+								</div>
+								
+								<hr>
+								<div class="row">
+									<div class="col-md-2 col-xs-12 text-right"><small><strong>Messaggio</strong></small></div>
+									<div class="col-md-10 col-xs-12">
+										<textarea cols="50" rows="8" placeholder="Messaggio" class="form-control" name="messaggio" required></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+										
+				</div>
+				
+				<div class="modal-footer">
+					{{ submit_button("Invia", "class": "btn btn-outline btn-flat" ) }}
+				</div>
+				
+				{{ end_form() }}
+				
+			</div>
+		</div>
+	</div>
