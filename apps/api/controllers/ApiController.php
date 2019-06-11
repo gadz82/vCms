@@ -101,7 +101,6 @@ class ApiController extends \Phalcon\Mvc\Controller
     }
 
     public function initialize(){
-
         $this->connection = $this->getDI()->getDb();
         $this->application = \apps\api\library\Cms::getIstance()->application;
         $this->id_application = \apps\api\library\Cms::getIstance()->id_application;

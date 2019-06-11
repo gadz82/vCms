@@ -96,7 +96,6 @@ class CheckRoutePlugin extends Plugin {
                 break;
             }
         }
-
         if ($error) {
             $this->flashSession->error ( 'Attenzione! Hai effettuato una richiesta non valida!' );
             return $this->di->getResponse ()->redirect ( $dispatcher->getControllerName () . '/index' );

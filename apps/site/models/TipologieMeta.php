@@ -1,6 +1,6 @@
 <?php
 
-class TipologieMeta extends \Phalcon\Mvc\Model
+class TipologieMeta extends BaseModel
 {
 
     /**

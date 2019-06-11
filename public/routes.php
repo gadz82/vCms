@@ -197,37 +197,36 @@ $router->add('/admin/:controller/:action/:params', [
     'params' => 3
 ])->setName('Admin Specific Action with params');
 
-
 /**
  * Api v1
  */
-$router->add('/api/v1', [
+$router->add('/api', [
     'module' => "api",
     'controller' => 'api',
     'action' => "index"
 ])->setName('Api Root');
 
-$router->add('/api/v1/:controller', [
+$router->add('/api/:controller', [
     'module' => "api",
     'controller' => 1,
     'action' => "index"
 ])->setName('Api Index of Controller');
 
-$router->add('/cron/:controller/:action/', array(
-    'module' => "cron",
-    'controller' => 1,
-    'action' => 2
-))->setName('cron Specific Action');
+$router->add('/api/taxonomies/:action(/:params)', [
+    'module' => "api",
+    'controller' => 'taxonomy',
+    'action' => 1,
+    'params' => 2
+])->setName('Api Taxonomy services');
 
-
-$router->add('/api/v1/entities/{post_type_slug:[a-z\-]+}/', [
+$router->add('/api/entities/{post_type_slug:[a-z\-]+}/', [
     'module' => "api",
     'controller' => 'list',
     'action' => 'fetch',
     'post_type_slug' => 1
 ])->setName('Listing Post Type');
 
-$router->add('/api/v1/entities/{post_type_slug:[a-z\-]+}/:action/:params', [
+$router->add('/api/entities/{post_type_slug:[a-z\-]+}/:action/:params', [
     'module' => "api",
     'controller' => 'list',
     'action' => 2,
@@ -235,12 +234,12 @@ $router->add('/api/v1/entities/{post_type_slug:[a-z\-]+}/:action/:params', [
     'params' => 3
 ])->setName('Listing Post Type with Filters');
 
-$router->add('/api/v1/entities/{post_type_slug:[a-z\-]+}/{post_slug:[a-z0-9\-]+}', [
+$router->add('/api/entities/read/{post_type_slug:[a-z\-]+}/{post_slug:[0-9{11}]+}', [
     'module' => "api",
     'controller' => 'entity',
     'action' => 'read',
     'post_type_slug' => 1,
-    'post_slug' => 2
+    'params' => 2
 ])->setName('Dettaglio');
 
 

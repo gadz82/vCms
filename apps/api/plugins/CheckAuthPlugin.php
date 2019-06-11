@@ -17,7 +17,7 @@ class CheckAuthPlugin extends Plugin {
 	public function beforeExecuteRoute(Event $event, Dispatcher $dispatcher) {
 
 	    if($this->request->getMethod() == 'GET') return true;
-
+        
         $headers = $this->request->getHeaders();
         try{
             if(!isset($headers['Authentication'])) throw new \Exception('Permesso negato', 403);

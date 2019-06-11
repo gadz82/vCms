@@ -8,6 +8,7 @@ return new \Phalcon\Config ([
         'modelsDir' 		=> __DIR__ . '/../../site/models/',
         'migrationsDir' 	=> __DIR__ . '/../migrations/',
         'viewsDir' 			=> __DIR__ . '/../views/',
+        'siteViewsDir' 		=> ABSOLUTE_DIR . 'apps/site/views',
         'pluginsDir' 		=> __DIR__ . '/../plugins/',
         'libraryDir' 		=> __DIR__ . '/../library/',
         'formsDir' 			=> __DIR__ . '/../forms/',

@@ -118,9 +118,9 @@ class FiltriController extends ControllerBase {
 				}
 			}
 		}
-		
+
 		return $this->dispatcher->forward(array('controller'=>$this->controllerName, 'action'=>'index'));
-		
+
 	}
 	
 	public function newAction(){

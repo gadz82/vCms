@@ -157,6 +157,7 @@ class Meta extends BaseModel
             'required' => 'required',
             'autoload' => 'autoload',
             'priorita' => 'priorita',
+            'hidden' => 'hidden',
             'data_creazione' => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
             'id_utente' => 'id_utente',

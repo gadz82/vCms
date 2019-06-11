@@ -13,9 +13,11 @@ class EntityController extends ApiController{
     }
 
     public function readAction($id){
-
         $post_type = TipologiePost::query()
-            ->innerJoin('Posts', 'p.id_tipologia_post = TipologiePost.id AND p.id = "'.$id.'" AND p.attivo = 1', 'p')
+            ->innerJoin('Posts', 'p.id_tipologia_post = TipologiePost.id AND p.id = ?1 AND p.attivo = 1', 'p')
+            ->bind([
+                1 => $id
+            ])
             ->cache([
                 "key" => "apiReadTipologiaPost".$id,
                 "lifetime" => 12400
@@ -24,12 +26,11 @@ class EntityController extends ApiController{
             ->getFirst();
 
         $post_type_slug = $post_type->slug;
-        if(!$this->connection->tableExists('_'.$post_type->slug)){
+        if (!$this->connection->tableExists('_' . $this->application . '_' . $post_type->slug)) {
             throw new Exception('Post not found', 404);
         }
         $cache = $this->getDI()->get('modelsCache');
         $cacheKey = $post_type_slug.".".$id;
-
         $rs = $cache->get($cacheKey);
 
         if (is_null($rs)) {
@@ -46,18 +47,23 @@ class EntityController extends ApiController{
             for($x = 0; $x < $n; $x++){
                 $columns_select[] = "pf.".$postTypeFilterFields[$x]." AS filter_".$postTypeFilterFields[$x];
             }
+            $tableName = '_' . $this->application . '_' . $post_type_slug;
+            $columns = !empty($columns_select) ? implode(',' . PHP_EOL, $columns_select) : '';
             $query = "
                 SELECT
                   p.*,
-                  ".implode(','.PHP_EOL, $columns_select)."
-                FROM
-                  _".$post_type_slug." p
-                INNER JOIN _".$post_type_slug."_meta pm ON pm.id_post = p.id_post
-                INNER JOIN _".$post_type_slug."_filter pf ON pf.id_post = p.id_post
+                  " . $columns;
+
+            $query .= " FROM
+                 `" . $tableName . "` p
+                INNER JOIN `" . $tableName . "_meta` pm ON pm.id_post = p.id_post
+                INNER JOIN `" . $tableName . "_filter` pf ON pf.id_post = p.id_post
                 WHERE
                     p.id_post = '{$id}'
                 AND
                     p.id_tipologia_stato = 1
+                AND
+                    p.attivo = 1
                 AND
                     p.data_inizio_pubblicazione < NOW()
                 AND
@@ -68,6 +74,7 @@ class EntityController extends ApiController{
                 )
             ";
 
+            echo $query;
             $q = $this->connection->query($query);
             $q->setFetchMode(Phalcon\Db::FETCH_OBJ);
             $rs = $q->fetch();
