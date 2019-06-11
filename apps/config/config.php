@@ -1,8 +1,8 @@
 <?php
 setlocale ( LC_ALL, 'it_IT.UTF-8' );
 date_default_timezone_set ( 'Europe/Rome' );
-if(file_exists ( APP_DIR . '/config/config.locale.php' )){
-    return include (APP_DIR . '/config/config.locale.php');
+if(file_exists ( __DIR__ . '/config.locale.php' )){
+    return include (__DIR__ . '/config.locale.php');
 } elseif(file_exists ( __DIR__ . '/config.staging.php' )){
     return include (__DIR__ . '/config.staging.php');
 } else {
@@ -16,9 +16,9 @@ if(file_exists ( APP_DIR . '/config/config.locale.php' )){
         'database' => [
             'adapter' => 'Mysql',
             'host' => '127.0.0.1',
-            'username' => 'root',
-            'password' => '',
-            'dbname' => '',
+            'username' => 'cms',
+            'password' => 'cms',
+            'dbname' => 'cms',
             'charset' => 'utf8'
         ],
         'application' => [
@@ -28,7 +28,6 @@ if(file_exists ( APP_DIR . '/config/config.locale.php' )){
             'modelsDir' 		=> __DIR__ . '/../models/',
             'migrationsDir' 	=> __DIR__ . '/../migrations/',
             'viewsDir' 			=> __DIR__ . '/../views/',
-            'siteViewsDir' 		=> ABSOLUTE_DIR . 'apps/site/views',
             'pluginsDir' 		=> __DIR__ . '/../plugins/',
             'libraryDir' 		=> __DIR__ . '/../library/',
             'formsDir' 			=> __DIR__ . '/../forms/',

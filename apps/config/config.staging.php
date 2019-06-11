@@ -19,7 +19,7 @@ return new \Phalcon\Config([
     ],
     'application' => [
         'appName'           => 'VERTICALIZE',
-        'appEnv'            => 'development',
+        'appEnv'            => 'staging',
         'controllersDir' 	=> __DIR__ . '/../controllers/',
         'modelsDir' 		=> __DIR__ . '/../../site/models/',
         'viewsDir' 			=> __DIR__ . '/../views/',

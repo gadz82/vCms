@@ -1,11 +1,10 @@
 <?php
-setlocale ( LC_ALL, 'it_IT.UTF-8' );
-date_default_timezone_set ( 'Europe/Rome' );
-
-if(file_exists ( APP_DIR . '/config/config.locale.php' )){
-    return include (APP_DIR . '/config/config.locale.php');
-} elseif(file_exists (__DIR__ . '/config.staging.php' )){
-    return include (__DIR__ . '/config.staging.php');
+setlocale(LC_ALL, 'it_IT.UTF-8');
+date_default_timezone_set('Europe/Rome');
+if (file_exists(__DIR__ . '/config.locale.php')) {
+    return include(__DIR__ . '/config.locale.php');
+} elseif (file_exists(__DIR__ . '/config.staging.php')) {
+    return include(__DIR__ . '/config.staging.php');
 } else {
 
     return new \Phalcon\Config([
@@ -15,17 +14,7 @@ if(file_exists ( APP_DIR . '/config/config.locale.php' )){
             'tools' => true,
             'apc' => true
         ],
-        'database' => [
-            'adapter' => 'Mysql',
-            'host' => '127.0.0.1',
-            'username' => 'cms',
-            'password' => 'cms',
-            'dbname' => 'cms',
-            'charset' => 'utf8'
-        ],
         'application' => [
-            'appName'           => 'Verticalize',
-            'appEnv'            => 'production',
             'controllersDir' 	=> __DIR__ . '/../controllers/',
             'modelsDir' 		=> __DIR__ . '/../models/',
             'migrationsDir' 	=> __DIR__ . '/../migrations/',
@@ -34,24 +23,6 @@ if(file_exists ( APP_DIR . '/config/config.locale.php' )){
             'libraryDir' 		=> __DIR__ . '/../library/',
             'formsDir' 			=> __DIR__ . '/../forms/',
             'cacheDir' 			=> __DIR__ . '/../cache/',
-            'baseUri' 			=> '/',
-            'siteUri'           => '//cms.loc',
-            'protocol'          => 'https:',
-            'defaultCode'       => 'it',
-            'defaultId'         => '1',
-            'multisite'         => true
-        ],
-        'mailer' => [
-            'fromName' => 'VERTICALIZE',
-            'fromEmail' => '',
-            'method' => 'smtp', //mail
-            'smtp' => [
-                'server' => '',
-                'port' => 465,
-                'security' => 'ssl',
-                'username' => '',
-                'password' => 'ttt'
-            ]
         ],
         'facebook' => [
             'appId' => '',
@@ -59,7 +30,6 @@ if(file_exists ( APP_DIR . '/config/config.locale.php' )){
             'cbPage' => '/user/facebookRegistration'
         ],
         'sessionKey' => 'verticalize-prod',
-        'sessionKeyAdmin' => 'auth-identity',
-        'context' => 'prod'
+        'sessionKeyAdmin' => 'auth-identity'
     ]);
 }

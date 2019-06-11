@@ -2,7 +2,7 @@
 $router->setDefaultModule("site");
 $config = include __DIR__.'/../apps/config/config.php';
 
-$key = $config->application->appCode.'.Routes';
+$key = $config->application->appName.'.Routes';
 $rs = apcu_fetch ( $key );
 if (! $rs) {
     $con = new Phalcon\Db\Adapter\Pdo\Mysql([

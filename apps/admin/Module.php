@@ -55,8 +55,17 @@ class Module implements ModuleDefinitionInterface
 
     	define ( 'BASE_DIR', dirname ( __DIR__ ) );
     	define ( 'APP_DIR', BASE_DIR . '/admin' );
-    	$config = include __DIR__.'/config/config.php';
+
+        $config = $di->get('baseConfig');
+        if(file_exists(__DIR__.'/config/config.php')){
+            $moduleConfig = include __DIR__.'/config/config.php';
+            $config->merge($moduleConfig);
+        }
+        $di->set ( 'config', $config );
+        $di->remove('baseConfig');
+
         define('APPLICATION_ENV', $config->application->appEnv);
+
         if($config->application->appEnv) $di->setShared ( 'config', $config );
 
 		// EventsManager

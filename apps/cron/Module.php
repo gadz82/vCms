@@ -52,8 +52,15 @@ class Module implements ModuleDefinitionInterface
 
         define ( 'BASE_DIR', dirname ( __DIR__ ) );
         define ( 'APP_DIR', BASE_DIR . '/cron' );
-        $config = include __DIR__.'/config/config.php';
-        $di->setShared ( 'config', $config );
+
+        $config = $di->get('baseConfig');
+        if(file_exists(__DIR__.'/config/config.php')){
+            $moduleConfig = include __DIR__.'/config/config.php';
+            $config->merge($moduleConfig);
+        }
+        $di->set ( 'config', $config );
+        $di->remove('baseConfig');
+
         // EventsManager
         $di->setShared ( 'dispatcher', function () use($di) {
 

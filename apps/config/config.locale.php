@@ -12,9 +12,9 @@ return new \Phalcon\Config([
     'database' => [
         'adapter' => 'Mysql',
         'host' => '127.0.0.1',
-        'username' => 'root',
-        'password' => '',
-        'dbname' => '',
+        'username' => 'cms',
+        'password' => 'cms',
+        'dbname' => 'cms',
         'charset' => 'utf8'
     ],
     'application' => [

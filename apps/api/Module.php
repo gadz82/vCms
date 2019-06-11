@@ -74,10 +74,16 @@ class Module implements ModuleDefinitionInterface
         }
 
 
-    	$config = include __DIR__.'/config/config.php';
+        $config = $di->get('baseConfig');
+        if(file_exists(__DIR__.'/config/config.php')){
+            $moduleConfig = include __DIR__.'/config/config.php';
+            $config->merge($moduleConfig);
+        }
+        $di->set ( 'config', $config );
+        $di->remove('baseConfig');
+
         define('APPLICATION_ENV', $config->application->appEnv);
 
-		$di->setShared ( 'config', $config );
 
 		// EventsManager
 		$di->setShared ( 'dispatcher', function () use($di) {

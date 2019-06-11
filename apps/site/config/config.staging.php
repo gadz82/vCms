@@ -8,17 +8,7 @@ return new \Phalcon\Config([
         'tools' => true,
         'apc' => true
     ],
-    'database' => [
-        'adapter' => 'Mysql',
-        'host' => '127.0.0.1',
-        'username' => 'cms',
-        'password' => 'cms',
-        'dbname' => 'cms',
-        'charset' => 'utf8'
-    ],
     'application' => [
-        'appName'           => 'Verticalize',
-        'appEnv'            => 'production',
         'controllersDir' 	=> __DIR__ . '/../controllers/',
         'modelsDir' 		=> __DIR__ . '/../models/',
         'migrationsDir' 	=> __DIR__ . '/../migrations/',
@@ -27,24 +17,6 @@ return new \Phalcon\Config([
         'libraryDir' 		=> __DIR__ . '/../library/',
         'formsDir' 			=> __DIR__ . '/../forms/',
         'cacheDir' 			=> __DIR__ . '/../cache/',
-        'baseUri' 			=> '/',
-        'siteUri'           => '//cms.loc',
-        'protocol'          => 'https:',
-        'defaultCode'       => 'it',
-        'defaultId'         => '1',
-        'multisite'         => true
-    ],
-    'mailer' => [
-        'fromName' => 'VERTICALIZE',
-        'fromEmail' => '',
-        'method' => 'smtp', //mail
-        'smtp' => [
-            'server' => '',
-            'port' => 465,
-            'security' => 'ssl',
-            'username' => '',
-            'password' => 'ttt'
-        ]
     ],
     'facebook' => [
         'appId' => '',
@@ -52,6 +24,5 @@ return new \Phalcon\Config([
         'cbPage' => '/user/facebookRegistration'
     ],
     'sessionKey' => 'verticalize-staging',
-    'sessionKeyAdmin' => 'auth-identity',
-    'context' => 'staging'
+    'sessionKeyAdmin' => 'auth-identity'
 ]);

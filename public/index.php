@@ -101,6 +101,10 @@ class Application extends BaseApplication
             return $router;
         });
 
+        $di->setShared('baseConfig', function(){
+            return include ABSOLUTE_DIR.'apps/config/config.php';
+        });
+
         $this->di['app'] = $this;
         $this->setDI($di);
     }
