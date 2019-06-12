@@ -256,7 +256,7 @@ class ApplicazioniController extends ControllerBase {
 				return $this->response->redirect($this->controllerName.'/index');
 			}
 		}
-	
+	    $controller_data->triggerDelete();
 		$this->flashSession->success($this->alert_messagge['successDelete']);
         return $this->response->redirect($this->controllerName.'/index');
 		
