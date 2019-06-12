@@ -786,7 +786,7 @@ class FilesController extends ControllerBase
             return $this->response->setJsonContent(['success' => false]);
         }
         $url = $file->private ? $this->config->application->baseUri . 'media/render/' . $file->filename : $this->config->application->baseUri . 'files/' . $file->filename;
-
+        $links = "";
         if (substr($file->filetype, 0, 5) === "image") {
             $fileSizes = self::getImageVersions();
             $links .= '
