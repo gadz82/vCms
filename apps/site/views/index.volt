@@ -35,6 +35,7 @@
 	{{ tags.getOgImage() }}
 	{{ tags.getOgDescription() }}
 	{{ tags.getOgVideo() }}
+	{{ tags.getAdditionalHeading() }}
 
 	{{ stylesheet_link('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css') }}
 	{{ tags.outputCssInline('inlineCssSiteTheme') }}

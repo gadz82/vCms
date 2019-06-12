@@ -5,29 +5,72 @@ use Phalcon\Db;
 use Phalcon\Di;
 use Phalcon\Tag;
 
+/**
+ * Class Tags
+ * @package apps\site\library
+ */
 class Tags extends Tag
 {
-
+    /**
+     * @var string
+     */
     private $meta_description;
 
+    /**
+     * @var string
+     */
     private $og_title;
 
+    /**
+     * @var string
+     */
     private $og_description;
 
+    /**
+     * @var string
+     */
     private $og_url;
 
+    /**
+     * @var string
+     */
     private $og_image;
 
+    /**
+     * @var string
+     */
     private $og_video;
 
+    /**
+     * @var string
+     */
     private $canonical_url;
 
+    /**
+     * @var string
+     */
     private $robots;
 
+    /**
+     * @var string
+     */
+    private $additional_heading;
+
+    /**
+     * @var string
+     */
     private $required_js = [];
 
+    /**
+     * @var string
+     */
     private $required_css = [];
 
+    /**
+     * @param $block_key
+     * @param bool $include_tags
+     * @return bool
+     */
     public static function renderBlock($block_key, $include_tags = true)
     {
         $code_block = \Blocks::findFirst([
@@ -71,6 +114,10 @@ class Tags extends Tag
 
     }
 
+    /**
+     * @param $block_key
+     * @return bool
+     */
     public function blockExists($block_key)
     {
 
@@ -86,6 +133,10 @@ class Tags extends Tag
         return true;
     }
 
+    /**
+     * @param bool $tag
+     * @return string
+     */
     public function getOgTitle($tag = true)
     {
         if (!empty($this->og_title)) {
@@ -96,11 +147,18 @@ class Tags extends Tag
         return $tag ? parent::tagHtml('meta', ['property' => 'og:title', 'content' => str_replace('&', '-', $content)]) : $content;
     }
 
+    /**
+     * @param $og_title
+     */
     public function setOgTitle($og_title)
     {
         $this->og_title = $og_title;
     }
 
+    /**
+     * @param $collection_name
+     * @return string
+     */
     public function outputCssInline($collection_name)
     {
         $assets = Di::getDefault()->get('assets');
@@ -112,6 +170,10 @@ class Tags extends Tag
         }
     }
 
+    /**
+     * @param bool $tag
+     * @return string
+     */
     public function getOgDescription($tag = true)
     {
         if (!empty($this->og_description)) {
@@ -122,11 +184,18 @@ class Tags extends Tag
         return $tag ? parent::tagHtml('meta', ['property' => 'og:description', 'content' => str_replace('&', '-', $content)]) : $content;
     }
 
+    /**
+     * @param $og_desc
+     */
     public function setOgDescription($og_desc)
     {
         $this->og_description = $og_desc;
     }
 
+    /**
+     * @param bool $tag
+     * @return string
+     */
     public function getMetaDescription($tag = true)
     {
         if (!empty($this->meta_description)) {
@@ -148,11 +217,18 @@ class Tags extends Tag
         return $tag ? parent::tagHtml('meta', ['name' => 'description', 'content' => $content]) : $content;
     }
 
+    /**
+     * @param $meta_description
+     */
     public function setMetaDescription($meta_description)
     {
         $this->meta_description = $meta_description;
     }
 
+    /**
+     * @param bool $tag
+     * @return string
+     */
     public function getOgUrl($tag = true)
     {
         if (!empty($this->og_url)) {
@@ -163,11 +239,18 @@ class Tags extends Tag
         return $tag ? parent::tagHtml('meta', ['property' => 'og:url', 'content' => $content]) : $content;
     }
 
+    /**
+     * @param $og_url
+     */
     public function setOgUrl($og_url)
     {
         $this->og_url = $og_url;
     }
 
+    /**
+     * @param bool $tag
+     * @return bool|string
+     */
     public function getOgImage($tag = true)
     {
         if (!empty($this->og_image)) {
@@ -178,11 +261,18 @@ class Tags extends Tag
         }
     }
 
+    /**
+     * @param $og_image
+     */
     public function setOgImage($og_image)
     {
         $this->og_image = $og_image;
     }
 
+    /**
+     * @param bool $tag
+     * @return bool|string
+     */
     public function getOgVideo($tag = true)
     {
         if (!empty($this->og_video)) {
@@ -193,33 +283,69 @@ class Tags extends Tag
         }
     }
 
+    /**
+     * @param $video
+     */
     public function setOgVideo($video)
     {
         $this->og_video = $video;
     }
 
+    /**
+     * @param bool $tag
+     * @return string
+     */
     public function getCanonicalUrl($tag = true)
     {
         $content = !empty($this->canonical_url) ? $this->canonical_url : $this->getDi()->get('config')->application->protocol . "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         return $tag ? parent::tagHtml('link', ['rel' => 'canonical', 'href' => $content]) : $content;
     }
 
+    /**
+     * @param $link
+     */
     public function setCanonicalUrl($link)
     {
         $this->canonical_url = $link;
     }
 
+    /**
+     * @param bool $tag
+     * @return string
+     */
     public function getRobots($tag = true)
     {
         $content = !empty($this->robots) ? $this->robots : 'index/follow';
         return $tag ? parent::tagHtml('meta', ['name' => 'robots', 'cotent' => $content]) : $content;
     }
 
+    /**
+     * @param $robots
+     */
     public function setRobots($robots)
     {
         $this->robots = $robots;
     }
 
+    /**
+     * @return string
+     */
+    public function getAdditionalHeading(){
+        if(!empty($this->additional_heading) && $this->additional_heading != strip_tags($this->additional_heading)){
+            return $this->additional_heading;
+        }
+    }
+
+    /**
+     * @param $additionalHeading
+     */
+    public function setAdditionalHeading($additionalHeading){
+        $this->additional_heading = $additionalHeading;
+    }
+
+    /**
+     * @param $resource
+     */
     public function injectJsFromDi($resource)
     {
         if (is_array($resource)) {
@@ -232,6 +358,10 @@ class Tags extends Tag
         }
     }
 
+    /**
+     * @param bool $tag
+     * @return string
+     */
     public function getInjectedJsByDi($tag = true)
     {
         $nr = count($this->required_js);
@@ -243,6 +373,9 @@ class Tags extends Tag
         return $tag ? $return : $this->required_js;
     }
 
+    /**
+     * @param $resource
+     */
     public function injectCssFromDi($resource)
     {
         if (is_array($resource)) {
@@ -255,6 +388,10 @@ class Tags extends Tag
         }
     }
 
+    /**
+     * @param bool $tag
+     * @return string
+     */
     public function getInjectedCssByDi($tag = true)
     {
         $nr = count($this->required_css);
@@ -265,6 +402,12 @@ class Tags extends Tag
         return $tag ? $return : $this->required_css;
     }
 
+    /**
+     * @param $form_key
+     * @param int $id_post
+     * @param array $data
+     * @return bool
+     */
     public function renderForm($form_key, $id_post = 1, $data = [])
     {
         $form = Forms::getForm($form_key, $id_post, $this);
@@ -279,6 +422,12 @@ class Tags extends Tag
         return $rs;
     }
 
+    /**
+     * @param $post_type
+     * @param $filter_key
+     * @param $filter_params
+     * @return bool
+     */
     public function renderFilterValuesMenu($post_type, $filter_key, $filter_params)
     {
         $current_filter_value = !is_null($filter_params) && array_key_exists($filter_key, $filter_params) ? $filter_params[$filter_key] : null;
@@ -357,6 +506,12 @@ class Tags extends Tag
         return $rs;
     }
 
+    /**
+     * @param $post_type
+     * @param $filter_key
+     * @param $filter_params
+     * @return bool
+     */
     public function renderSubFilterValuesMenu($post_type, $filter_key, $filter_params)
     {
         $current_filter_value = !is_null($filter_params) && array_key_exists($filter_key, $filter_params) ? $filter_params[$filter_key] : null;
@@ -544,11 +699,14 @@ class Tags extends Tag
         }
     }
 
+    /**
+     * @param $post_type_slug
+     * @param $tpl
+     * @param $limit
+     * @return bool
+     */
     public function renderWidgetLastEntities($post_type_slug, $tpl, $limit)
     {
-        /**
-         * @var Db
-         */
         $cache = $this->getDI()->get('viewCache');
         $application = \apps\site\library\Cms::getIstance()->application;
         $cacheKey = $application . $post_type_slug . ".LastPosts." . $tpl . $limit;
@@ -781,6 +939,10 @@ class Tags extends Tag
         return $res;
     }
 
+    /**
+     * @param string $tpl
+     * @return bool
+     */
     public function renderNewsSlider($tpl = 'slides')
     {
         $cache = $this->getDI()->get('viewCache');
@@ -855,12 +1017,21 @@ class Tags extends Tag
         return $rs;
     }
 
+    /**
+     * @param string $string
+     * @param int $your_desired_width
+     * @return string
+     */
     public function wordwrapString($string = "", $your_desired_width = 15)
     {
         $return = substr($string, 0, strpos(wordwrap($string, $your_desired_width), "\n"));
         return $return;
     }
 
+    /**
+     * @param $date
+     * @return string
+     */
     public function formatDateEventList($date)
     {
         $mesi = [
@@ -881,6 +1052,11 @@ class Tags extends Tag
         return date('d', $strt) . ' <span>' . $mesi[date('m', $strt)] . '</span>';
     }
 
+    /**
+     * @param null $application
+     * @param bool $relative
+     * @return string
+     */
     public function getApplicationUrl($application = null, $relative = false)
     {
         return Cms::getIstance()->getApplicationUrl($application = null, $relative = false);

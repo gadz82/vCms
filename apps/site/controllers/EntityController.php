@@ -44,6 +44,10 @@ class EntityController extends ControllerBase
         $this->tags->setOgDescription($post->meta_og_description);
         $this->tags->setOgUrl($this->config->application->protocol . $this->config->application->siteUri . '/' . $post_type . '/' . $slug);
 
+        if(!empty($post->meta_additional_heading)){
+            $this->tags->setAdditionalHeading($post->meta_additional_heading);
+        }
+
         $canonical = \apps\site\library\Cms::getIstance()->getApplicationUrl();
         if ($post_type !== 'pagina') {
             $canonical .= $post_type;
@@ -65,7 +69,7 @@ class EntityController extends ControllerBase
                 ],
                 'cache'      => [
                     "key"      => "ogMetaImage" . $post->meta_og_image,
-                    "lifetime" => 12000
+                    "lifetime" => 36000
                 ]
             ]);
             if ($og_image) $this->tags->setOgImage($og_image->fileurl);
@@ -89,7 +93,7 @@ class EntityController extends ControllerBase
             'bind'       => [1 => $post_type],
             'cache'      => [
                 "key"      => "getPostType" . $post_type . "Detail",
-                "lifetime" => 12000
+                "lifetime" => 36000
             ]
         ]);
 
