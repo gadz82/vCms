@@ -1,3 +1,4 @@
+
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -107,7 +108,13 @@ VALUES
 	(10,1,1,1,'Endpoint Ajax','/ajax/:action/:params','{\"module\":\"site\",\"controller\":\"ajax\",\"action\":1,\"params\":2}',10,'2019-06-06 11:50:43','2019-06-06 12:04:37',1),
 	(11,1,1,1,'Form Request','/forms/:action/:params','{\"module\":\"site\",\"controller\":\"forms\",\"action\":1,\"params\":2}',11,'2019-06-06 11:54:51','2019-06-06 12:04:40',1),
 	(12,1,1,1,'Rendering Media','/media/:action/:params','{\"module\":\"site\",\"controller\":\"media\",\"action\":1,\"params\":2}',12,'2019-06-06 11:55:18','2019-06-06 12:04:41',1),
-	(13,1,1,1,'Sitemap','/sitemap.xml','{\"module\":\"site\",\"controller\":\"sitemap\",\"action\":\"index\"}',13,'2019-06-06 11:55:59','2019-06-06 12:04:41',1);
+	(13,1,1,1,'Sitemap','/sitemap.xml','{\"module\":\"site\",\"controller\":\"sitemap\",\"action\":\"index\"}',13,'2019-06-06 11:55:59','2019-06-06 12:04:41',1),
+	(14,1,1,1,'Api Root','/api','{\"module\":\"api\",\"controller\":\"api\",\"action\":\"index\"}',14,'2019-06-12 09:52:08','2019-06-12 10:02:09',1),
+	(15,1,1,1,'Api Controller','/api/:controller','{\"module\":\"api\",\"controller\":1,\"action\":\"index\"}',15,'2019-06-12 09:53:47','2019-06-12 10:02:11',1),
+	(16,1,1,1,'Api Taxonomy services','/api/taxonomies/:action(/:params)','{\"module\":\"api\",\"controller\":\"taxonomy\",\"action\":1,\"params\":2}',16,'2019-06-12 09:54:42','2019-06-12 10:02:13',1),
+	(17,1,1,1,'Listing Post Type','/api/entities/{post_type_slug:[a-z\\-]+}/','{\"module\":\"api\",\"controller\":\"list\",\"action\":\"fetch\",\"post_type_slug\":1}',17,'2019-06-12 09:55:36','2019-06-12 10:02:16',1),
+	(18,1,1,1,'Listing Post Type with Filters','/api/entities/{post_type_slug:[a-z\\-]+}/:action/:params','{\"module\":\"api\",\"controller\":\"list\",\"action\":2,\"post_type_slug\":1,\"params\":3}',18,'2019-06-12 09:56:18','2019-06-12 10:02:19',1),
+	(19,1,1,1,'Api Entity Detail','/api/entities/read/{post_type_slug:[a-z\\-]+}/{post_slug:[0-9{11}]+}','{\"module\":\"api\",\"controller\":\"entity\",\"action\":\"read\",\"post_type_slug\":1,\"params\":2}',19,'2019-06-12 09:57:13','2019-06-12 10:02:22',1);
 
 /*!40000 ALTER TABLE `applicazioni_routes` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -174,8 +181,7 @@ LOCK TABLES `blocks` WRITE;
 INSERT INTO `blocks` (`id`, `id_applicazione`, `id_tipologia_stato`, `id_tipologia_block`, `id_block_tag`, `titolo`, `key`, `content`, `data_creazione`, `data_aggiornamento`, `data_inizio_pubblicazione`, `data_fine_pubblicazione`, `id_utente`, `attivo`)
 VALUES
 	(1,1,1,3,4,'Menu','menu','[\r\n    {\r\n        \"title\": \"Home Page\",\r\n        \"class\": \"hidden-sm\",\r\n        \"href\": \"/\",\r\n        \"submenu\": null\r\n    }\r\n]','2019-02-07 12:11:39','2019-06-10 15:02:52','2019-02-07 12:11:39',NULL,1,1),
-	(2,1,1,2,1,'Custom CSS','custom-css','body{\r\n  \r\n}','2019-03-11 16:47:28','2019-06-10 15:02:53','2019-03-11 16:47:28',NULL,5,1),
-	(3,1,1,3,4,'Menu','Menu','[\r\n    {\r\n        \"title\": \"Casa\",\r\n        \"class\": \"hidden-sm\",\r\n        \"href\": \"/\",\r\n        \"submenu\": null\r\n    }\r\n]','2019-06-10 14:21:03','2019-06-10 15:02:53','2019-02-07 12:11:39',NULL,1,0);
+	(2,1,1,2,1,'Custom CSS','custom-css','body{\r\n  \r\n}','2019-03-11 16:47:28','2019-06-12 16:57:37','2019-03-11 16:47:28',NULL,1,1);
 
 /*!40000 ALTER TABLE `blocks` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -239,10 +245,10 @@ LOCK TABLES `blocks_tags` WRITE;
 
 INSERT INTO `blocks_tags` (`id`, `descrizione`, `data_creazione`, `data_aggiornamento`, `id_utente`, `attivo`)
 VALUES
-	(1,'Non Categorizzato','2019-03-04 00:00:00','2019-03-04 15:30:26',5,1),
-	(2,'Home','2019-03-04 15:30:33',NULL,5,1),
-	(3,'News','2019-03-04 16:05:01','2019-03-04 16:12:49',5,1),
-	(4,'Menu','2019-03-11 13:04:43',NULL,5,1);
+	(1,'Non Categorizzato','2019-03-04 00:00:00','2019-06-12 16:58:12',1,1),
+	(2,'Home','2019-03-04 15:30:33','2019-06-12 16:58:12',1,1),
+	(3,'News','2019-03-04 16:05:01','2019-06-12 16:58:13',1,1),
+	(4,'Menu','2019-03-11 13:04:43','2019-06-12 16:58:14',1,1);
 
 /*!40000 ALTER TABLE `blocks_tags` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -379,7 +385,7 @@ LOCK TABLES `filtri` WRITE;
 
 INSERT INTO `filtri` (`id`, `id_applicazione`, `id_filtri_group`, `id_tipologia_filtro`, `id_tipologia_stato`, `id_filtro_parent`, `key`, `one_to_one`, `required`, `frontend_filter`, `titolo`, `descrizione`, `data_creazione`, `data_aggiornamento`, `id_utente`, `attivo`)
 VALUES
-	(1,1,1,2,1,NULL,'categoria',1,1,1,'Categoria','Categoria News','2017-12-27 14:31:39','2019-03-08 12:19:58',5,1);
+	(1,1,1,2,1,NULL,'categoria',1,1,1,'Categoria','Categoria News','2017-12-27 14:31:39','2019-06-12 16:58:42',1,1);
 
 /*!40000 ALTER TABLE `filtri` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -406,7 +412,7 @@ LOCK TABLES `filtri_group` WRITE;
 
 INSERT INTO `filtri_group` (`id`, `descrizione`, `priorita`, `data_creazione`, `data_aggiornamento`, `id_utente`, `attivo`)
 VALUES
-	(1,'Tassonomie News',1,'2017-12-27 14:30:42','2019-03-08 12:19:58',5,1);
+	(1,'Tassonomie News',1,'2017-12-27 14:30:42','2019-06-12 16:58:46',1,1);
 
 /*!40000 ALTER TABLE `filtri_group` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -717,7 +723,7 @@ CREATE TABLE `meta` (
   `priorita` tinyint(3) NOT NULL DEFAULT 10,
   `dataset` text DEFAULT NULL,
   `required` tinyint(1) NOT NULL DEFAULT 0,
-  `hidden` tinyint(1) NOT NULL DEFAULT 0,
+  `hidden` tinyint(1) unsigned NOT NULL,
   `data_creazione` datetime NOT NULL,
   `data_aggiornamento` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `id_utente` tinyint(4) unsigned NOT NULL,
@@ -744,8 +750,7 @@ VALUES
 	(7,2,8,'immagine','Immagine Principale',1,'',0,0,'2017-04-27 11:44:37','2017-10-17 14:48:14',5,1),
 	(8,2,9,'immagini_gallery','Galleria Immagini',2,'',0,0,'2017-04-27 11:45:17','2017-10-17 14:48:14',5,1),
 	(9,1,3,'video_url','Url Video Vimeo o Facebook',3,'',0,0,'2017-04-27 11:49:56','2017-05-03 16:35:40',1,1),
-	(10,1,3,'rel_hreflang_it','Alternate Ref Lingua Italiana',7,'',0,0,'2018-01-03 11:54:59','2019-02-06 12:20:50',5,0),
-	(11,1,3,'rel_hreflang_en','Alternate Ref Lingua Inglese',8,'',0,0,'2018-01-03 11:55:55','2019-02-06 12:20:47',5,0);
+	(10,1,4,'header_tags','Header Tags Aggiuntivi',7,'',0,0,'2019-06-12 15:25:37','2019-06-12 15:37:58',1,1);
 
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -773,9 +778,9 @@ LOCK TABLES `meta_group` WRITE;
 
 INSERT INTO `meta_group` (`id`, `descrizione`, `priorita`, `data_creazione`, `data_aggiornamento`, `id_utente`, `attivo`)
 VALUES
-	(1,'Seo',98,'2017-04-26 17:37:32','2019-03-11 17:08:01',5,1),
+	(1,'Seo',98,'2017-04-26 17:37:32','2019-06-12 10:48:04',1,1),
 	(2,'Media',3,'2017-04-27 11:44:08','2019-03-11 17:07:56',5,1),
-	(8,'Gestione Template',0,'2019-03-18 08:50:31','2019-03-18 08:50:31',5,1);
+	(8,'Gestione Template',0,'2019-03-18 08:50:31','2019-06-12 10:47:44',1,0);
 
 /*!40000 ALTER TABLE `meta_group` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -806,7 +811,8 @@ VALUES
 	(1,1,2,1),
 	(2,2,2,1),
 	(4,2,1,1),
-	(32,1,8,1);
+	(32,1,8,1),
+	(33,1,1,1);
 
 /*!40000 ALTER TABLE `meta_group_post_type` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -837,16 +843,20 @@ LOCK TABLES `options` WRITE;
 
 INSERT INTO `options` (`id`, `option_name`, `option_value`, `data_creazione`, `data_aggiornamento`, `id_utente`, `attivo`)
 VALUES
-	(1,'default_app_code','it','2017-12-22 10:22:27','2017-12-22 11:22:27',5,1),
-	(2,'reindex_queue','[\"1\",\"2\"]','2017-12-22 11:14:18','2019-06-10 16:45:34',1,1),
-	(7,'app_md5','2019-06-10 16:45:34','2017-12-27 14:36:58','2019-06-10 16:45:34',1,1),
-	(26,'columns_map_it_news_meta','[\"template_news\",\"immagine\",\"immagini_gallery\"]','2019-03-06 10:07:59','2019-06-06 13:02:27',1,1),
-	(27,'columns_map_it_news_filter','[\"categoria\",\"key_categoria\"]','2019-03-06 10:07:59','2019-06-06 13:02:27',1,1),
-	(28,'columns_map_it_pagina_meta','[\"immagine\",\"immagini_gallery\",\"meta_title\",\"meta_description\",\"og_title\",\"og_description\",\"og_image\",\"robots\",\"video_url\"]','2019-03-06 10:09:36','2019-06-06 13:01:28',1,1),
-	(29,'columns_map_it_pagina_filter','[]','2019-03-06 10:09:36','2019-06-06 13:01:28',1,1),
-	(40,'version_number_css','15601797695cfe743961f553.57821797','2019-03-08 16:01:19','2019-06-10 17:16:09',1,1),
-	(41,'version_number_js','15601797695cfe7439633fd4.41793861','2019-03-08 16:01:32','2019-06-10 17:16:09',1,1),
-	(42,'version_number_assets_collections','15601797695cfe7439645d42.07036043','2019-03-08 16:01:19','2019-06-10 17:16:09',1,1);
+	(1,'default_app_code','it','2017-12-22 10:22:27','2019-06-12 16:57:16',1,1),
+	(2,'reindex_queue','[\"1\",\"2\"]','2017-12-22 11:14:18','2019-06-12 15:34:13',1,1),
+	(7,'app_md5','2019-06-12 11:36:23','2017-12-27 14:36:58','2019-06-12 11:39:45',1,1),
+	(26,'columns_map_it_news_meta','[\"immagine\",\"immagini_gallery\",\"meta_title\",\"meta_description\",\"og_title\",\"og_description\",\"og_image\",\"robots\",\"video_url\"]','2019-03-06 10:07:59','2019-06-12 12:07:25',1,1),
+	(27,'columns_map_it_news_filter','[\"categoria\",\"key_categoria\"]','2019-03-06 10:07:59','2019-06-12 12:07:25',1,1),
+	(28,'columns_map_it_pagina_meta','[\"immagine\",\"immagini_gallery\",\"meta_title\",\"meta_description\",\"og_title\",\"og_description\",\"og_image\",\"robots\",\"video_url\"]','2019-03-06 10:09:36','2019-06-12 11:06:45',1,1),
+	(29,'columns_map_it_pagina_filter','[]','2019-03-06 10:09:36','2019-06-12 11:06:45',1,1),
+	(40,'version_number_css','15603490305d010966a2d010.22418600','2019-03-08 16:01:19','2019-06-12 16:17:10',1,1),
+	(41,'version_number_js','15603490305d010966a61a80.44652032','2019-03-08 16:01:32','2019-06-12 16:17:10',1,1),
+	(42,'version_number_assets_collections','15603490305d010966a8bbb6.43939286','2019-03-08 16:01:19','2019-06-12 16:17:10',1,1),
+	(53,'columns_map_en_news_meta','[\"immagine\",\"immagini_gallery\"]','2019-06-12 10:09:21','2019-06-12 10:09:21',1,1),
+	(54,'columns_map_en_news_filter','[]','2019-06-12 10:09:21','2019-06-12 10:09:21',1,1),
+	(55,'columns_map_en_pagina_meta','[\"immagine\",\"immagini_gallery\",\"meta_title\",\"meta_description\",\"og_title\",\"og_description\",\"og_image\",\"robots\",\"video_url\"]','2019-06-12 10:09:23','2019-06-12 10:09:23',1,1),
+	(56,'columns_map_en_pagina_filter','[]','2019-06-12 10:09:23','2019-06-12 10:09:23',1,1);
 
 /*!40000 ALTER TABLE `options` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -891,8 +901,9 @@ LOCK TABLES `posts` WRITE;
 
 INSERT INTO `posts` (`id`, `id_applicazione`, `id_tipologia_stato`, `id_tipologia_post`, `titolo`, `slug`, `excerpt`, `testo`, `data_creazione`, `data_aggiornamento`, `data_inizio_pubblicazione`, `data_fine_pubblicazione`, `id_utente`, `attivo`)
 VALUES
-	(1,1,1,2,'Home','index','home','<div class=\"clearfix\"><div>Hello World!</div></div>','2018-12-29 12:45:45','2019-06-10 16:45:34','2018-12-29 12:45:45',NULL,1,1),
-	(2,1,1,1,'Notizia a','notizia-a','Notizia a','<p>Notizia as<br></p>','2019-02-05 12:25:34','2019-06-10 14:10:19','2019-02-05 00:00:00',NULL,1,1);
+	(1,1,1,2,'Home','index','home','<div class=\"clearfix\"><div>Hello World!</div></div>','2018-12-29 12:45:45','2019-06-12 11:34:07','2018-12-29 12:45:45',NULL,1,1),
+	(2,1,1,1,'Notizia a','notizia-a','Notizia a','<p>Notizia as<br></p>','2019-02-05 12:25:34','2019-06-12 11:34:08','2019-02-05 00:00:00',NULL,1,1),
+	(9,1,1,2,'test','test','test','<p>test</p>','2019-06-12 11:10:18','2019-06-12 11:34:12','2019-06-12 00:00:00',NULL,1,1);
 
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -988,9 +999,17 @@ VALUES
 	(36,2,4,1,4,'og_description',NULL,NULL,NULL,NULL,NULL,NULL,'2019-02-05 12:25:34','2019-03-07 09:14:54',1),
 	(37,2,8,1,5,'og_image',NULL,NULL,NULL,NULL,NULL,NULL,'2019-02-05 12:25:34','2019-03-07 09:14:54',1),
 	(38,2,6,1,6,'robots',NULL,NULL,'index/follow',NULL,NULL,NULL,'2019-02-05 12:25:34','2019-03-07 09:14:54',1),
-	(40,2,3,1,11,'rel_hreflang_en',NULL,NULL,NULL,NULL,NULL,NULL,'2019-02-05 12:25:34','2019-02-05 12:25:34',1),
 	(41,2,8,1,7,'immagine',NULL,NULL,NULL,NULL,NULL,2,'2019-02-05 12:25:34','2019-06-10 14:10:19',1),
-	(42,2,9,1,8,'immagini_gallery',NULL,NULL,'39,40,41,42',NULL,NULL,NULL,'2019-02-05 12:25:34','2019-06-10 14:10:19',1);
+	(42,2,9,1,8,'immagini_gallery',NULL,NULL,'39,40,41,42',NULL,NULL,NULL,'2019-02-05 12:25:34','2019-06-10 14:10:19',1),
+	(85,9,8,1,7,'immagine',NULL,NULL,NULL,NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1),
+	(86,9,9,1,8,'immagini_gallery',NULL,NULL,NULL,NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1),
+	(87,9,3,1,1,'meta_title',NULL,NULL,'test',NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1),
+	(88,9,3,1,3,'og_title',NULL,NULL,NULL,NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1),
+	(89,9,3,1,2,'meta_description',NULL,NULL,'test',NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1),
+	(90,9,3,1,9,'video_url',NULL,NULL,NULL,NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1),
+	(91,9,4,1,4,'og_description',NULL,NULL,NULL,NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1),
+	(92,9,8,1,5,'og_image',NULL,NULL,NULL,NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1),
+	(93,9,6,1,6,'robots',NULL,NULL,'index/follow',NULL,NULL,NULL,'2019-06-12 11:10:18','2019-06-12 11:10:18',1);
 
 /*!40000 ALTER TABLE `posts_meta` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1539,40 +1558,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table tipologie_punto_vendita
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `tipologie_punto_vendita`;
-
-CREATE TABLE `tipologie_punto_vendita` (
-  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
-  `descrizione` char(175) NOT NULL DEFAULT '',
-  `codice` varchar(50) DEFAULT NULL,
-  `ordine` tinyint(2) NOT NULL,
-  `attivo` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `attivo` (`attivo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `tipologie_punto_vendita` WRITE;
-/*!40000 ALTER TABLE `tipologie_punto_vendita` DISABLE KEYS */;
-
-INSERT INTO `tipologie_punto_vendita` (`id`, `descrizione`, `codice`, `ordine`, `attivo`)
-VALUES
-	(1,'Conad City','city',1,1),
-	(2,'Conad','conad',2,1),
-	(3,'Conad Superstore','superstore',3,1),
-	(4,'Conad Ipermercato','ipermercato',4,1),
-	(5,'Margherita Conad','conad',5,1),
-	(6,'Pet Store','petstore',6,1),
-	(7,'Conad Carburanti','carburante',7,1),
-	(8,'Spesa Facile','conad',8,1),
-	(9,'Sapori & Dintorni Conad','sapori-e-dintorni',9,1);
-
-/*!40000 ALTER TABLE `tipologie_punto_vendita` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table tipologie_routes
 # ------------------------------------------------------------
 
@@ -1867,31 +1852,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table tipologie_stato_punto_vendita
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `tipologie_stato_punto_vendita`;
-
-CREATE TABLE `tipologie_stato_punto_vendita` (
-  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
-  `descrizione` char(175) NOT NULL DEFAULT '',
-  `ordine` tinyint(2) NOT NULL,
-  `attivo` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `tipologie_stato_punto_vendita` WRITE;
-/*!40000 ALTER TABLE `tipologie_stato_punto_vendita` DISABLE KEYS */;
-
-INSERT INTO `tipologie_stato_punto_vendita` (`id`, `descrizione`, `ordine`, `attivo`)
-VALUES
-	(1,'Attivo',1,1),
-	(2,'Non Attivo',2,1);
-
-/*!40000 ALTER TABLE `tipologie_stato_punto_vendita` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table tipologie_stato_user
 # ------------------------------------------------------------
 
@@ -1958,33 +1918,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table tipologie_stato_volantino
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `tipologie_stato_volantino`;
-
-CREATE TABLE `tipologie_stato_volantino` (
-  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
-  `descrizione` char(175) NOT NULL DEFAULT '',
-  `ordine` tinyint(2) NOT NULL,
-  `attivo` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `attivo` (`attivo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
-LOCK TABLES `tipologie_stato_volantino` WRITE;
-/*!40000 ALTER TABLE `tipologie_stato_volantino` DISABLE KEYS */;
-
-INSERT INTO `tipologie_stato_volantino` (`id`, `descrizione`, `ordine`, `attivo`)
-VALUES
-	(1,'Attivo',1,1),
-	(2,'Bozza',2,1),
-	(3,'Non Attivo',3,1);
-
-/*!40000 ALTER TABLE `tipologie_stato_volantino` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table tipologie_user
 # ------------------------------------------------------------
 
@@ -2039,34 +1972,6 @@ VALUES
 	(3,'Data Entry',1,'2015-03-13 10:42:47','2016-01-20 19:51:47',1);
 
 /*!40000 ALTER TABLE `tipologie_utente` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table tipologie_volantino
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `tipologie_volantino`;
-
-CREATE TABLE `tipologie_volantino` (
-  `id` tinyint(2) unsigned NOT NULL AUTO_INCREMENT,
-  `descrizione` char(175) NOT NULL DEFAULT '',
-  `ordine` tinyint(2) NOT NULL,
-  `attivo` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`id`),
-  KEY `attivo` (`attivo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-LOCK TABLES `tipologie_volantino` WRITE;
-/*!40000 ALTER TABLE `tipologie_volantino` DISABLE KEYS */;
-
-INSERT INTO `tipologie_volantino` (`id`, `descrizione`, `ordine`, `attivo`)
-VALUES
-	(1,'Standard',1,1),
-	(2,'Integrativa',2,1),
-	(3,'Mi Premio',3,1),
-	(4,'Kitchenaid',4,1);
-
-/*!40000 ALTER TABLE `tipologie_volantino` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -2187,7 +2092,8 @@ LOCK TABLES `utenti` WRITE;
 
 INSERT INTO `utenti` (`id`, `id_tipologia_utente`, `id_tipologia_stato`, `id_ruolo`, `livello`, `nome_utente`, `password`, `nome`, `cognome`, `email`, `avatar`, `token`, `api_level`, `public_key`, `private_key`, `data_creazione_token`, `data_creazione`, `data_aggiornamento`, `attivo`)
 VALUES
-	(1,1,1,1,99,'admin',X'24327924313224596A4A4A63325A6F555374534C30785652474A785965662F4D693039735250737166416D624D77493373695A506332445979546C36','Admin','Admin','admin@cms.io','avatar/avatar_work_01.png','b45f4da602d91f3e82c56d83bbe8eff9ac511aee',0,NULL,NULL,'2019-06-10 14:22:25','2015-10-02 00:00:00','2019-06-10 14:22:25',1);
+	(1, 1, 1, 1, 99, 'admin', X'243279243132246432314F52575A336445524964556332646B7379514F61707272434B476752533739414B687A3272616F6538356B3141504E445536', 'Admin', 'Admin', 'admin@cms.io', 'avatar/avatar_work_01.png', 'b45f4da602d91f3e82c56d83bbe8eff9ac511aee', 99, 'admin', 'admin', '2019-06-10 14:22:25', '2015-10-02 00:00:00', '2019-06-12 17:00:44', 1);
+
 
 /*!40000 ALTER TABLE `utenti` ENABLE KEYS */;
 UNLOCK TABLES;
