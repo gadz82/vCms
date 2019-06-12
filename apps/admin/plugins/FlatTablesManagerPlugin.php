@@ -942,12 +942,12 @@ class FlatTablesManagerPlugin extends Plugin
         $postTypes = \TipologiePost::find();
 
         foreach($postTypes as $postType){
-            if(!$this->connection->tableExists('_'.$app->codice.'_'.$postType->slug.self::meta_suffix)){
+            if(!$this->connection->tableExists('_'.$app->codice.'_'.$postType->slug)){
                 return true;
             } else {
                 if($this->connection->tableExists('_'.$app->codice.'_'.$postType->slug.self::meta_suffix)) $this->connection->dropTable('_'.$app->codice.'_'.$postType->slug.self::meta_suffix);
                 if($this->connection->tableExists('_'.$app->codice.'_'.$postType->slug.self::filtri_suffix)) $this->connection->dropTable('_'.$app->codice.'_'.$postType->slug.self::filtri_suffix);
-                $this->connection->dropTable('_'.$app->codice.'_'.$postType->slug.self::meta_suffix);
+                $this->connection->dropTable('_'.$app->codice.'_'.$postType->slug);
             }
             $optionsMeta = \Options::findFirstByOptionName('_'.$app->codice.'_'.$postType->slug.self::meta_suffix);
             if($optionsMeta) $optionsMeta->delete();
