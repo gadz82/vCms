@@ -138,17 +138,13 @@ class PostsController extends ControllerBase {
                     $item->id_tipologia_stato = $item->TipologieStatoPost->descrizione;
                     $item->id_tipologia_post = $item->TipologiePost->descrizione;
                     $item->id_applicazione = $item->Applicazioni->descrizione;
-                    $item->slug = '<a class="btn btn-success btn-sm" target="_blank" href="/'.$item->TipologiePost->slug.'/'.$item->slug.'"><i class="fa fa-search"></i></a>';
+                    $item->slug = $item->Applicazioni->codice == $this->config->application->defaultCode ?
+                        '<a class="btn btn-success btn-sm" target="_blank" href="/'.$item->TipologiePost->slug.'/'.$item->slug.'"><i class="fa fa-search"></i></a>' :
+                        '<a class="btn btn-success btn-sm" target="_blank" href="/'.$item->Applicazioni->codice.'/'.$item->TipologiePost->slug.'/'.$item->slug.'"><i class="fa fa-search"></i></a>';
                 }
 				
 				if($this->request->hasPost('export')){
 					//crea un file excel con il risultato della ricerca
-                    if($id_tipologia_post && $id_tipologia_post == 3){
-                        $this->jqGrid_columns[] = ['label' =>'Marca', 'name'=>'valore_marca'];
-                        $this->jqGrid_columns[] = ['label' =>'Alimentazione', 'name'=>'valore_alimentazione'];
-                        $this->jqGrid_columns[] = ['label' =>'Stato', 'name'=>'valore_stato_auto'];
-                        $this->jqGrid_columns[] = ['label' =>'Prezzo', 'name'=>'meta_prezzo'];
-                    }
 					$this->jqGridExport($paging->items);
 				}else{
 					//crea l'array grid da passare a jqgrid
