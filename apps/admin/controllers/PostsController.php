@@ -593,6 +593,11 @@ class PostsController extends ControllerBase {
         }
 		$post = Posts::findFirstById($id);
 
+		if(!$post){
+			$this->flashSession->error($this->alert_messagge['notFound']);
+			return $this->response->redirect($this->controllerName.'/index/'.$this->id_tipologia_post);
+		}
+
         if($post->TipologiePost->admin_menu == '1'){
             $backlink.= '/'.$post->id_tipologia_post;
         }
@@ -600,10 +605,6 @@ class PostsController extends ControllerBase {
         $this->getDI()->getSession()->set('id_applicazione', $post->id_applicazione);
 
         $old_slug = $post->slug;
-		if(!$post){
-			$this->flashSession->error($this->alert_messagge['notFound']);
-			return $this->dispatcher->forward(array('controller'=>$this->controllerName, 'action'=>'index'));
-		}
 
 		$form = new PostsForms\EditForm($post);
 
