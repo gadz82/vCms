@@ -175,9 +175,11 @@ class Applicazioni extends \BaseModel {
      * Step 2 : Delete Domini
      * Step 3 : Delete Utenti
      * Step 4 : Delete Posts
-     * Step 5 : Delete Flat Tables
+     * Step 5 : Delete Blocks
+     * Steo 6 : Form in status Disabled(3)
+     * Step 7 : Delete Flat Tables
      */
-    public function afterDelete(){
+    public function triggerDelete(){
         /*
          * Step 1
          */
@@ -224,15 +226,48 @@ class Applicazioni extends \BaseModel {
          * Step 4
          */
         $posts = Posts::find([
-            'conditions' => ['id_applicazione = ?1'],
+            'conditions' => 'id_applicazione = ?1',
             'bind'  => [1 => $this->id]
         ]);
-        foreach($posts as $post){
-            $post->delete();
+
+        if($posts){
+            foreach($posts as $post){
+                $post->delete();
+                $post->triggerSave(true);
+            }
         }
 
         /*
          * Step 5
+         */
+        $blocks = Blocks::find([
+            'conditions' => 'id_applicazione = ?1',
+            'bind'  => [1 => $this->id]
+        ]);
+
+        if($blocks){
+            foreach($blocks as $block){
+                $block->delete();
+            }
+        }
+
+        /*
+         * Step 6
+         */
+        $forms = Forms::find([
+            'conditions' => 'id_applicazione = ?1',
+            'bind'  => [1 => $this->id]
+        ]);
+
+        if($forms){
+            foreach($forms as $form){
+                $form->id_tipologia_stato = 3;
+                $form->save();
+            }
+        }
+
+        /*
+         * Step 7
          */
         $eventsManager = new Phalcon\Events\Manager();
         $eventsManager->attach ('dispatch:afterDeleteApplication', new \apps\admin\plugins\FlatTablesManagerPlugin() );

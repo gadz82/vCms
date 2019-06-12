@@ -217,6 +217,7 @@ class Posts extends BaseModel
             $eventsManager->attach ('dispatch:triggerDeleteSingleEntity', new \apps\admin\plugins\FlatTablesManagerPlugin() );
             $eventsManager->attach ('dispatch:triggerDeleteSingleEntity', new \apps\admin\plugins\AppSyncPlugin() );
             $eventsManager->fire('dispatch:triggerDeleteSingleEntity', $this);
+            $this->forceAfterDelete();
         } else {
             $eventsManager->attach ('dispatch:triggerEditSingleEntity', new \apps\admin\plugins\FlatTablesManagerPlugin() );
             $eventsManager->attach ('dispatch:triggerEditSingleEntity', new \apps\admin\plugins\AppSyncPlugin() );
@@ -251,5 +252,46 @@ class Posts extends BaseModel
         }
     }
 
+    public function forceAfterDelete(){
+        $meta = PostsMeta::find([
+            'conditions' => 'post_id = ?1',
+            'bind' => [1 => $this->id]
+        ]);
+        if($meta){
+            foreach($meta as $m){
+                $m->delete();
+            }
+        }
+
+        $filters = PostsFiltri::find([
+            'conditions' => 'id_post = ?1',
+            'bind' => [1 => $this->id]
+        ]);
+        if($filters){
+            foreach($filters as $f){
+                $f->delete();
+            }
+        }
+
+        $tags = PostsTags::find([
+            'conditions' => 'id_post = ?1',
+            'bind' => [1 => $this->id]
+        ]);
+        if($tags){
+            foreach($tags as $t){
+                $t->delete();
+            }
+        }
+
+        $ug = PostsUsersGroups::find([
+            'conditions' => 'id_post = ?1',
+            'bind' => [1 => $this->id]
+        ]);
+        if($ug){
+            foreach($ug as $u){
+                $u->delete();
+            }
+        }
+    }
 
 }
