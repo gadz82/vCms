@@ -4,55 +4,6 @@ include "../vendor/autoload.php";
 use Phalcon\Mvc\Router;
 use Phalcon\DI\FactoryDefault;
 use Phalcon\Mvc\Application as BaseApplication;
-
-if (function_exists('apcu_add') && !function_exists('apc_add')) {
-    function apc_add() {
-        return call_user_func_array('apcu_add', func_get_args());
-    }
-
-    function apc_cache_info() {
-        return call_user_func_array('apcu_cache_info', func_get_args());
-    }
-
-    function apc_cas() {
-        return call_user_func_array('apcu_cas', func_get_args());
-    }
-
-    function apc_clear_cache() {
-        return call_user_func_array('apcu_clear_cache', func_get_args());
-    }
-
-    function apc_dec() {
-        return call_user_func_array('apcu_dec', func_get_args());
-    }
-
-    function apc_delete() {
-        return call_user_func_array('apcu_delete', func_get_args());
-    }
-
-    function apc_exists() {
-        return call_user_func_array('apcu_exists', func_get_args());
-    }
-
-    function apc_fetch() {
-        return call_user_func_array('apcu_fetch', func_get_args());
-    }
-
-    function apc_inc() {
-        return call_user_func_array('apcu_inc', func_get_args());
-    }
-
-    function apc_sma_info() {
-        return call_user_func_array('apcu_sma_info', func_get_args());
-    }
-
-    function apc_store() {
-        return call_user_func_array('apcu_store', func_get_args());
-    }
-
-    class APCIterator extends APCUIterator {}
-}
-
 class Application extends BaseApplication
 {
 
@@ -109,6 +60,56 @@ class Application extends BaseApplication
         $this->setDI($di);
     }
 }
+
+
+if (function_exists('apcu_add') && !function_exists('apc_add')) {
+    function apc_add() {
+        return call_user_func_array('apcu_add', func_get_args());
+    }
+
+    function apc_cache_info() {
+        return call_user_func_array('apcu_cache_info', func_get_args());
+    }
+
+    function apc_cas() {
+        return call_user_func_array('apcu_cas', func_get_args());
+    }
+
+    function apc_clear_cache() {
+        return call_user_func_array('apcu_clear_cache', func_get_args());
+    }
+
+    function apc_dec() {
+        return call_user_func_array('apcu_dec', func_get_args());
+    }
+
+    function apc_delete() {
+        return call_user_func_array('apcu_delete', func_get_args());
+    }
+
+    function apc_exists() {
+        return call_user_func_array('apcu_exists', func_get_args());
+    }
+
+    function apc_fetch() {
+        return call_user_func_array('apcu_fetch', func_get_args());
+    }
+
+    function apc_inc() {
+        return call_user_func_array('apcu_inc', func_get_args());
+    }
+
+    function apc_sma_info() {
+        return call_user_func_array('apcu_sma_info', func_get_args());
+    }
+
+    function apc_store() {
+        return call_user_func_array('apcu_store', func_get_args());
+    }
+
+    class APCIterator extends APCUIterator {}
+}
+
 
 $application = new Application();
 $application->main();
