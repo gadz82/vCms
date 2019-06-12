@@ -7,18 +7,18 @@
  */
 class PaginaEntityController extends EntityController{
 
-    public function initialize(){
+    public function readAction(){
         $routeUri = $this->getDi()->get('router')->getRewriteUri();
         $post_type = $this->dispatcher->getParam('post_type_slug');
         $slug = $this->dispatcher->getParam('post_slug');
         $appUri = \apps\site\library\Cms::getIstance()->getApplicationUrl(null, true);
-        if($post_type == 'pagina' && $routeUri == $appUri.$post_type.DIRECTORY_SEPARATOR.$slug){
-            $this->response->redirect($appUri.$slug, false, 301);
-        }
-        parent::initialize();
-    }
 
-    public function readAction(){
+        if($slug == 'index') return $this->response->redirect($appUri, false, 301);
+
+        if($post_type == 'pagina' && $routeUri == $appUri.$post_type.DIRECTORY_SEPARATOR.$slug){
+            return $this->response->redirect($appUri.$slug, false, 301);
+        }
+
         parent::readAction();
     }
 
