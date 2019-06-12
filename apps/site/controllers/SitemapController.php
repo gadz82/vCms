@@ -12,6 +12,7 @@ class SitemapController extends ControllerBase
         set_time_limit(0);
         $this->domain = $this->config->application->protocol.$this->config->application->siteUri;
         parent::initialize();
+        if($this->application !== $this->config->application->defaultCode) $this->domain.= DIRECTORY_SEPARATOR.$this->application;
 
     }
 
@@ -39,12 +40,16 @@ class SitemapController extends ControllerBase
 
         foreach ($tipologie_post as $post_type){
             $rs = $this->getEntities($post_type->slug);
+
             $entity_base_url = '/'.$post_type->slug;
+
             $postTypeFilterFields = self::getPostTypeFilterFields($post_type->slug);
             $n = count($postTypeFilterFields);
-            $links[] = $entity_base_url.'/';
+            if($post_type->slug !== 'pagina') $links[] = $entity_base_url.'/';
             foreach($rs as $e){
-                $links[] = $entity_base_url.'/'.$e->slug;
+                if($post_type->slug !== 'pagina' && $e->slug !== 'index'){
+                    $links[] = $entity_base_url.'/'.$e->slug;
+                }
                 $sub_models = [];
 
                 for($i = 0; $i < $n; $i++){
@@ -111,7 +116,7 @@ class SitemapController extends ControllerBase
         }
 
         $url = $sitemap->createElement('url');
-        $href = $this->domain;
+        $href = $this->application == $this->config->application->defaultCode ? $this->domain : $this->domain.DIRECTORY_SEPARATOR;
         $url->appendChild($sitemap->createElement('loc', $href));
         $url->appendChild($sitemap->createElement('changefreq', 'daily')); //Hourly, daily, weekly etc.
         $url->appendChild($sitemap->createElement('priority', '1.0'));     //1, 0.7, 0.5 ...
@@ -141,21 +146,20 @@ class SitemapController extends ControllerBase
             for($x = 0; $x < $n; $x++){
                 $columns_select[] = "ef.".$postTypeFilterFields[$x]." AS filter_".$postTypeFilterFields[$x];
             }
-
             $query = "
                 SELECT
                   e.*,
-                  f.*,
                   ".implode(','.PHP_EOL, $columns_select)."
                 FROM
                   `_".$application."_".$post_type_slug."` e
                 INNER JOIN  _".$application."_".$post_type_slug."_meta em ON em.id_post = e.id_post
                 INNER JOIN _".$application."_".$post_type_slug."_filter ef ON ef.id_post = e.id_post
-                INNER JOIN files f ON f.id = em.immagine AND f.attivo = 1
                 WHERE
                     e.id_tipologia_stato = 1
                 AND
                     e.data_inizio_pubblicazione < NOW()
+                AND
+                    e.attivo = 1
                 ORDER BY e.data_inizio_pubblicazione DESC, e.id DESC
             ";
 
