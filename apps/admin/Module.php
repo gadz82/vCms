@@ -275,7 +275,7 @@ class Module implements ModuleDefinitionInterface
 
         if ($di->has('debugbar')) {
             $debugbar = $di['debugbar'];
-            if ($config->debug->tools || $di['session']->has('debug')) {
+            if ($config->debug->tools && $di['session']->has('debug')) {
                 $debugbar->attachDb('db');
                 $debugbar->enable();
             } else {

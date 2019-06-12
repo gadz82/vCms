@@ -5,7 +5,7 @@ return new \Phalcon\Config ([
     'debug'       => [
         'error_reporting' => E_ALL,
         'display_errors'  => 1,
-        'tools'           => false,
+        'tools'           => true,
         'apc'             => true
     ],
     'application' => [

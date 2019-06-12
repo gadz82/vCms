@@ -34,9 +34,10 @@ class Application extends BaseApplication
             ]
         ]);
 
-        if($_SERVER['SERVER_ADDR'] == '172.16.238.11' || $_SERVER['SERVER_ADDR'] == '10.0.11.198'){
+        if(\Phalcon\Di::getDefault()->get('baseConfig')->debug->tools){
             (new \Snowair\Debugbar\ServiceProvider())->start();
         }
+
         echo $this->handle()->getContent();
     }
 

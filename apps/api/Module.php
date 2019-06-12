@@ -171,5 +171,11 @@ class Module implements ModuleDefinitionInterface
         $di->setShared('mailer', function () {
             return new Mailer();
         });
+
+        if ($config->debug->tools) {
+            if ($config->debug->error_reporting !== 0) error_reporting($config->debug->error_reporting);
+            if ($config->debug->display_errors !== 0) ini_set('display_errors', $config->debug->display_errors);
+        }
+
     }
 }
