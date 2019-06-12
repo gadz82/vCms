@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,141 +18,141 @@ class PostsMigration_112 extends Migration
     public function morph()
     {
         $this->morphTable('posts', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_applicazione',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'id_tipologia_stato',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id_applicazione'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id_applicazione'
                         ]
                     ),
                     new Column(
                         'id_tipologia_post',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id_tipologia_stato'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id_tipologia_stato'
                         ]
                     ),
                     new Column(
                         'titolo',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 150,
-                            'after' => 'id_tipologia_post'
+                            'size'    => 150,
+                            'after'   => 'id_tipologia_post'
                         ]
                     ),
                     new Column(
                         'slug',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 75,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 75,
                             'after' => 'titolo'
                         ]
                     ),
                     new Column(
                         'excerpt',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
-                            'size' => 275,
-                            'after' => 'slug'
+                            'size'    => 275,
+                            'after'   => 'slug'
                         ]
                     ),
                     new Column(
                         'testo',
                         [
-                            'type' => Column::TYPE_TEXT,
-                            'size' => 1,
+                            'type'  => Column::TYPE_TEXT,
+                            'size'  => 1,
                             'after' => 'excerpt'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'testo'
+                            'size'    => 1,
+                            'after'   => 'testo'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "current_timestamp()",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'data_inizio_pubblicazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
-                            'size' => 1,
+                            'type'  => Column::TYPE_DATETIME,
+                            'size'  => 1,
                             'after' => 'data_aggiornamento'
                         ]
                     ),
                     new Column(
                         'data_fine_pubblicazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
-                            'size' => 1,
+                            'type'  => Column::TYPE_DATETIME,
+                            'size'  => 1,
                             'after' => 'data_inizio_pubblicazione'
                         ]
                     ),
                     new Column(
                         'id_utente',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 4,
-                            'after' => 'data_fine_pubblicazione'
+                            'notNull'  => true,
+                            'size'     => 4,
+                            'after'    => 'data_fine_pubblicazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "1",
+                            'type'     => Column::TYPE_INTEGER,
+                            'default'  => "1",
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'id_utente'
+                            'notNull'  => true,
+                            'size'     => 1,
+                            'after'    => 'id_utente'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('slug_unique', ['slug', 'id_tipologia_post', 'id_applicazione', 'attivo'], 'UNIQUE'),
                     new Index('id_tipologia_stato', ['id_tipologia_stato'], null),
@@ -166,48 +166,48 @@ class PostsMigration_112 extends Migration
                     new Reference(
                         'posts_ibfk_1',
                         [
-                            'referencedTable' => 'tipologie_stato_post',
-                            'columns' => ['id_tipologia_stato'],
+                            'referencedTable'   => 'tipologie_stato_post',
+                            'columns'           => ['id_tipologia_stato'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'posts_ibfk_2',
                         [
-                            'referencedTable' => 'tipologie_post',
-                            'columns' => ['id_tipologia_post'],
+                            'referencedTable'   => 'tipologie_post',
+                            'columns'           => ['id_tipologia_post'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'posts_ibfk_3',
                         [
-                            'referencedTable' => 'utenti',
-                            'columns' => ['id_utente'],
+                            'referencedTable'   => 'utenti',
+                            'columns'           => ['id_utente'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'posts_ibfk_4',
                         [
-                            'referencedTable' => 'applicazioni',
-                            'columns' => ['id_applicazione'],
+                            'referencedTable'   => 'applicazioni',
+                            'columns'           => ['id_applicazione'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

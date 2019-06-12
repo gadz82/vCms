@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,87 +18,87 @@ class FlatTranslationsMigration_100 extends Migration
     public function morph()
     {
         $this->morphTable('flat_translations', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_applicazione',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'original_string',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 255,
-                            'after' => 'id_applicazione'
+                            'size'    => 255,
+                            'after'   => 'id_applicazione'
                         ]
                     ),
                     new Column(
                         'translation',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 255,
-                            'after' => 'original_string'
+                            'size'    => 255,
+                            'after'   => 'original_string'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'translation'
+                            'size'    => 1,
+                            'after'   => 'translation'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'id_utente',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 4,
-                            'after' => 'data_aggiornamento'
+                            'notNull'  => true,
+                            'size'     => 4,
+                            'after'    => 'data_aggiornamento'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'id_utente'
+                            'size'    => 1,
+                            'after'   => 'id_utente'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('original_string', ['original_string'], null),
                     new Index('attivo', ['attivo'], null),
@@ -109,28 +109,28 @@ class FlatTranslationsMigration_100 extends Migration
                     new Reference(
                         'fk_flat_translations_applicazioni',
                         [
-                            'referencedTable' => 'applicazioni',
-                            'columns' => ['id_applicazione'],
+                            'referencedTable'   => 'applicazioni',
+                            'columns'           => ['id_applicazione'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'fk_flat_translations_utenti',
                         [
-                            'referencedTable' => 'utenti',
-                            'columns' => ['id_utente'],
+                            'referencedTable'   => 'utenti',
+                            'columns'           => ['id_utente'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '2',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '2',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

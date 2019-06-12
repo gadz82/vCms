@@ -39,14 +39,15 @@ class TipologieStatoFile extends BaseModel
      * @param mixed $parameters
      * @return TipologieStatoPostFile[]|TipologieStatoPostFile
      */
-    public static function find($parameters = null) {
-    	$key = 'tipologie_stato_file_find.' . md5 ( json_encode ( $parameters ) );
-    	$rs = apcu_fetch ( $key );
-    	if (! $rs) {
-    		$rs = parent::find ( $parameters );
-    		apcu_store ( $key, $rs );
-    	}
-    	return $rs;
+    public static function find($parameters = null)
+    {
+        $key = 'tipologie_stato_file_find.' . md5(json_encode($parameters));
+        $rs = apcu_fetch($key);
+        if (!$rs) {
+            $rs = parent::find($parameters);
+            apcu_store($key, $rs);
+        }
+        return $rs;
     }
 
     /**
@@ -55,14 +56,15 @@ class TipologieStatoFile extends BaseModel
      * @param mixed $parameters
      * @return RuoliPermessi
      */
-    public static function findFirst($parameters = null) {
-    	$key = 'tipologie_stato_file_find_first.' . md5 ( json_encode ( $parameters ) );
-    	$rs = apcu_fetch ( $key );
-    	if (! $rs) {
-    		$rs = parent::findFirst ( $parameters );
-    		apcu_store ( $key, $rs );
-    	}
-    	return $rs;
+    public static function findFirst($parameters = null)
+    {
+        $key = 'tipologie_stato_file_find_first.' . md5(json_encode($parameters));
+        $rs = apcu_fetch($key);
+        if (!$rs) {
+            $rs = parent::findFirst($parameters);
+            apcu_store($key, $rs);
+        }
+        return $rs;
     }
 
     /**
@@ -70,11 +72,11 @@ class TipologieStatoFile extends BaseModel
      */
     public function initialize()
     {
-    	parent::initialize();
+        parent::initialize();
 
         $this->hasMany('id', 'Files', 'id_tipologia_stato', ['alias' => 'Files', 'reusable' => true]);
     }
-    
+
     /**
      * Returns table name mapped in the model.
      *
@@ -94,10 +96,10 @@ class TipologieStatoFile extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 

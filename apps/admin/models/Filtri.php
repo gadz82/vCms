@@ -146,8 +146,8 @@ class Filtri extends BaseModel
         $this->belongsTo('id_applicazione', '\Applicazioni', 'id', ['alias' => 'Applicazioni', 'reusable' => true]);
         $this->belongsTo('id_filtri_group', '\FiltriGroup', 'id', ['alias' => 'FiltriGroup', 'reusable' => true]);
         $this->belongsTo('id_filtro_parent', '\Filtri', 'id', [
-            'alias' => 'FiltroParent',
-            'reusable' => true,
+            'alias'      => 'FiltroParent',
+            'reusable'   => true,
             'foreignKey' => [
                 'allowNulls' => true
             ]
@@ -155,7 +155,7 @@ class Filtri extends BaseModel
         $this->belongsTo('id_tipologia_filtro', '\TipologieFiltro', 'id', ['alias' => 'TipologieFiltro', 'reusable' => true]);
         $this->belongsTo('id_tipologia_stato', '\TipologieStatoFiltro', 'id', ['alias' => 'TipologieStatoFiltro', 'reusable' => true]);
         $this->belongsTo('id_utente', '\Utenti', 'id', ['alias' => 'Utenti', 'reusable' => true]);
-        $this->allowEmptyStringValues(array('descrizione'));
+        $this->allowEmptyStringValues(['descrizione']);
     }
 
     /**
@@ -168,8 +168,9 @@ class Filtri extends BaseModel
         return 'filtri';
     }
 
-    public function setIdFiltroParent($value){
-        if(empty($value)){
+    public function setIdFiltroParent($value)
+    {
+        if (empty($value)) {
             $this->id_filtro_parent = null;
         } else {
             $this->id_filtro_parent = $value;
@@ -185,49 +186,53 @@ class Filtri extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_applicazione' => 'id_applicazione',
-            'id_filtri_group' => 'id_filtri_group',
+            'id'                  => 'id',
+            'id_applicazione'     => 'id_applicazione',
+            'id_filtri_group'     => 'id_filtri_group',
             'id_tipologia_filtro' => 'id_tipologia_filtro',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_filtro_parent' => 'id_filtro_parent',
-            'one_to_one' => 'one_to_one',
-            'required' => 'required',
-            'frontend_filter' => 'frontend_filter',
-            'titolo' => 'titolo',
-            'key' => 'key',
-            'descrizione' => 'descrizione',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'id_tipologia_stato'  => 'id_tipologia_stato',
+            'id_filtro_parent'    => 'id_filtro_parent',
+            'one_to_one'          => 'one_to_one',
+            'required'            => 'required',
+            'frontend_filter'     => 'frontend_filter',
+            'titolo'              => 'titolo',
+            'key'                 => 'key',
+            'descrizione'         => 'descrizione',
+            'data_creazione'      => 'data_creazione',
+            'data_aggiornamento'  => 'data_aggiornamento',
+            'id_utente'           => 'id_utente',
+            'attivo'              => 'attivo'
         ];
     }
 
-    public function afterSave(){
+    public function afterSave()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);
     }
 
-    private function getTipologiePost(){
+    private function getTipologiePost()
+    {
         return TipologiePost::query()
             ->innerJoin('FiltriGroupPostType', 'fgpt.id_tipologia_post = TipologiePost.id AND fgpt.attivo = 1', 'fgpt')
             ->innerJoin('FiltriGroup', 'fg.id = fgpt.id_filtri_group AND fg.attivo = 1', 'fg')
-            ->where('fg.id = '.$this->id_filtri_group.' AND TipologiePost.attivo = 1')
+            ->where('fg.id = ' . $this->id_filtri_group . ' AND TipologiePost.attivo = 1')
             ->groupBy('TipologiePost.id')
             ->execute()->toArray();
     }
 
-    public function afterCreate(){
+    public function afterCreate()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);
     }
 
-    public function beforeDelete(){
+    public function beforeDelete()
+    {
         $eventsManager = new Phalcon\Events\Manager();
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);

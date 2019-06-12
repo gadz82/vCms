@@ -104,13 +104,13 @@ class Options extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'option_name' => 'option_name',
-            'option_value' => 'option_value',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'option_name'        => 'option_name',
+            'option_value'       => 'option_value',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'id_utente'          => 'id_utente',
+            'attivo'             => 'attivo'
         ];
     }
 

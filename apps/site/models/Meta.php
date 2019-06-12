@@ -126,7 +126,7 @@ class Meta extends BaseModel
         $this->hasMany('id', 'PostsMeta ', 'id_meta', ['alias' => 'PostsMeta', 'reusable' => true]);
         $this->belongsTo('id_meta_group', '\MetaGroup', 'id', ['alias' => 'MetaGroup', 'reusable' => true]);
         $this->belongsTo('id_tipologia_meta', '\TipologieMeta', 'id', ['alias' => 'TipologieMeta', 'reusable' => true]);
-        $this->allowEmptyStringValues(array('dataset'));
+        $this->allowEmptyStringValues(['dataset']);
     }
 
     /**
@@ -148,20 +148,20 @@ class Meta extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_meta_group' => 'id_meta_group',
-            'id_tipologia_meta' => 'id_tipologia_meta',
-            'key' => 'key',
-            'label' => 'label',
-            'dataset' => 'dataset',
-            'required' => 'required',
-            'autoload' => 'autoload',
-            'priorita' => 'priorita',
-            'hidden' => 'hidden',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'id_meta_group'      => 'id_meta_group',
+            'id_tipologia_meta'  => 'id_tipologia_meta',
+            'key'                => 'key',
+            'label'              => 'label',
+            'dataset'            => 'dataset',
+            'required'           => 'required',
+            'autoload'           => 'autoload',
+            'priorita'           => 'priorita',
+            'hidden'             => 'hidden',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'id_utente'          => 'id_utente',
+            'attivo'             => 'attivo'
         ];
     }
 

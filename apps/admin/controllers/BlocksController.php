@@ -27,37 +27,37 @@ class BlocksController extends ControllerBase
         $this->jqGrid_columns = [
             ['label' => 'App', 'name' => 'id_applicazione'],
             [
-                'label' => 'Titolo',
-                'name' => 'titolo',
-                'editable' => true,
-                'type' => 'text',
+                'label'     => 'Titolo',
+                'name'      => 'titolo',
+                'editable'  => true,
+                'type'      => 'text',
                 'editrules' => [
                     'required' => true
                 ]
             ],
             [
-                'label' => 'Key',
-                'name' => 'key',
-                'editable' => true,
-                'type' => 'text',
+                'label'     => 'Key',
+                'name'      => 'key',
+                'editable'  => true,
+                'type'      => 'text',
                 'editrules' => [
                     'required' => true
                 ]
             ],
             [
-                'label' => 'Stato block',
-                'name' => 'id_tipologia_stato',
-                'editable' => true,
-                'type' => 'select',
+                'label'     => 'Stato block',
+                'name'      => 'id_tipologia_stato',
+                'editable'  => true,
+                'type'      => 'select',
                 'editrules' => [
                     'required' => true
                 ]
             ],
             [
-                'label' => 'Block Tag',
-                'name' => 'id_block_tag',
-                'editable' => true,
-                'type' => 'select',
+                'label'     => 'Block Tag',
+                'name'      => 'id_block_tag',
+                'editable'  => true,
+                'type'      => 'select',
                 'editrules' => [
                     'required' => true
                 ]
@@ -75,7 +75,7 @@ class BlocksController extends ControllerBase
         parent::indexAction();
         $jqGrid_select_editoptions = [
             'id_tipologia_stato' => 'TipologieStatoBlock',
-            'id_block_tag' => 'BlocksTags'
+            'id_block_tag'       => 'BlocksTags'
         ];
 
         $this->view->entityId = str_replace('/', '_', $this->controllerName);
@@ -111,7 +111,7 @@ class BlocksController extends ControllerBase
                 $this->persistent->searchParams = $search;
 
                 $parameters = $this->persistent->parameters;
-                if (!is_array($parameters)) $parameters = array();
+                if (!is_array($parameters)) $parameters = [];
 
                 //verifica ordinamento
                 $sort = ($this->request->hasPost('sort') && !empty($this->request->getPost('sort'))) ? $this->request->getPost('sort') : 'id';
@@ -127,13 +127,13 @@ class BlocksController extends ControllerBase
 
                 //crea l'oggetto paginator
                 if ($this->request->hasPost('export')) {
-                    $paginator = new Paginator(array('data' => $controller_data, 'limit' => 65000, 'page' => 1));
+                    $paginator = new Paginator(['data' => $controller_data, 'limit' => 65000, 'page' => 1]);
                 } else {
-                    $paginator = new Paginator(array(
-                        'data' => $controller_data,
+                    $paginator = new Paginator([
+                        'data'  => $controller_data,
                         'limit' => ($this->request->hasPost('rows') && !empty($this->request->getPost('rows'))) ? $this->request->getPost('rows') : 20,
-                        'page' => ($this->request->hasPost('page') && !empty($this->request->getPost('page'))) ? $this->request->getPost('page') : 1,
-                    ));
+                        'page'  => ($this->request->hasPost('page') && !empty($this->request->getPost('page'))) ? $this->request->getPost('page') : 1,
+                    ]);
                 }
 
                 $now = new DateTime(date('Y-m-d'));
@@ -150,7 +150,7 @@ class BlocksController extends ControllerBase
                     $this->jqGridExport($paging->items);
                 } else {
                     //crea l'array grid da passare a jqgrid
-                    $grid = array('records' => $paging->total_items, 'page' => $paging->current, 'total' => $paging->total_pages, 'rows' => $paging->items);
+                    $grid = ['records' => $paging->total_items, 'page' => $paging->current, 'total' => $paging->total_pages, 'rows' => $paging->items];
 
                     $this->response->setJsonContent($grid);
                     return $this->response;
@@ -158,7 +158,7 @@ class BlocksController extends ControllerBase
             }
         }
 
-        return $this->dispatcher->forward(array('controller' => $this->controllerName, 'action' => 'index'));
+        return $this->dispatcher->forward(['controller' => $this->controllerName, 'action' => 'index']);
 
     }
 
@@ -183,10 +183,10 @@ class BlocksController extends ControllerBase
     public function createAction()
     {
         if (!$this->request->isPost()) {
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => $this->router->getControllerName(),
-                'action' => 'index'
-            ));
+                'action'     => 'index'
+            ]);
         }
 
         $params = $this->request->getPost();
@@ -204,18 +204,18 @@ class BlocksController extends ControllerBase
             foreach ($form->getMessages() as $message) {
                 $this->flash->error($message);
             }
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => $this->router->getControllerName(),
-                'action' => 'new'
-            ));
+                'action'     => 'new'
+            ]);
         }
 
         if (!$block->save()) {
             $this->flash->error($block->getMessages());
-            return $this->dispatcher->forward(array(
+            return $this->dispatcher->forward([
                 'controller' => $this->router->getControllerName(),
-                'action' => 'edit/' . $$block->id
-            ));
+                'action'     => 'edit/' . $$block->id
+            ]);
         } else {
             $this->flashSession->success($this->alert_messagge ['successCreate']);
             $form->clear();
@@ -228,7 +228,7 @@ class BlocksController extends ControllerBase
         $controller_data = Blocks::findFirstById($id);
         if (!$controller_data) {
             $this->flashSession->error($this->alert_messagge['notFound']);
-            return $this->dispatcher->forward(array('controller' => $this->controllerName, 'action' => 'index'));
+            return $this->dispatcher->forward(['controller' => $this->controllerName, 'action' => 'index']);
         }
 
         $sparams = $controller_data->toArray();
@@ -243,7 +243,7 @@ class BlocksController extends ControllerBase
 
         if (!$controller_data) {
             $this->flashSession->error($this->alert_messagge['notFound']);
-            return $this->dispatcher->forward(array('controller' => $this->controllerName, 'action' => 'index'));
+            return $this->dispatcher->forward(['controller' => $this->controllerName, 'action' => 'index']);
         }
 
         $form = new BlocksForms\EditForm($controller_data);
@@ -265,7 +265,7 @@ class BlocksController extends ControllerBase
                     $this->flashSession->success($this->alert_messagge['successUpdate']);
                     return $this->response->redirect($this->controllerName . '/edit/' . $controller_data->id);
                 } else {
-                    $message = array();
+                    $message = [];
                     foreach ($controller_data->getMessages() as $message) {
                         $messages[] = $message;
                     }
@@ -273,7 +273,7 @@ class BlocksController extends ControllerBase
                 }
 
             } else {
-                $message = array();
+                $message = [];
                 foreach ($form->getMessages() as $message) {
                     $messages[] = $message;
                 }
@@ -284,9 +284,9 @@ class BlocksController extends ControllerBase
         $this->view->auth_user = $this->getDI()->getSession()->get('auth-identity');
         $this->view->form = $form;
         $this->view->controller_data = $controller_data;
-        $this->view->controller_data_history = $controller_data->getBlocksHistory(array('order' => 'id DESC'));
+        $this->view->controller_data_history = $controller_data->getBlocksHistory(['order' => 'id DESC']);
 
-        $this->addLibraryAssets(array('jQueryValidation', 'dataTables'), $this->controllerName . '-edit');
+        $this->addLibraryAssets(['jQueryValidation', 'dataTables'], $this->controllerName . '-edit');
 
         $this->assets->addJs('assets/admin/js/codemirror/codemirror.js');
         $this->addLibraryAssets(['codemirror'], $this->controllerName . '-new');
@@ -306,19 +306,19 @@ class BlocksController extends ControllerBase
             $controller_data = Blocks::findFirstById($params['id']);
             $original = clone $controller_data;
             if (!$controller_data) {
-                $this->response->setJsonContent(array('error' => $this->alert_messagge['failUpdate']));
+                $this->response->setJsonContent(['error' => $this->alert_messagge['failUpdate']]);
             }
 
             $controller_data->assign($params);
 
             if ($controller_data->save()) {
-                $this->response->setJsonContent(array('success' => $this->alert_messagge['successUpdate']));
+                $this->response->setJsonContent(['success' => $this->alert_messagge['successUpdate']]);
             } else {
-                $this->response->setJsonContent(array('error' => $this->alert_messagge['failUpdate']));
+                $this->response->setJsonContent(['error' => $this->alert_messagge['failUpdate']]);
             }
 
         } else {
-            $this->response->setJsonContent(array('error' => $this->alert_messagge['failUpdate']));
+            $this->response->setJsonContent(['error' => $this->alert_messagge['failUpdate']]);
         }
         return $this->response;
     }
@@ -359,9 +359,9 @@ class BlocksController extends ControllerBase
         if ($this->request->isAjax()) {
             $response = $this->scan($this->config->application->siteViewsDir);
             $this->response->setJsonContent([
-                "name" => 'views',
-                "type" => "folder",
-                "path" => $this->config->application->siteViewsDir,
+                "name"  => 'views',
+                "type"  => "folder",
+                "path"  => $this->config->application->siteViewsDir,
                 "items" => $response
             ]);
         } else {
@@ -373,7 +373,7 @@ class BlocksController extends ControllerBase
 
     private function scan($dir)
     {
-        $files = array();
+        $files = [];
 
         // Is there actually such a folder/file?
         if (file_exists($dir)) {
@@ -386,19 +386,19 @@ class BlocksController extends ControllerBase
 
                 if (is_dir($dir . '/' . $f)) {
                     // The path is a folder
-                    $files[] = array(
-                        "name" => $f,
-                        "type" => "folder",
-                        "path" => $dir . '/' . $f,
+                    $files[] = [
+                        "name"  => $f,
+                        "type"  => "folder",
+                        "path"  => $dir . '/' . $f,
                         "items" => $this->scan($dir . '/' . $f) // Recursively get the contents of the folder
-                    );
+                    ];
                 } else {
-                    $files[] = array(
+                    $files[] = [
                         "name" => $f,
                         "type" => "file",
                         "path" => $dir . '/' . $f,
                         "size" => filesize($dir . '/' . $f) // Gets the size of this file
-                    );
+                    ];
                 }
             }
         }
@@ -431,12 +431,12 @@ class BlocksController extends ControllerBase
                     $response['vars'] = [];
                     $meta_values = Options::findFirst([
                         'conditions' => 'option_name = ?1 AND attivo = 1',
-                        'bind' => [1 => 'columns_map_' . $this->config->application->defaultCode . '_' . $postType . '_meta']
+                        'bind'       => [1 => 'columns_map_' . $this->config->application->defaultCode . '_' . $postType . '_meta']
                     ]);
                     $response['vars']['meta'] = json_decode($meta_values->option_value, true);
                     $filter_values = Options::findFirst([
                         'conditions' => 'option_name = ?1 AND attivo = 1',
-                        'bind' => [1 => 'columns_map_' . $this->config->application->defaultCode . '_' . $postType . '_filter']
+                        'bind'       => [1 => 'columns_map_' . $this->config->application->defaultCode . '_' . $postType . '_filter']
                     ]);
                     $response['vars']['filters'] = json_decode($filter_values->option_value, true);
                 }

@@ -83,10 +83,10 @@ class CronLog extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'codice' => 'codice',
-            'text' => 'text',
-            'entity' => 'entity',
+            'id'             => 'id',
+            'codice'         => 'codice',
+            'text'           => 'text',
+            'entity'         => 'entity',
             'data_creazione' => 'data_creazione'
         ];
     }

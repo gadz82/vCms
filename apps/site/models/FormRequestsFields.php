@@ -113,14 +113,14 @@ class FormRequestsFields extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_form_request' => 'id_form_request',
-            'id_form' => 'id_form',
-            'id_form_field' => 'id_form_field',
-            'input_value' => 'input_value',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'id_form_request'    => 'id_form_request',
+            'id_form'            => 'id_form',
+            'id_form_field'      => 'id_form_field',
+            'input_value'        => 'input_value',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

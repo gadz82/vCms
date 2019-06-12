@@ -148,8 +148,8 @@ class ControllerBase extends Controller
         $app = \apps\site\library\Cms::getIstance()->application;
         $postTypeMetaFields = Options::findFirst([
             'conditions' => 'option_name = "columns_map_' . $app . '_' . $post_type_slug . '_meta" AND attivo = 1',
-            'cache' => [
-                "key" => $app . '_' . $post_type_slug . ".meta_fields",
+            'cache'      => [
+                "key"      => $app . '_' . $post_type_slug . ".meta_fields",
                 "lifetime" => 56400
             ]
         ]);
@@ -168,8 +168,8 @@ class ControllerBase extends Controller
         $app = \apps\site\library\Cms::getIstance()->application;
         $postTypeFilterFields = Options::findFirst([
             'conditions' => 'option_name = "columns_map_' . $app . '_' . $post_type_slug . '_filter" AND attivo = 1',
-            'cache' => [
-                "key" => $app . '_' . $post_type_slug . ".filter_fields",
+            'cache'      => [
+                "key"      => $app . '_' . $post_type_slug . ".filter_fields",
                 "lifetime" => 56400
             ]
         ]);
@@ -195,8 +195,8 @@ class ControllerBase extends Controller
     {
         return TipologiePost::find([
             'conditions' => 'attivo = 1',
-            'cache' => [
-                "key" => "getPostTypes-frontend",
+            'cache'      => [
+                "key"      => "getPostTypes-frontend",
                 "lifetime" => 12400
             ]
         ]);
@@ -236,7 +236,7 @@ class ControllerBase extends Controller
 
             // setta il content type a json
             $this->response->setContentType('application/json', 'UTF-8');
-            $this->response->setJsonContent(array());
+            $this->response->setJsonContent([]);
         }
 
         /**
@@ -353,8 +353,8 @@ class ControllerBase extends Controller
      */
     protected function addLibraryAssets($libraries, $name)
     {
-        $js_assets = array();
-        $css_assets = array();
+        $js_assets = [];
+        $css_assets = [];
         $nr = count($libraries);
         for ($i = 0; $i < $nr; $i++) {
 

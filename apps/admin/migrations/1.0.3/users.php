@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,229 +18,229 @@ class UsersMigration_103 extends Migration
     public function morph()
     {
         $this->morphTable('users', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_users_groups',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 4,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 4,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'id_tipologia_stato',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id_users_groups'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id_users_groups'
                         ]
                     ),
                     new Column(
                         'username',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 125,
-                            'after' => 'id_tipologia_stato'
+                            'size'    => 125,
+                            'after'   => 'id_tipologia_stato'
                         ]
                     ),
                     new Column(
                         'email',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 125,
-                            'after' => 'username'
+                            'size'    => 125,
+                            'after'   => 'username'
                         ]
                     ),
                     new Column(
                         'nome',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 250,
-                            'after' => 'email'
+                            'size'    => 250,
+                            'after'   => 'email'
                         ]
                     ),
                     new Column(
                         'cognome',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 250,
-                            'after' => 'nome'
+                            'size'    => 250,
+                            'after'   => 'nome'
                         ]
                     ),
                     new Column(
                         'telefono',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 75,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 75,
                             'after' => 'cognome'
                         ]
                     ),
                     new Column(
                         'indirizzo',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 250,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 250,
                             'after' => 'telefono'
                         ]
                     ),
                     new Column(
                         'localita',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 125,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 125,
                             'after' => 'indirizzo'
                         ]
                     ),
                     new Column(
                         'cap',
                         [
-                            'type' => Column::TYPE_CHAR,
-                            'size' => 5,
+                            'type'  => Column::TYPE_CHAR,
+                            'size'  => 5,
                             'after' => 'localita'
                         ]
                     ),
                     new Column(
                         'data_di_nascita',
                         [
-                            'type' => Column::TYPE_DATE,
-                            'size' => 1,
+                            'type'  => Column::TYPE_DATE,
+                            'size'  => 1,
                             'after' => 'cap'
                         ]
                     ),
                     new Column(
                         'validation_token',
                         [
-                            'type' => Column::TYPE_TEXT,
-                            'size' => 1,
+                            'type'  => Column::TYPE_TEXT,
+                            'size'  => 1,
                             'after' => 'data_di_nascita'
                         ]
                     ),
                     new Column(
                         'token_validated',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "0",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'validation_token'
+                            'size'    => 1,
+                            'after'   => 'validation_token'
                         ]
                     ),
                     new Column(
                         'password',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 32,
-                            'after' => 'token_validated'
+                            'size'    => 32,
+                            'after'   => 'token_validated'
                         ]
                     ),
                     new Column(
                         'password_reset_token',
                         [
-                            'type' => Column::TYPE_TEXT,
-                            'size' => 1,
+                            'type'  => Column::TYPE_TEXT,
+                            'size'  => 1,
                             'after' => 'password'
                         ]
                     ),
                     new Column(
                         'validation_expiration_date',
                         [
-                            'type' => Column::TYPE_DATE,
+                            'type'    => Column::TYPE_DATE,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'password_reset_token'
+                            'size'    => 1,
+                            'after'   => 'password_reset_token'
                         ]
                     ),
                     new Column(
                         'reset_password_expiration_date',
                         [
-                            'type' => Column::TYPE_DATE,
+                            'type'    => Column::TYPE_DATE,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'validation_expiration_date'
+                            'size'    => 1,
+                            'after'   => 'validation_expiration_date'
                         ]
                     ),
                     new Column(
                         'user_registration_date',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'reset_password_expiration_date'
+                            'size'    => 1,
+                            'after'   => 'reset_password_expiration_date'
                         ]
                     ),
                     new Column(
                         'user_last_login',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'user_registration_date'
+                            'size'    => 1,
+                            'after'   => 'user_registration_date'
                         ]
                     ),
                     new Column(
                         'ip_address',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
-                            'size' => 25,
-                            'after' => 'user_last_login'
+                            'size'    => 25,
+                            'after'   => 'user_last_login'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'ip_address'
+                            'size'    => 1,
+                            'after'   => 'ip_address'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
-                            'size' => 1,
+                            'type'  => Column::TYPE_TIMESTAMP,
+                            'size'  => 1,
                             'after' => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "1",
+                            'type'     => Column::TYPE_INTEGER,
+                            'default'  => "1",
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_aggiornamento'
+                            'notNull'  => true,
+                            'size'     => 1,
+                            'after'    => 'data_aggiornamento'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('email', ['email', 'attivo'], 'UNIQUE'),
                     new Index('username', ['username', 'attivo'], 'UNIQUE'),
@@ -252,28 +252,28 @@ class UsersMigration_103 extends Migration
                     new Reference(
                         'users_ibfk_1',
                         [
-                            'referencedTable' => 'users_groups',
-                            'columns' => ['id_users_groups'],
+                            'referencedTable'   => 'users_groups',
+                            'columns'           => ['id_users_groups'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'users_ibfk_2',
                         [
-                            'referencedTable' => 'tipologie_stato_user',
-                            'columns' => ['id_tipologia_stato'],
+                            'referencedTable'   => 'tipologie_stato_user',
+                            'columns'           => ['id_tipologia_stato'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '1',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '1',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

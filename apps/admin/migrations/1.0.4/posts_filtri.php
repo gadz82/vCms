@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,79 +18,79 @@ class PostsFiltriMigration_104 extends Migration
     public function morph()
     {
         $this->morphTable('posts_filtri', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_post',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'id_filtro',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id_post'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id_post'
                         ]
                     ),
                     new Column(
                         'id_filtro_valore',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id_filtro'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id_filtro'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'id_filtro_valore'
+                            'size'    => 1,
+                            'after'   => 'id_filtro_valore'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_aggiornamento'
+                            'size'    => 1,
+                            'after'   => 'data_aggiornamento'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('fk_posts_filtri_posts', ['id_post'], null),
                     new Index('fk_posts_filtri_filtri', ['id_filtro'], null),
@@ -101,38 +101,38 @@ class PostsFiltriMigration_104 extends Migration
                     new Reference(
                         'fk_posts_filtri_filtri',
                         [
-                            'referencedTable' => 'filtri',
-                            'columns' => ['id_filtro'],
+                            'referencedTable'   => 'filtri',
+                            'columns'           => ['id_filtro'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'CASCADE'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'CASCADE'
                         ]
                     ),
                     new Reference(
                         'fk_posts_filtri_filtri_valori',
                         [
-                            'referencedTable' => 'filtri_valori',
-                            'columns' => ['id_filtro_valore'],
+                            'referencedTable'   => 'filtri_valori',
+                            'columns'           => ['id_filtro_valore'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'CASCADE'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'CASCADE'
                         ]
                     ),
                     new Reference(
                         'posts_filtri_ibfk_1',
                         [
-                            'referencedTable' => 'posts',
-                            'columns' => ['id_post'],
+                            'referencedTable'   => 'posts',
+                            'columns'           => ['id_post'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'CASCADE'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'CASCADE'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '3',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '3',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

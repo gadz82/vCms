@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,17 +22,17 @@ class ItalyCapMigration_110 extends Migration
                     new Column(
                         'istat',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'    => 11,
+                            'first'   => true
                         ]
                     ),
                     new Column(
                         'cap',
                         [
-                            'type' => Column::TYPE_CHAR,
-                            'size' => 11,
+                            'type'  => Column::TYPE_CHAR,
+                            'size'  => 11,
                             'after' => 'istat'
                         ]
                     )
@@ -41,9 +41,9 @@ class ItalyCapMigration_110 extends Migration
                     new Index('PRIMARY', ['istat'], 'PRIMARY')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

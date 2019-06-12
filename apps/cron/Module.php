@@ -29,17 +29,17 @@ class Module implements ModuleDefinitionInterface
     public function registerAutoloaders(DiInterface $di = null)
     {
         $loader = new Loader();
-        $loader->registerDirs ( array (
-            __DIR__.'/controllers/',
-            __DIR__.'/../admin/models/'
+        $loader->registerDirs([
+            __DIR__ . '/controllers/',
+            __DIR__ . '/../admin/models/'
 
-        ) )->registerNamespaces ( array (
-            'apps\cron\plugins' => __DIR__.'/plugins/',
-            'apps\cron\library' => __DIR__.'/library/',
-            'apps\admin\plugins' => __DIR__.'/../admin/plugins/',
-            'apps\admin\library' => __DIR__.'/../admin/library/',
-            'apps\cron\exception' => __DIR__.'/../cron/exception/'
-        ) );
+        ])->registerNamespaces([
+            'apps\cron\plugins'   => __DIR__ . '/plugins/',
+            'apps\cron\library'   => __DIR__ . '/library/',
+            'apps\admin\plugins'  => __DIR__ . '/../admin/plugins/',
+            'apps\admin\library'  => __DIR__ . '/../admin/library/',
+            'apps\cron\exception' => __DIR__ . '/../cron/exception/'
+        ]);
 
         $loader->register();
     }
@@ -50,108 +50,108 @@ class Module implements ModuleDefinitionInterface
     public function registerServices(DiInterface $di)
     {
 
-        define ( 'BASE_DIR', dirname ( __DIR__ ) );
-        define ( 'APP_DIR', BASE_DIR . '/cron' );
+        define('BASE_DIR', dirname(__DIR__));
+        define('APP_DIR', BASE_DIR . '/cron');
 
         $config = $di->get('baseConfig');
-        if(file_exists(__DIR__.'/config/config.php')){
-            $moduleConfig = include __DIR__.'/config/config.php';
+        if (file_exists(__DIR__ . '/config/config.php')) {
+            $moduleConfig = include __DIR__ . '/config/config.php';
             $config->merge($moduleConfig);
         }
-        $di->set ( 'config', $config );
+        $di->set('config', $config);
         $di->remove('baseConfig');
 
         // EventsManager
-        $di->setShared ( 'dispatcher', function () use($di) {
+        $di->setShared('dispatcher', function () use ($di) {
 
             $eventsManager = new EventsManager ();
-            $eventsManager->attach ( 'dispatch:beforeException', new ExceptionHandlerPlugin() );
-            $eventsManager->attach ( 'dispatch:beforeExecuteRoute', new CheckRoutePlugin() );
-            $eventsManager->attach ( 'application:beforeSendResponse',  function(\Phalcon\Events\Event $event, Application $app, Response $response){
+            $eventsManager->attach('dispatch:beforeException', new ExceptionHandlerPlugin());
+            $eventsManager->attach('dispatch:beforeExecuteRoute', new CheckRoutePlugin());
+            $eventsManager->attach('application:beforeSendResponse', function (\Phalcon\Events\Event $event, Application $app, Response $response) {
                 $response->setContentType('application/json', 'UTF-8');
-                if($app->request->get('callback')){
-                    $response->setContent($app->request['callback'].'('.$response->getContent().')');
+                if ($app->request->get('callback')) {
+                    $response->setContent($app->request['callback'] . '(' . $response->getContent() . ')');
                 }
             });
 
             $dispatcher = new Dispatcher ();
-            $dispatcher->setEventsManager ( $eventsManager );
+            $dispatcher->setEventsManager($eventsManager);
             return $dispatcher;
-        } );
+        });
 
         /**
          * Database connection is created based in the parameters defined in the configuration file
          */
-        $di->setShared ( 'db', function () use($config) {
-            $dbConfig = $config->database->toArray ();
+        $di->setShared('db', function () use ($config) {
+            $dbConfig = $config->database->toArray();
             $adapter = $dbConfig ['adapter'];
-            unset ( $dbConfig ['adapter'] );
+            unset ($dbConfig ['adapter']);
 
             $class = 'Phalcon\Db\Adapter\Pdo\\' . $adapter;
 
-            return new $class ( $dbConfig );
-        } );
+            return new $class ($dbConfig);
+        });
 
         // ModelManager
-        $di->setShared ( 'modelsManager', function () {
+        $di->setShared('modelsManager', function () {
             return new ModelManager ();
-        } );
+        });
 
         // Metadata per MODEL -> APC
-        $di->setShared ( 'modelsMetadata', function () {
-            return new MetaDataAdapter ( array (
-                'prefix' => 'cmsio-metadata',
+        $di->setShared('modelsMetadata', function () {
+            return new MetaDataAdapter ([
+                'prefix'   => 'cmsio-metadata',
                 'lifetime' => 86400
-            ) );
-        } );
+            ]);
+        });
         /**
          * Setting up the view component
          */
-        $di->set ( 'view', function () use($config) {
+        $di->set('view', function () use ($config) {
 
             $view = new View ();
 
-            $view->setViewsDir ( $config->application->viewsDir );
+            $view->setViewsDir($config->application->viewsDir);
 
-            $view->registerEngines ( array (
-                '.phtml' => function ($view, $di) use($config) {
+            $view->registerEngines([
+                '.phtml' => function ($view, $di) use ($config) {
 
-                    $volt = new VoltEngine ( $view, $di );
-                    $volt->setOptions ( array (
-                        'compiledPath' => $config->application->cacheDir,
+                    $volt = new VoltEngine ($view, $di);
+                    $volt->setOptions([
+                        'compiledPath'      => $config->application->cacheDir,
                         'compiledSeparator' => '_'
-                    ) );
+                    ]);
                     return $volt;
                 }
-            ));
+            ]);
 
             return $view;
-        } );
+        });
         // Configurazione CACHE per MODEL
-        $di->setShared ( 'modelsCache', function () {
+        $di->setShared('modelsCache', function () {
 
             // Cache data for one day by default
-            $frontCache = new \Phalcon\Cache\Frontend\Data ( array (
+            $frontCache = new \Phalcon\Cache\Frontend\Data ([
                 "lifetime" => 86400
-            ) );
+            ]);
 
             // Memcached connection settings
-            $cache = new ApcBackend ( $frontCache, array (
+            $cache = new ApcBackend ($frontCache, [
                 'prefix' => 'cms-cache-'
-            ) );
+            ]);
 
             return $cache;
-        } );
+        });
 
         /**
          * Start the session the first time some component request the session service
          */
-        $di->setShared ( 'session', function () {
+        $di->setShared('session', function () {
             $session = new SessionAdapter ();
-            $session->start ();
+            $session->start();
 
             return $session;
-        } );
+        });
 
     }
 }

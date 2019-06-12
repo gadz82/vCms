@@ -81,7 +81,7 @@ class TipologiePost extends BaseModel
      */
     public function initialize()
     {
-    	parent::initialize ();
+        parent::initialize();
 
         $this->hasMany('id', 'Posts', 'id_tipologia_post', ['alias' => 'Posts', 'reusable' => true]);
         $this->allowEmptyStringValues(['admin_icon']);
@@ -106,13 +106,13 @@ class TipologiePost extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'slug' => 'slug',
-            'admin_menu' => 'admin_menu',
-            'admin_icon' => 'admin_icon',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'slug'        => 'slug',
+            'admin_menu'  => 'admin_menu',
+            'admin_icon'  => 'admin_icon',
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 
@@ -134,30 +134,33 @@ class TipologiePost extends BaseModel
         $eventsManager->fire('dispatch:afterDeletePostEntity', $this);
     }*/
 
-    public function afterSave(){
+    public function afterSave()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach( 'dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $eventsManager->fire('dispatch:afterEditAttribute', [$this->toArray()]);
 
-        $eventsManager->attach( 'dispatch:afterEditPostType', new \apps\admin\plugins\FrontendGeneratorPlugin() );
+        $eventsManager->attach('dispatch:afterEditPostType', new \apps\admin\plugins\FrontendGeneratorPlugin());
         $eventsManager->fire('dispatch:afterEditPostType', $this);
     }
 
-    public function afterCreate(){
+    public function afterCreate()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $eventsManager->fire('dispatch:afterEditAttribute', [$this->toArray()]);
 
-        $eventsManager->attach( 'dispatch:afterCreatePostType', new \apps\admin\plugins\FrontendGeneratorPlugin() );
+        $eventsManager->attach('dispatch:afterCreatePostType', new \apps\admin\plugins\FrontendGeneratorPlugin());
         $eventsManager->fire('dispatch:afterCreatePostType', $this);
     }
 
-    public function beforeDelete(){
+    public function beforeDelete()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterDeletePostEntity', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterDeletePostEntity', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $eventsManager->fire('dispatch:afterDeletePostEntity', $this);
 
-        $eventsManager->attach( 'dispatch:afterDeletePostType', new \apps\admin\plugins\FrontendGeneratorPlugin() );
+        $eventsManager->attach('dispatch:afterDeletePostType', new \apps\admin\plugins\FrontendGeneratorPlugin());
         $eventsManager->fire('dispatch:afterDeletePostType', $this);
     }
 

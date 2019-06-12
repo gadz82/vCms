@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,51 +18,51 @@ class PostsTagsMigration_111 extends Migration
     public function morph()
     {
         $this->morphTable('posts_tags', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_post',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'id_tag',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id_post'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id_post'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "1",
+                            'type'     => Column::TYPE_INTEGER,
+                            'default'  => "1",
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'id_tag'
+                            'notNull'  => true,
+                            'size'     => 1,
+                            'after'    => 'id_tag'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('id_post', ['id_post'], null),
                     new Index('id_tag', ['id_tag'], null)
@@ -71,28 +71,28 @@ class PostsTagsMigration_111 extends Migration
                     new Reference(
                         'posts_tags_ibfk_2',
                         [
-                            'referencedTable' => 'tags',
-                            'columns' => ['id_tag'],
+                            'referencedTable'   => 'tags',
+                            'columns'           => ['id_tag'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'posts_tags_ibfk_3',
                         [
-                            'referencedTable' => 'posts',
-                            'columns' => ['id_post'],
+                            'referencedTable'   => 'posts',
+                            'columns'           => ['id_post'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'CASCADE'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'CASCADE'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '1',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '1',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

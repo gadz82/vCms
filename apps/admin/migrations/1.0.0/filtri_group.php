@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,70 +22,70 @@ class FiltriGroupMigration_100 extends Migration
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 2,
-                            'first' => true
+                            'size'          => 2,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'descrizione',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 75,
-                            'after' => 'id'
+                            'size'    => 75,
+                            'after'   => 'id'
                         ]
                     ),
                     new Column(
                         'priorita',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "10",
                             'notNull' => true,
-                            'size' => 3,
-                            'after' => 'descrizione'
+                            'size'    => 3,
+                            'after'   => 'descrizione'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'priorita'
+                            'size'    => 1,
+                            'after'   => 'priorita'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'id_utente',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 4,
-                            'after' => 'data_aggiornamento'
+                            'size'    => 4,
+                            'after'   => 'data_aggiornamento'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'id_utente'
+                            'size'    => 1,
+                            'after'   => 'id_utente'
                         ]
                     )
                 ],
@@ -93,9 +93,9 @@ class FiltriGroupMigration_100 extends Migration
                     new Index('PRIMARY', ['id'], 'PRIMARY')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '2',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '2',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

@@ -3,42 +3,42 @@
 class builder
 {
     private $config;
-    private $controller_data = array(
-        'CONTROLLER_NAME' => '',
+    private $controller_data = [
+        'CONTROLLER_NAME'           => '',
         'CONTROLLER_NAME_SINGOLARE' => '',
-        'TITOLO_SINGOLARE' => '',
-        'TITOLO_PLURALE' => '',
-        'JOIN_RICERCA_TABELLA' => '',
-        'JOIN_RICERCA_ALIAS' => '',
-        'JOIN_RICERCA_CAMPO' => '',
-        'RENDER_PAGING_OBJ' => ''
-    );
-    private $menu = array(
+        'TITOLO_SINGOLARE'          => '',
+        'TITOLO_PLURALE'            => '',
+        'JOIN_RICERCA_TABELLA'      => '',
+        'JOIN_RICERCA_ALIAS'        => '',
+        'JOIN_RICERCA_CAMPO'        => '',
+        'RENDER_PAGING_OBJ'         => ''
+    ];
+    private $menu = [
         'descrizione_menu_padre' => '',
-        'descrizione_menu' => '',
-        'icona_menu' => ''
-    );
-    private $flags = array(
-        'history' => false,
+        'descrizione_menu'       => '',
+        'icona_menu'             => ''
+    ];
+    private $flags = [
+        'history'            => false,
         'email_segnalazioni' => false
-    );
-    private $options = array(
+    ];
+    private $options = [
         'permessi' => false,
-        'menu' => false,
+        'menu'     => false,
         'override' => false
-    );
+    ];
     private $arr_replace_files;
     private $_path = '../';
     private $permessi = 0775;
     private $curl_model_url = 'http://www.cms.io/webtools.php?_url=/models/create';
-    private $curl_model_data = array(
+    private $curl_model_data = [
         'defineRelations' => 1,
-        'foreignKeys' => 1,
-        'directory' => BASE_DIR,
-        'namespace' => '',
-        'schema' => 'cmsio',
-        'tableName' => ''
-    );
+        'foreignKeys'     => 1,
+        'directory'       => BASE_DIR,
+        'namespace'       => '',
+        'schema'          => 'cmsio',
+        'tableName'       => ''
+    ];
 
     public function __construct(array $controller_data, array $flags, array $options, array $menu)
     {
@@ -59,57 +59,57 @@ class builder
         $this->setup_db();
 
         // inizializza le chiavi dell'array con il contenuto dei tpl
-        $tpl = array(
-            'standard' => array(
+        $tpl = [
+            'standard'           => [
                 'controller' => file_get_contents('builder/tpl/app/controllers/Controller.txt'),
                 'form_index' => file_get_contents('builder/tpl/app/forms/IndexForm.txt'),
-                'form_edit' => file_get_contents('builder/tpl/app/forms/EditForm.txt'),
-                'form_new' => file_get_contents('builder/tpl/app/forms/NewForm.txt'),
+                'form_edit'  => file_get_contents('builder/tpl/app/forms/EditForm.txt'),
+                'form_new'   => file_get_contents('builder/tpl/app/forms/NewForm.txt'),
                 'view_index' => file_get_contents('builder/tpl/app/views/index.txt'),
-                'view_edit' => file_get_contents('builder/tpl/app/views/edit.txt'),
-                'view_new' => file_get_contents('builder/tpl/app/views/new.txt'),
-                'js_edit' => file_get_contents('builder/tpl/public/js/edit.txt')
-            ),
-            'history' => array(
-                'controller_history' => file_get_contents('builder/tpl/app/controllers/ControllerHistory.txt'),
+                'view_edit'  => file_get_contents('builder/tpl/app/views/edit.txt'),
+                'view_new'   => file_get_contents('builder/tpl/app/views/new.txt'),
+                'js_edit'    => file_get_contents('builder/tpl/public/js/edit.txt')
+            ],
+            'history'            => [
+                'controller_history'   => file_get_contents('builder/tpl/app/controllers/ControllerHistory.txt'),
                 'view_partial_history' => file_get_contents('builder/tpl/app/views/partials/historyModal.txt')
-            ),
-            'email_segnalazioni' => array(
-                'controller_email_segnalazioni' => file_get_contents('builder/tpl/app/controllers/ControllerEmailSegnalazioni.txt'),
-                'view_email_template_segnalazione' => file_get_contents('builder/tpl/app/views/emailTemplates/segnalazione.txt'),
+            ],
+            'email_segnalazioni' => [
+                'controller_email_segnalazioni'                => file_get_contents('builder/tpl/app/controllers/ControllerEmailSegnalazioni.txt'),
+                'view_email_template_segnalazione'             => file_get_contents('builder/tpl/app/views/emailTemplates/segnalazione.txt'),
                 'view_partial_email_segnalazioni_detail_modal' => file_get_contents('builder/tpl/app/views/partials/emailSegnalazioniDetailModal.txt'),
-                'view_partial_email_segnalazioni_list' => file_get_contents('builder/tpl/app/views/partials/emailSegnalazioniList.txt'),
-                'view_partial_email_segnalazioni_modal' => file_get_contents('builder/tpl/app/views/partials/emailSegnalazioniModal.txt')
-            )
-        );
+                'view_partial_email_segnalazioni_list'         => file_get_contents('builder/tpl/app/views/partials/emailSegnalazioniList.txt'),
+                'view_partial_email_segnalazioni_modal'        => file_get_contents('builder/tpl/app/views/partials/emailSegnalazioniModal.txt')
+            ]
+        ];
 
         // inizializza le chiavi dell'array con il contenuto dei tpl da sostituire nei file
-        $tpl_replace_files = array(
-            'history' => array(
-                'view_edit_history' => array(
-                    'find' => 'VIEW_HISTORY',
-                    'tpl' => 'view_edit',
+        $tpl_replace_files = [
+            'history'            => [
+                'view_edit_history' => [
+                    'find'    => 'VIEW_HISTORY',
+                    'tpl'     => 'view_edit',
                     'content' => file_get_contents('builder/tpl_replace_files/app/views/editHistory.txt')
-                ),
-                'js_edit_history' => array(
-                    'find' => 'JS_HISTORY',
-                    'tpl' => 'js_edit',
+                ],
+                'js_edit_history'   => [
+                    'find'    => 'JS_HISTORY',
+                    'tpl'     => 'js_edit',
                     'content' => file_get_contents('builder/tpl_replace_files/public/js/editHistory.txt')
-                )
-            ),
-            'email_segnalazioni' => array(
-                'view_edit_email_segnalazioni' => array(
-                    'find' => 'VIEW_EMAIL_SEGNALAZIONI',
-                    'tpl' => 'view_edit',
+                ]
+            ],
+            'email_segnalazioni' => [
+                'view_edit_email_segnalazioni' => [
+                    'find'    => 'VIEW_EMAIL_SEGNALAZIONI',
+                    'tpl'     => 'view_edit',
                     'content' => file_get_contents('builder/tpl_replace_files/app/views/editEmailSegnalazioni.txt')
-                ),
-                'js_edit_email_segnalazioni' => array(
-                    'find' => 'JS_EMAIL_SEGNALAZIONI',
-                    'tpl' => 'js_edit',
+                ],
+                'js_edit_email_segnalazioni'   => [
+                    'find'    => 'JS_EMAIL_SEGNALAZIONI',
+                    'tpl'     => 'js_edit',
                     'content' => file_get_contents('builder/tpl_replace_files/public/js/editEmailSegnalazioni.txt')
-                )
-            )
-        );
+                ]
+            ]
+        ];
 
         // sostituisce $tpl_replace_files in $tpl
         foreach ($tpl_replace_files as $type => $arr) {
@@ -120,74 +120,74 @@ class builder
             }
         }
 
-        $files = array(
-            'standard' => array(
-                'controller' => array(
-                    'path' => 'apps/admin/controllers/',
+        $files = [
+            'standard'           => [
+                'controller' => [
+                    'path'     => 'apps/admin/controllers/',
                     'filename' => $this->controller_data ['CONTROLLER_NAME'] . 'Controller.php'
-                ),
-                'form_index' => array(
-                    'path' => 'apps/admin/forms/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'form_index' => [
+                    'path'     => 'apps/admin/forms/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'IndexForm.php'
-                ),
-                'form_edit' => array(
-                    'path' => 'apps/admin/forms/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'form_edit'  => [
+                    'path'     => 'apps/admin/forms/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'EditForm.php'
-                ),
-                'form_new' => array(
-                    'path' => 'apps/admin/forms/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'form_new'   => [
+                    'path'     => 'apps/admin/forms/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'NewForm.php'
-                ),
-                'view_index' => array(
-                    'path' => 'apps/admin/views/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'view_index' => [
+                    'path'     => 'apps/admin/views/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'index.phtml'
-                ),
-                'view_edit' => array(
-                    'path' => 'apps/admin/views/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'view_edit'  => [
+                    'path'     => 'apps/admin/views/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'edit.phtml'
-                ),
-                'view_new' => array(
-                    'path' => 'apps/admin/views/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'view_new'   => [
+                    'path'     => 'apps/admin/views/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'new.phtml'
-                ),
-                'js_edit' => array(
-                    'path' => 'public/assets/admin/js/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'js_edit'    => [
+                    'path'     => 'public/assets/admin/js/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'edit.js'
-                )
-            ),
-            'history' => array(
-                'controller_history' => array(
-                    'path' => 'apps/admin/controllers/',
+                ]
+            ],
+            'history'            => [
+                'controller_history'   => [
+                    'path'     => 'apps/admin/controllers/',
                     'filename' => $this->controller_data ['CONTROLLER_NAME'] . 'HistoryController.php'
-                ),
-                'view_partial_history' => array(
-                    'path' => 'apps/admin/views/partials/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'view_partial_history' => [
+                    'path'     => 'apps/admin/views/partials/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => $this->controller_data ['CONTROLLER_NAME'] . 'HistoryModal.phtml'
-                )
-            ),
-            'email_segnalazioni' => array(
-                'controller_email_segnalazioni' => array(
-                    'path' => 'apps/admin/controllers/',
+                ]
+            ],
+            'email_segnalazioni' => [
+                'controller_email_segnalazioni'                => [
+                    'path'     => 'apps/admin/controllers/',
                     'filename' => $this->controller_data ['CONTROLLER_NAME'] . 'EmailSegnalazioniController.php'
-                ),
-                'view_email_template_segnalazione' => array(
-                    'path' => 'apps/admin/views/emailTemplates/',
+                ],
+                'view_email_template_segnalazione'             => [
+                    'path'     => 'apps/admin/views/emailTemplates/',
                     'filename' => $this->controller_data ['CONTROLLER_NAME'] . 'Segnalazione.phtml'
-                ),
-                'view_partial_email_segnalazioni_detail_modal' => array(
-                    'path' => 'apps/admin/views/partials/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'view_partial_email_segnalazioni_detail_modal' => [
+                    'path'     => 'apps/admin/views/partials/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'emailSegnalazioniDetailModal.phtml'
-                ),
-                'view_partial_email_segnalazioni_list' => array(
-                    'path' => 'apps/admin/views/partials/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'view_partial_email_segnalazioni_list'         => [
+                    'path'     => 'apps/admin/views/partials/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'emailSegnalazioniList.phtml'
-                ),
-                'view_partial_email_segnalazioni_modal' => array(
-                    'path' => 'apps/admin/views/partials/' . $this->controller_data ['ROUTE'] . '/',
+                ],
+                'view_partial_email_segnalazioni_modal'        => [
+                    'path'     => 'apps/admin/views/partials/' . $this->controller_data ['ROUTE'] . '/',
                     'filename' => 'emailSegnalazioniModal.phtml'
-                )
-            )
-        );
+                ]
+            ]
+        ];
         $this->setup_model();
 
         $this->create_files($files ['standard'], $tpl ['standard']);
@@ -221,7 +221,7 @@ class builder
 
         if (!empty ($rs)) {
 
-            $arr_table = array();
+            $arr_table = [];
 
             $count = count($rs);
             for ($i = 0; $i < $count; $i++) {
@@ -251,7 +251,7 @@ class builder
                 $id_type_length = substr($rs_fields_table [0] ['Type'], stripos($rs_fields_table [0] ['Type'], '(') + 1, 1);
                 $id_type = str_replace($id_type_length, $id_type_length + 1, $rs_fields_table [0] ['Type']);
 
-                $fields = array();
+                $fields = [];
                 $count = count($rs_fields_table);
                 for ($i = 0; $i < $count; $i++) {
 
@@ -262,13 +262,13 @@ class builder
                     if ($rs_fields_table [$i] ['Field'] == 'attivo')
                         $rs_fields_table [$i] ['Default'] = '';
 
-                    $arr = array(
+                    $arr = [
                         $rs_fields_table [$i] ['Field'],
                         $rs_fields_table [$i] ['Type'],
                         ($rs_fields_table [$i] ['Null'] == 'NO') ? 'NOT NULL' : 'NULL',
                         ($rs_fields_table [$i] ['Default'] != '' && stripos($rs_fields_table [$i] ['Default'], 'CURRENT') !== false) ? 'DEFAULT ' . $rs_fields_table [$i] ['Default'] : '',
                         $rs_fields_table [$i] ['Extra']
-                    );
+                    ];
                     $fields [] = implode(' ', $arr);
                 }
 
@@ -304,21 +304,21 @@ class builder
 
             if ($this->options ['permessi']) {
 
-                $arr_ruoli_permessi [] = array(
+                $arr_ruoli_permessi [] = [
                     'risorsa' => $this->controller_data ['ROUTE'],
-                    'azione' => '[\"index\",\"search\",\"edit\",\"save\",\"delete\",\"new\",\"create\"]'
-                );
+                    'azione'  => '[\"index\",\"search\",\"edit\",\"save\",\"delete\",\"new\",\"create\"]'
+                ];
 
                 if ($this->flags ['history'])
-                    $arr_ruoli_permessi [] = array(
+                    $arr_ruoli_permessi [] = [
                         'risorsa' => $this->controller_data ['ROUTE'] . '_history',
-                        'azione' => '[\"search\"]'
-                    );
+                        'azione'  => '[\"search\"]'
+                    ];
                 if ($this->flags ['email_segnalazioni'])
-                    $arr_ruoli_permessi [] = array(
+                    $arr_ruoli_permessi [] = [
                         'risorsa' => $this->controller_data ['ROUTE'] . '_email_segnalazioni',
-                        'azione' => '[\"create\",\"search\"]'
-                    );
+                        'azione'  => '[\"create\",\"search\"]'
+                    ];
 
                 $count = count($arr_ruoli_permessi);
                 for ($i = 0; $i < $count; $i++) {
@@ -474,13 +474,13 @@ class builder
             $findFist .= "\t\t" . 'apcu_store($key, $rs);' . PHP_EOL . "\t\t" . '}' . PHP_EOL . "\t";
             $findFist .= "\t" . 'return $rs;';
 
-            $data = str_replace(array(
+            $data = str_replace([
                 'return parent::find($parameters);',
                 'return parent::findFirst($parameters);'
-            ), array(
+            ], [
                 $find,
                 $findFist
-            ), $data);
+            ], $data);
 
             file_put_contents($model, $data);
         }

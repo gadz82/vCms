@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,117 +18,117 @@ class ApplicazioniMigration_110 extends Migration
     public function morph()
     {
         $this->morphTable('applicazioni', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 2,
-                            'first' => true
+                            'size'          => 2,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_tipologia_applicazione',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'id_tipologia_stato',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id_tipologia_applicazione'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id_tipologia_applicazione'
                         ]
                     ),
                     new Column(
                         'titolo',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 75,
-                            'after' => 'id_tipologia_stato'
+                            'size'    => 75,
+                            'after'   => 'id_tipologia_stato'
                         ]
                     ),
                     new Column(
                         'codice',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 5,
-                            'after' => 'titolo'
+                            'size'    => 5,
+                            'after'   => 'titolo'
                         ]
                     ),
                     new Column(
                         'href_lang',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 6,
-                            'after' => 'codice'
+                            'size'    => 6,
+                            'after'   => 'codice'
                         ]
                     ),
                     new Column(
                         'descrizione',
                         [
-                            'type' => Column::TYPE_TEXT,
-                            'size' => 1,
+                            'type'  => Column::TYPE_TEXT,
+                            'size'  => 1,
                             'after' => 'href_lang'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'descrizione'
+                            'size'    => 1,
+                            'after'   => 'descrizione'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'id_utente_admin',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 4,
-                            'after' => 'data_aggiornamento'
+                            'notNull'  => true,
+                            'size'     => 4,
+                            'after'    => 'data_aggiornamento'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'id_utente_admin'
+                            'size'    => 1,
+                            'after'   => 'id_utente_admin'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('id_tipologia_applicazione', ['id_tipologia_applicazione'], null),
                     new Index('id_tipologia_stato', ['id_tipologia_stato'], null),
@@ -139,38 +139,38 @@ class ApplicazioniMigration_110 extends Migration
                     new Reference(
                         'applicazioni_ibfk_1',
                         [
-                            'referencedTable' => 'tipologie_applicazione',
-                            'columns' => ['id_tipologia_applicazione'],
+                            'referencedTable'   => 'tipologie_applicazione',
+                            'columns'           => ['id_tipologia_applicazione'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'applicazioni_ibfk_2',
                         [
-                            'referencedTable' => 'tipologie_stato_applicazione',
-                            'columns' => ['id_tipologia_stato'],
+                            'referencedTable'   => 'tipologie_stato_applicazione',
+                            'columns'           => ['id_tipologia_stato'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'applicazioni_ibfk_3',
                         [
-                            'referencedTable' => 'utenti',
-                            'columns' => ['id_utente_admin'],
+                            'referencedTable'   => 'utenti',
+                            'columns'           => ['id_utente_admin'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '3',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '3',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

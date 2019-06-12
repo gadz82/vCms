@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,69 +22,69 @@ class ApplicazioniDominiMigration_110 extends Migration
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 4,
-                            'first' => true
+                            'size'          => 4,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_applicazione',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'referer',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 150,
-                            'after' => 'id_applicazione'
+                            'size'    => 150,
+                            'after'   => 'id_applicazione'
                         ]
                     ),
                     new Column(
                         'ip_autorizzati',
                         [
-                            'type' => Column::TYPE_CHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_CHAR,
+                            'size'  => 255,
                             'after' => 'referer'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'ip_autorizzati'
+                            'size'    => 1,
+                            'after'   => 'ip_autorizzati'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_aggiornamento'
+                            'size'    => 1,
+                            'after'   => 'data_aggiornamento'
                         ]
                     )
                 ],
@@ -93,9 +93,9 @@ class ApplicazioniDominiMigration_110 extends Migration
                     new Index('referer', ['referer'], null)
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '2',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '2',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

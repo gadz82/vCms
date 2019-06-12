@@ -152,20 +152,20 @@ class ItalyRegions extends BaseModel
     public function columnMap()
     {
         return [
-            'id_regione' => 'id_regione',
-            'regione' => 'regione',
-            'descrizione' => 'descrizione',
-            'superficie' => 'superficie',
+            'id_regione'    => 'id_regione',
+            'regione'       => 'regione',
+            'descrizione'   => 'descrizione',
+            'superficie'    => 'superficie',
             'num_residenti' => 'num_residenti',
-            'num_comuni' => 'num_comuni',
+            'num_comuni'    => 'num_comuni',
             'num_provincie' => 'num_provincie',
-            'presidente' => 'presidente',
-            'cod_istat' => 'cod_istat',
-            'cod_fiscale' => 'cod_fiscale',
-            'piva' => 'piva',
-            'pec' => 'pec',
-            'sito' => 'sito',
-            'sede' => 'sede'
+            'presidente'    => 'presidente',
+            'cod_istat'     => 'cod_istat',
+            'cod_fiscale'   => 'cod_fiscale',
+            'piva'          => 'piva',
+            'pec'           => 'pec',
+            'sito'          => 'sito',
+            'sede'          => 'sede'
         ];
     }
 

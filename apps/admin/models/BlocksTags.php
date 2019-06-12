@@ -1,6 +1,7 @@
 <?php
 
-class BlocksTags extends BaseModel {
+class BlocksTags extends BaseModel
+{
 
     /**
      *
@@ -97,12 +98,12 @@ class BlocksTags extends BaseModel {
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'descrizione' => 'descrizione',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'descrizione'        => 'descrizione',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'id_utente'          => 'id_utente',
+            'attivo'             => 'attivo'
         ];
     }
 

@@ -3,31 +3,33 @@
 class UsersController extends ControllerBase
 {
 
-    public function initialize(){
+    public function initialize()
+    {
         parent::initialize();
     }
 
     /**
      *  Form Registrazione e Login
      */
-    public function indexAction(){
+    public function indexAction()
+    {
         $this->tags->setTitle('Accedi o Registrati');
         $this->tags->setRobots('noindex,follow');
-        if($this->isUserLoggedIn){
+        if ($this->isUserLoggedIn) {
             return $this->response->redirect('/user/viewProfile');
         } else {
             $fb = new \Facebook\Facebook([
-                'app_id' => $this->config->facebook['appId'], // Replace {app-id} with your app id
-                'app_secret' => $this->config->facebook['appSecret'],
+                'app_id'                => $this->config->facebook['appId'], // Replace {app-id} with your app id
+                'app_secret'            => $this->config->facebook['appSecret'],
                 'default_graph_version' => 'v3.2',
             ]);
             $helper = $fb->getRedirectLoginHelper();
             $permissions = ['email']; // Optional permissions
-            $this->view->facebookLoginUrl = $helper->getLoginUrl('https:'.$this->config->application['siteUri'].$this->config->facebook['cbPage'], $permissions);
+            $this->view->facebookLoginUrl = $helper->getLoginUrl('https:' . $this->config->application['siteUri'] . $this->config->facebook['cbPage'], $permissions);
 
             $this->view->csrfTokenKey = $this->security->getTokenKey();
             $this->view->csrfToken = $this->security->getToken();
-            if(is_null($this->session->get('site_redirect_after_login'))){
+            if (is_null($this->session->get('site_redirect_after_login'))) {
                 $this->session->set('site_redirect_after_login', $this->currentUrl);
             }
             $this->assets->addJs('assets/site/js/user/register-login.js');
@@ -40,16 +42,17 @@ class UsersController extends ControllerBase
      *
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
-    public function passwordLostAction(){
+    public function passwordLostAction()
+    {
         /*
          * Request reset della passwrod
          */
-        if($this->request->isPost() && $this->request->isAjax()){
+        if ($this->request->isPost() && $this->request->isAjax()) {
             $params = $this->request->getPost();
             /*
              * Validazione CSRF
              */
-            if(!isset($params['email'])){
+            if (!isset($params['email'])) {
                 $this->response->setJsonContent(['success' => false, 'content' => 'Ci serve l\'indirizzo email che hai usato per la registrazione']);
             }
             $security = \Phalcon\Di::getDefault()->get('security');
@@ -60,9 +63,9 @@ class UsersController extends ControllerBase
             // Recupero l'utente in stato attivo con la mail inserita
             $user = Users::findFirst([
                 'conditions' => 'email = :email: AND id_tipologia_stato = 1 AND token_validated = 1 AND attivo = 1',
-                'bind' => ['email' => $params['email']]
+                'bind'       => ['email' => $params['email']]
             ]);
-            if(!$user ){
+            if (!$user) {
 
                 return $this->response->setJsonContent(['success' => false, 'content' => 'Account non trovato o in attesa di attivazione dopo la registrazione']);
 
@@ -70,10 +73,10 @@ class UsersController extends ControllerBase
                 /*
                  * Generazione token univoco per il link di reset password e relativa data di scadenza ad 1 giorno
                  */
-                $user->password_reset_token = sha1(mt_rand(10000,99999).time().$params['email']);
-                $user->reset_password_expiration_date= (new DateTime())->add(new DateInterval('P1D'))->format('Y-m-d H:i:s');
+                $user->password_reset_token = sha1(mt_rand(10000, 99999) . time() . $params['email']);
+                $user->reset_password_expiration_date = (new DateTime())->add(new DateInterval('P1D'))->format('Y-m-d H:i:s');
 
-                if(!$user->save()){
+                if (!$user->save()) {
                     $this->flash->error('Errore nel processo di invio token');
                 }
 
@@ -84,16 +87,16 @@ class UsersController extends ControllerBase
                     $params['email'],
                     [],
                     ['francesco@desegno.it'],
-                    'Link per il cambio password su '.$this->config->application->appName,
+                    'Link per il cambio password su ' . $this->config->application->appName,
                     'password-lost',
                     [
-                        'nome' => $user->nome.' '.$user->cognome,
-                        'tokenUrl' => 'https:'.$this->config->application['siteUri'].'/user/resetPassword/'.$user->id.'/'.$user->password_reset_token
+                        'nome'     => $user->nome . ' ' . $user->cognome,
+                        'tokenUrl' => 'https:' . $this->config->application['siteUri'] . '/user/resetPassword/' . $user->id . '/' . $user->password_reset_token
                     ],
                     [],
                     true
                 );
-                PhalconDebug::debug($this->config->application['siteUri'].'/user/resetPassword/'.$user->id.'/'.$user->password_reset_token);
+                PhalconDebug::debug($this->config->application['siteUri'] . '/user/resetPassword/' . $user->id . '/' . $user->password_reset_token);
 
                 /*
                  * Response Ajax
@@ -108,7 +111,7 @@ class UsersController extends ControllerBase
             /*
              * Form e chiavi csrf
              */
-            if($this->isUserLoggedIn){
+            if ($this->isUserLoggedIn) {
                 $this->response->redirect('/user');
             }
             $this->view->csrfTokenKey = $this->security->getTokenKey();
@@ -121,21 +124,22 @@ class UsersController extends ControllerBase
     /**
      * Form Visualizza / Modifica Profilo
      */
-    public function viewProfileAction(){
-        if(!$this->isUserLoggedIn){
+    public function viewProfileAction()
+    {
+        if (!$this->isUserLoggedIn) {
             return $this->response->redirect('/user');
         }
         $this->tags->setTitle('Il Mio Account');
-        if(!$this->isUserLoggedIn || empty($u = $this->user)){
+        if (!$this->isUserLoggedIn || empty($u = $this->user)) {
             return $this->response->redirect('/user');
         }
 
         $user = Users::findFirst([
             'conditions' => 'id = :user_id: AND id_tipologia_stato = 1 AND attivo = 1',
-            'bind' => ['user_id' => $u['id']]
+            'bind'       => ['user_id' => $u['id']]
         ]);
 
-        if(!$user) return $this->response->redirect('/user');
+        if (!$user) return $this->response->redirect('/user');
 
         $this->view->user = $user;
         $this->view->csrfTokenKey = $this->security->getTokenKey();
@@ -149,18 +153,19 @@ class UsersController extends ControllerBase
     /**
      * Request Modifica Profilo utente
      */
-    public function editProfileAction(){
-        if(!$this->isUserLoggedIn){
+    public function editProfileAction()
+    {
+        if (!$this->isUserLoggedIn) {
             return $this->response->redirect('/user');
         }
-        if(!$this->request->isPost()){
+        if (!$this->request->isPost()) {
             $this->flashSession->error('Impossibile eseguire la modifica del profilo');
             return $this->response->redirect('/user');
         }
 
         $params = $this->request->getPost();
 
-        if(!isset($params['nome'],$params['cognome'],$params['email'],$params['username'],$params['id_user'])){
+        if (!isset($params['nome'], $params['cognome'], $params['email'], $params['username'], $params['id_user'])) {
             $this->flashSession->error('Richiesta non valida, parametri mancanti');
             return $this->response->redirect('/user');
         }
@@ -176,43 +181,43 @@ class UsersController extends ControllerBase
 
         $user = Users::findFirst([
             'conditions' => 'id = ?1 AND attivo = 1',
-            'bind' => [1 => $params['id_user']]
+            'bind'       => [1 => $params['id_user']]
         ]);
 
-        if(!$user){
+        if (!$user) {
             $this->flashSession->error('Richiesta non valida, utete non trovato');
             return $this->response->redirect('/user');
         }
 
-        $user->username = $params['username']  ;
+        $user->username = $params['username'];
         $user->email = $params['email'];
         $user->nome = $params['nome'];
         $user->cognome = $params['cognome'];
 
-        if(!empty($params['old-password'])){
-            if(!$this->security->checkHash ( $params['old-password'], $user->password )){
+        if (!empty($params['old-password'])) {
+            if (!$this->security->checkHash($params['old-password'], $user->password)) {
                 $this->flashSession->error('Vecchia Password errata');
                 return $this->response->redirect('/user');
             }
-            if(isset($params['new-password'], $params['new-repassword'])){
-                if($params['new-password'] !== $params['new-repassword']){
+            if (isset($params['new-password'], $params['new-repassword'])) {
+                if ($params['new-password'] !== $params['new-repassword']) {
                     $this->flashSession->error('Non hai ripetuto la nuova password in maniera corretta.');
                     return $this->response->redirect('/user');
                 }
-                $user->password = $this->security->hash ($params['new-password']);
+                $user->password = $this->security->hash($params['new-password']);
             }
         }
 
 
-        if(!empty($params['telefono'])) $user->telefono = $params['telefono'];
-        if(!empty($params['indirizzo'])) $user->indirizzo = $params['indirizzo'];
-        if(!empty($params['localita'])) $user->localita = $params['localita'];
-        if(!empty($params['cap'])) $user->cap = $params['cap'];
-        if(!empty($params['data_di_nascita'])) $user->data_di_nascita = $params['data_di_nascita'];
+        if (!empty($params['telefono'])) $user->telefono = $params['telefono'];
+        if (!empty($params['indirizzo'])) $user->indirizzo = $params['indirizzo'];
+        if (!empty($params['localita'])) $user->localita = $params['localita'];
+        if (!empty($params['cap'])) $user->cap = $params['cap'];
+        if (!empty($params['data_di_nascita'])) $user->data_di_nascita = $params['data_di_nascita'];
 
-        if(!$user->save()){
+        if (!$user->save()) {
             $this->flashSession->error('Si è verificato un errore durante il salvataggio');
-            foreach($user->getMessages() as $message){
+            foreach ($user->getMessages() as $message) {
                 PhalconDebug::debug($message->getMessage());
             }
             return $this->response->redirect('/user');
@@ -226,13 +231,14 @@ class UsersController extends ControllerBase
      * Request Recupero Password
      * Gestisce sia la request ajax per il cambio password che il form
      */
-    public function resetPasswordAction($userId = null, $password_token = null){
-        if($this->request->isPost() && $this->request->isAjax()){
+    public function resetPasswordAction($userId = null, $password_token = null)
+    {
+        if ($this->request->isPost() && $this->request->isAjax()) {
             $params = $this->request->getPost();
-            if(
-                !isset($params['password'],$params['reset-form-repassword'], $params['id_user']) ||
+            if (
+                !isset($params['password'], $params['reset-form-repassword'], $params['id_user']) ||
                 $params['password'] !== $params['reset-form-repassword']
-            ){
+            ) {
                 $this->response->setJsonContent(['success' => false, 'content' => 'Password non valida']);
             }
 
@@ -246,16 +252,16 @@ class UsersController extends ControllerBase
 
             $user = Users::findFirst([
                 'conditions' => 'id = :id: AND id_tipologia_stato = 1 AND attivo = 1',
-                'bind' => ['id' => $params['id_user']]
+                'bind'       => ['id' => $params['id_user']]
             ]);
-            if(!$user){
+            if (!$user) {
 
                 return $this->response->setJsonContent(['success' => false, 'content' => 'Account non trovato, richiesta non valida']);
 
             } else {
-                $user->password = $this->security->hash ($params['password']);
+                $user->password = $this->security->hash($params['password']);
 
-                if(!$user->save()){
+                if (!$user->save()) {
                     return $this->response->setJsonContent(['success' => false, 'content' => 'Richiesta non valida']);
                 }
 
@@ -264,23 +270,23 @@ class UsersController extends ControllerBase
                     'content' => 'Password aggiornata correttamente, <a href="/user">clicca qui</a> se non vieni reindirizzato automaticamente.'
                 ]);
             }
-        } else{
+        } else {
             /*
              * Verifica chiave token dall'url e reset del valore nel db per invalidare successive request
              */
-            if($this->isUserLoggedIn){
+            if ($this->isUserLoggedIn) {
                 return $this->response->redirect('/user');
             }
-            if(!is_null($userId) && !is_null($password_token)){
+            if (!is_null($userId) && !is_null($password_token)) {
 
                 $user = Users::findFirstById($userId);
-                if(!$user){
+                if (!$user) {
                     $this->flash->error('L\'utente è stato disattivato o non esiste più.');
                     $this->dispatcher->forward(['action' => 'index']);
                 }
 
                 //Verifica token e expiration
-                if($password_token != $user->password_reset_token || (new \DateTime())->format('Y-m-d H:i:s') > $user->reset_password_expiration_date){
+                if ($password_token != $user->password_reset_token || (new \DateTime())->format('Y-m-d H:i:s') > $user->reset_password_expiration_date) {
                     $this->flash->error('Token per il reset password non valido, già utilizzato o scaduto, richiedi una nuova password qui sotto.');
                     $this->dispatcher->forward(['action' => 'passwordLost']);
                 } else {
@@ -289,7 +295,7 @@ class UsersController extends ControllerBase
                      */
                     $user->password_reset_token = '';
 
-                    if(!$user->save()){
+                    if (!$user->save()) {
                         $this->flash->error('Errore nel processo di attivazione account');
                     }
                     $this->view->csrfTokenKey = $this->security->getTokenKey();
@@ -307,10 +313,11 @@ class UsersController extends ControllerBase
     /**
      * Request di Login in post
      */
-    public function loginAction(){
-        if($this->request->isPost()){
+    public function loginAction()
+    {
+        if ($this->request->isPost()) {
             $params = $this->request->getPost();
-            if(!isset($params['username'], $params['password'])){
+            if (!isset($params['username'], $params['password'])) {
                 $this->flashSession->error('Parametri mancanti');
                 $this->response->redirect('/user');
             }
@@ -323,15 +330,15 @@ class UsersController extends ControllerBase
                 return $this->response->redirect('/user');
             }
 
-            $user = \Users::findFirst ( "username = '" . $params ['username'] . "' AND attivo = 1" );
+            $user = \Users::findFirst("username = '" . $params ['username'] . "' AND attivo = 1");
 
-            if (! $user) {
+            if (!$user) {
                 $this->flashSession->error('Nessun utente con questo username');
                 return $this->response->redirect('/user');
             }
 
             //Verifica password
-            if (! $this->security->checkHash ( $params ['password'], $user->password )) {
+            if (!$this->security->checkHash($params ['password'], $user->password)) {
                 $this->flashSession->error('Password Errata');
                 return $this->response->redirect('/user');
             }
@@ -341,11 +348,11 @@ class UsersController extends ControllerBase
             }
             $user->user_last_login = (new \DateTime())->format('Y-m-d H:i:s');
             $user->ip_address = $this->request->getClientAddress();
-            $this->auth->setIdentity ( $user );
+            $this->auth->setIdentity($user);
             $user->save();
 
             $ref = $this->session->get('site_redirect_after_login', '/user');
-            return $this->response->redirect ( $ref );
+            return $this->response->redirect($ref);
 
         } else {
             return $this->response->redirect('/user');
@@ -358,25 +365,27 @@ class UsersController extends ControllerBase
      * Logout
      * @return \Phalcon\Http\Response|\Phalcon\Http\ResponseInterface
      */
-    public function logoutAction(){
-        if($this->isUserLoggedIn){
+    public function logoutAction()
+    {
+        if ($this->isUserLoggedIn) {
             $this->auth->remove();
         }
-        return $this->response->redirect ( '/user' );
+        return $this->response->redirect('/user');
     }
 
 
     /**
      * Request di registrazione
      */
-    public function registrationAction(){
+    public function registrationAction()
+    {
         $now = new \DateTime();
-        if(!$this->request->isPost() || !$this->request->isAjax()){
+        if (!$this->request->isPost() || !$this->request->isAjax()) {
             $this->response->redirect('/user');
         }
         $params = $this->request->getPost();
 
-        if(!isset($params['nome'],$params['cognome'],$params['email'],$params['password'], $params['register-form-repassword'])){
+        if (!isset($params['nome'], $params['cognome'], $params['email'], $params['password'], $params['register-form-repassword'])) {
             $this->response->setJsonContent(['success' => false, 'content' => 'Parametri errati']);
             return $this->response;
         }
@@ -391,29 +400,29 @@ class UsersController extends ControllerBase
 
         $user = Users::findFirst([
             'conditions' => '( email = :email: OR username = :email: ) AND attivo = 1',
-            'bind' => ['email' => $params['email']]
+            'bind'       => ['email' => $params['email']]
         ]);
 
-        if(!$user){
+        if (!$user) {
             $user = new Users();
             $user->id_users_groups = 2;
             $user->id_tipologia_stato = 2;
             $user->id_tipologia_user = 1;
-            $user->username = $params['email']  ;
+            $user->username = $params['email'];
             $user->email = $params['email'];
             $user->nome = $params['nome'];
             $user->cognome = $params['cognome'];
-            $user->validation_token = sha1(mt_rand(10000,99999).time().$params['email']);
+            $user->validation_token = sha1(mt_rand(10000, 99999) . time() . $params['email']);
             $user->token_validated = 0;
             $user->validation_expiration_date = $now->add(new DateInterval('P1D'))->format('Y-m-d H:i:s');;
-            $user->password = $this->security->hash ($params['password']);
+            $user->password = $this->security->hash($params['password']);
             $user->user_registration_date = $now->format('Y-m-d H:i:s');
             $user->ip_address = $this->request->getClientAddress();
             $user->data_creazione = $now->format('Y-m-d H:i:s');
             $user->data_aggiornamento = $now->format('Y-m-d H:i:s');
             $user->attivo = 1;
         } else {
-            switch($user->id_tipologia_stato){
+            switch ($user->id_tipologia_stato) {
                 // UTENTE GIA ATTIVO
                 case 1:
                     return $this->response->setJsonContent(['success' => false, 'content' => 'Utente già registrato, effettua l\'accesso o recupera la password']);
@@ -445,17 +454,17 @@ class UsersController extends ControllerBase
                     $user->email = $params['email'];
                     $user->nome = $params['nome'];
                     $user->cognome = $params['cognome'];
-                    $user->validation_token = sha1(mt_rand(10000,99999).time().$email);
+                    $user->validation_token = sha1(mt_rand(10000, 99999) . time() . $email);
                     $user->token_validated = 0;
                     $user->validation_expiration_date = $now->add(new DateInterval('P1D'))->format('Y-m-d H:i:s');
-                    $user->password = $this->security->hash ($params['password']);
+                    $user->password = $this->security->hash($params['password']);
                     $user->ip_address = $this->request->getClientAddress();
                     $user->attivo = 1;
                     break;
             }
         }
-        if(!$user->save()){
-            foreach ($user->getMessages() as $msg){
+        if (!$user->save()) {
+            foreach ($user->getMessages() as $msg) {
                 \PhalconDebug::debug($msg->getMessage());
             }
             return $this->response->setJsonContent(['success' => false, 'content' => 'Errore in fase di registrazione dell\'account.']);
@@ -465,11 +474,11 @@ class UsersController extends ControllerBase
             $params['email'],
             [],
             ['francesco@desegno.it'],
-            'Attiva il tuo account su '.$this->config->application->appName,
+            'Attiva il tuo account su ' . $this->config->application->appName,
             'attivazione',
             [
-                'nome' => $user->nome.' '.$user->cognome,
-                'tokenUrl' => 'https:'.$this->config->application['siteUri'].'/user/activateAccount/'.$user->id.'/'.$user->validation_token
+                'nome'     => $user->nome . ' ' . $user->cognome,
+                'tokenUrl' => 'https:' . $this->config->application['siteUri'] . '/user/activateAccount/' . $user->id . '/' . $user->validation_token
             ],
             [],
             true
@@ -484,11 +493,12 @@ class UsersController extends ControllerBase
     /**
      * Request di registrazione / Login tramite Facebook
      */
-    public function facebookRegistrationAction(){
+    public function facebookRegistrationAction()
+    {
         $now = new \DateTime();
         $fb = new \Facebook\Facebook([
-            'app_id' => $this->config->facebook['appId'], // Replace {app-id} with your app id
-            'app_secret' => $this->config->facebook['appSecret'],
+            'app_id'                => $this->config->facebook['appId'], // Replace {app-id} with your app id
+            'app_secret'            => $this->config->facebook['appSecret'],
             'default_graph_version' => 'v3.2',
         ]);
 
@@ -498,12 +508,12 @@ class UsersController extends ControllerBase
          */
         $helper = $fb->getRedirectLoginHelper();
         try {
-            $accessToken = $helper->getAccessToken('https:'.$this->config->application['siteUri'].$this->config->facebook['cbPage']);
-        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+            $accessToken = $helper->getAccessToken('https:' . $this->config->application['siteUri'] . $this->config->facebook['cbPage']);
+        } catch (Facebook\Exceptions\FacebookResponseException $e) {
             // When Graph returns an error
             $this->flashSession->error('Impossibile effettuare l\'accesso attraverso il tuo account Facebook');
             return $this->response->redirect($this->session->get('site_redirect_after_login', 'site/user'));
-        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+        } catch (Facebook\Exceptions\FacebookSDKException $e) {
             $this->flashSession->error('Facebook sembra non rispondere, prova a registrarti attraverso il sito.');
             return $this->response->redirect($this->session->get('site_redirect_after_login', 'site/user'));
         }
@@ -532,7 +542,7 @@ class UsersController extends ControllerBase
         $tokenMetadata->validateAppId($this->config->facebook['appId']); // Replace {app-id} with your app id
         $tokenMetadata->validateExpiration();
 
-        if (! $accessToken->isLongLived()) {
+        if (!$accessToken->isLongLived()) {
             // Se l'access token scade a breve lo prolungo (magari per un utilizzo futuro)
             try {
                 $accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
@@ -548,10 +558,10 @@ class UsersController extends ControllerBase
          */
         try {
             $response = $fb->get('/me?fields=id,name,first_name,last_name,email,address,birthday', $accessToken);
-        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+        } catch (Facebook\Exceptions\FacebookResponseException $e) {
             $this->flashSession->error('Impossibile recuperare le informazioni dal tuo profilo.');
             return $this->response->redirect($this->session->get('site_redirect_after_login', 'site/user'));
-        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+        } catch (Facebook\Exceptions\FacebookSDKException $e) {
             $this->flashSession->error('Abbiamo incontrato un problema nel recupero delle tue informazioni da Facebook.');
             return $this->response->redirect($this->session->get('site_redirect_after_login', 'site/user'));
         }
@@ -565,11 +575,11 @@ class UsersController extends ControllerBase
          */
         $existingUser = Users::findFirst([
             'conditions' => 'facebook_auth_id = :facebook_user_id: AND attivo = 1',
-            'bind' => ['facebook_user_id' => $fbUser->getId()]
+            'bind'       => ['facebook_user_id' => $fbUser->getId()]
         ]);
 
-        if(!$existingUser){
-            if(is_null($email = $fbUser->getEmail())){
+        if (!$existingUser) {
+            if (is_null($email = $fbUser->getEmail())) {
                 $this->flashSession->error('Indirizzo email mancante nel tuo profilo Facebook.');
                 return $this->response->redirect($this->session->get('site_redirect_after_login', 'site/user'));
             }
@@ -585,7 +595,7 @@ class UsersController extends ControllerBase
             $user->email = $email;
             $user->nome = $fbUser['first_name'];
             $user->cognome = $fbUser['last_name'];
-            if(!is_null($fbUser->getBirthday())){
+            if (!is_null($fbUser->getBirthday())) {
                 $user->data_di_nascita = $fbUser->getBirthday()->format('Y-m-d');
             }
             $user->token_validated = 1;
@@ -594,14 +604,14 @@ class UsersController extends ControllerBase
             $user->user_last_login = $now->format('Y-m-d H:i:s');
             $user->ip_address = $this->request->getClientAddress();
             $user->facebook_auth_id = $fbUser->getId();
-            $user->facebook_auth_token = (string) $accessToken;
+            $user->facebook_auth_token = (string)$accessToken;
             $user->data_creazione = $now->format('Y-m-d H:i:s');
             $user->data_aggiornamento = $now->format('Y-m-d H:i:s');
             $user->attivo = 1;
 
-            if(!$user->save()){
+            if (!$user->save()) {
                 $this->flashSession->error('Errore in fase di registrazione, esiste già un utente con questo indirizzo email, controlla i dati o effettua un recupero password.');
-                foreach ($user->getMessages() as $lm){
+                foreach ($user->getMessages() as $lm) {
                     PhalconDebug::debug($lm->getMessage());
                 }
                 return $this->response->redirect($this->session->get('site_redirect_after_login', 'site/user'));
@@ -610,19 +620,19 @@ class UsersController extends ControllerBase
              * Creo la sessione utente
              */
             $this->auth->setIdentity($user);
-            $this->flashSession->success('Accesso effettuato, benvenuto '.$fbUser->getName());
+            $this->flashSession->success('Accesso effettuato, benvenuto ' . $fbUser->getName());
             return $this->response->redirect($this->session->get('site_redirect_after_login', '/user'));
 
         } else {
 
-            $existingUser->facebook_auth_token = (string) $accessToken;
+            $existingUser->facebook_auth_token = (string)$accessToken;
             $existingUser->user_last_login = $now->format('Y-m-d H:i:s');
             $existingUser->id_tipologia_stato = 1;
             $existingUser->token_validated = 1;
 
-            if(!$existingUser->save()){
+            if (!$existingUser->save()) {
                 $this->flashSession->error('Errore in fase di autenticazione, riprova in un altro momento.');
-                foreach ($existingUser->getMessages() as $lm){
+                foreach ($existingUser->getMessages() as $lm) {
                     PhalconDebug::debug($lm->getMessage());
                 }
                 return $this->response->redirect($this->session->get('site_redirect_after_login', 'site/user'));
@@ -632,7 +642,7 @@ class UsersController extends ControllerBase
              * Creo la sessione utente
              */
             $this->auth->setIdentity($existingUser);
-            $this->flashSession->success('Accesso effettuato, benvenuto '.$fbUser->getName());
+            $this->flashSession->success('Accesso effettuato, benvenuto ' . $fbUser->getName());
             return $this->response->redirect($this->session->get('site_redirect_after_login', 'site/user'));
         }
 
@@ -644,17 +654,18 @@ class UsersController extends ControllerBase
      * @param $userId
      * @param $activationToken
      */
-    public function activateAccountAction($userId, $activationToken){
+    public function activateAccountAction($userId, $activationToken)
+    {
 
         $user = Users::findFirstById($userId);
-        if(!$user){
+        if (!$user) {
             $this->flash->error('Link di attivazione non valido, ripeti la registrazione o contattaci.');
             $this->view->activeBlock = 'lost-user';
             $this->dispatcher->forward(['action' => 'index']);
         }
 
         //Verifica requisiti logici
-        if(
+        if (
             $user->id_tipologia_user != 1 || //Attivazione necessaria solo per gli utenti registrati dal sito
             $user->id_tipologia_stato != 2 || //Attivazione necessaria solo per gli utenti in attesa di attivazione
             $user->token_validated == 1 || //Attivazione necessaria solo per gli utenti con flag token_validated a 1
@@ -664,7 +675,7 @@ class UsersController extends ControllerBase
             $this->flash->error('Il tuo account è stato già attivato in precedenza, effettua l\'accesso o recupera la password');
             $this->dispatcher->forward(['action' => 'index']);
 
-        } elseif($activationToken != $user->validation_token || (new \DateTime())->format('Y-m-d H:i:s') > $user->validation_expiration_date){
+        } elseif ($activationToken != $user->validation_token || (new \DateTime())->format('Y-m-d H:i:s') > $user->validation_expiration_date) {
             $this->flash->error('Token di attivazione non valido o scaduto');
             $this->view->activeBlock = 'new-token';
             $this->dispatcher->forward(['action' => 'sendActivation']);
@@ -673,7 +684,7 @@ class UsersController extends ControllerBase
             $user->token_validated = 1;
             $user->id_tipologia_stato = 1;
 
-            if(!$user->save()){
+            if (!$user->save()) {
                 $this->flash->error('Errore nel processo di attivazione account');
             } else {
                 $this->flash->success('Account attivato con successo, accedi con le credenziali che hai scelto in fase di registazione.');
@@ -687,13 +698,14 @@ class UsersController extends ControllerBase
      * Reinvio link attivaziona account dopo tentativo di login di utenti non attivi
      * Gestisce sia il rendering del form per la richiesta link di attivazione, che la relativa request e invio email
      */
-    public function sendActivationAction(){
-        if($this->request->isPost() && $this->request->isAjax()){
+    public function sendActivationAction()
+    {
+        if ($this->request->isPost() && $this->request->isAjax()) {
             $params = $this->request->getPost();
             /*
              * @var \Phalcon\Security
              */
-            if(!isset($params['email'])){
+            if (!isset($params['email'])) {
                 $this->response->setJsonContent(['success' => false, 'content' => 'Ci serve l\'indirizzo email che hai usato per la registrazione']);
             }
             $security = \Phalcon\Di::getDefault()->get('security');
@@ -703,18 +715,18 @@ class UsersController extends ControllerBase
 
             $pendingUser = Users::findFirst([
                 'conditions' => 'email = :email: AND id_tipologia_stato = 2 AND token_validated = 0 AND attivo = 1',
-                'bind' => ['email' => $params['email']]
+                'bind'       => ['email' => $params['email']]
             ]);
-            if(!$pendingUser){
+            if (!$pendingUser) {
 
                 return $this->response->setJsonContent(['success' => false, 'content' => 'Account non trovato o già attivato in precedenza']);
 
             } else {
 
-                $pendingUser->validation_token = sha1(mt_rand(10000,99999).time().$params['email']);
+                $pendingUser->validation_token = sha1(mt_rand(10000, 99999) . time() . $params['email']);
                 $pendingUser->validation_expiration_date = (new DateTime())->add(new DateInterval('P1D'))->format('Y-m-d H:i:s');
 
-                if(!$pendingUser->save()){
+                if (!$pendingUser->save()) {
                     return $this->response->setJsonContent(['success' => false, 'content' => 'Errore nel processo di invio token']);
                 }
 
@@ -722,11 +734,11 @@ class UsersController extends ControllerBase
                     $params['email'],
                     [],
                     ['francesco@desegno.it'],
-                    'Link attivazione account su '.$this->config->application->appName,
+                    'Link attivazione account su ' . $this->config->application->appName,
                     'attivazione',
                     [
-                        'nome' => $pendingUser->nome.' '.$pendingUser->cognome,
-                        'tokenUrl' => 'https:'.$this->config->application['siteUri'].'/user/activateAccount/'.$pendingUser->id.'/'.$pendingUser->validation_token
+                        'nome'     => $pendingUser->nome . ' ' . $pendingUser->cognome,
+                        'tokenUrl' => 'https:' . $this->config->application['siteUri'] . '/user/activateAccount/' . $pendingUser->id . '/' . $pendingUser->validation_token
                     ],
                     [],
                     true
@@ -745,13 +757,14 @@ class UsersController extends ControllerBase
         }
     }
 
-    public function deleteAction(){
-        if(!$this->isUserLoggedIn){
+    public function deleteAction()
+    {
+        if (!$this->isUserLoggedIn) {
             return $this->response->redirect('/user/viewProfile');
         }
         $user = $this->user;
-        if($user->id && $su = Users::findFirstById($user->id)){
-            if(!$su->delete()){
+        if ($user->id && $su = Users::findFirstById($user->id)) {
+            if (!$su->delete()) {
                 $this->flashSession->error('Errore in fase di cancellazione');
                 return $this->response->redirect('/user/viewProfile');
             } else {
@@ -764,10 +777,11 @@ class UsersController extends ControllerBase
         }
     }
 
-    protected function setAuthVars(){
-        if(\apps\site\library\Cms::getIstance()->userLoggedIn){
+    protected function setAuthVars()
+    {
+        if (\apps\site\library\Cms::getIstance()->userLoggedIn) {
             $this->view->isUserLoggedIn = $this->isUserLoggedIn = true;
-            $this->view->user= $this->user = $this->auth->getIdentity();
+            $this->view->user = $this->user = $this->auth->getIdentity();
         } else {
             $this->view->isUserLoggedIn = $this->isUserLoggedIn = false;
         }

@@ -31,7 +31,7 @@ class ExceptionHandlerPlugin extends Plugin
         $this->response->setStatusCode($code);
         $this->response->setJsonContent([
                 'message' => $code == '404' ? "Endpoint not found" : $exception->getMessage(),
-                'code' => $code
+                'code'    => $code
             ]
         );
 

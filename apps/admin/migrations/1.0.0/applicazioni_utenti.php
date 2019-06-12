@@ -18,61 +18,61 @@ class ApplicazioniUtentiMigration_100 extends Migration
     public function morph()
     {
         $this->morphTable('applicazioni_utenti', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 4,
-                            'first' => true
+                            'size'          => 4,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_applicazione',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'id_utente_applicazione',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 4,
-                            'after' => 'id_applicazione'
+                            'notNull'  => true,
+                            'size'     => 4,
+                            'after'    => 'id_applicazione'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'id_utente_applicazione'
+                            'size'    => 1,
+                            'after'   => 'id_utente_applicazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "1",
+                            'type'     => Column::TYPE_INTEGER,
+                            'default'  => "1",
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_aggiornamento'
+                            'notNull'  => true,
+                            'size'     => 1,
+                            'after'    => 'data_aggiornamento'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('id_applicazione', ['id_applicazione'], null),
                     new Index('id_utente', ['id_utente_applicazione'], null)
@@ -81,28 +81,28 @@ class ApplicazioniUtentiMigration_100 extends Migration
                     new Reference(
                         'applicazioni_utenti_ibfk_1',
                         [
-                            'referencedTable' => 'applicazioni',
-                            'columns' => ['id_applicazione'],
+                            'referencedTable'   => 'applicazioni',
+                            'columns'           => ['id_applicazione'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     ),
                     new Reference(
                         'applicazioni_utenti_ibfk_2',
                         [
-                            'referencedTable' => 'utenti',
-                            'columns' => ['id_utente_applicazione'],
+                            'referencedTable'   => 'utenti',
+                            'columns'           => ['id_utente_applicazione'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '1',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '1',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

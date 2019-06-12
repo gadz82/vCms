@@ -83,10 +83,10 @@ class TipologieVolantino extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 

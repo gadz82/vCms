@@ -9,17 +9,17 @@ use Phalcon\Forms\Element\Select;
 class EditForm extends Form
 {
 
-    protected $fields = array();
-    protected $exclude_required = array();
-    protected $custom_validation = array();
+    protected $fields = [];
+    protected $exclude_required = [];
+    protected $custom_validation = [];
 
-    public function initialize($entity = null, $options = array())
+    public function initialize($entity = null, $options = [])
     {
 
         $auth = $this->getDI()->getSession()->get('auth-identity');
 
-        $exclude_fields = array('id', 'data_cambio_stato', 'data_creazione', 'data_aggiornamento', 'id_utente', 'attivo');
-        $order_fields = array();
+        $exclude_fields = ['id', 'data_cambio_stato', 'data_creazione', 'data_aggiornamento', 'id_utente', 'attivo'];
+        $order_fields = [];
 
         $this->fields = $this->getAutoRenderByModel(new \MetaGroup(), 'MetaGroup', $exclude_fields, $order_fields, false);
 
@@ -29,15 +29,15 @@ class EditForm extends Form
 
         $meta_group_post_types = new Select('meta_group_post_types[]', $select_meta_group_post_types,
             [
-                'class' => 'form-control selectpicker',
-                'using' => array('id', 'descrizione'),
-                'data-style' => 'btn-flat btn-white',
-                'data-size' => 5,
-                'multiple' => true,
-                'data-width' => '100%',
-                'data-live-search' => true,
+                'class'                     => 'form-control selectpicker',
+                'using'                     => ['id', 'descrizione'],
+                'data-style'                => 'btn-flat btn-white',
+                'data-size'                 => 5,
+                'multiple'                  => true,
+                'data-width'                => '100%',
+                'data-live-search'          => true,
                 'data-selected-text-format' => 'count>1',
-                'useEmpty' => false
+                'useEmpty'                  => false
             ]
         );
         $this->fields['meta_group_post_types'] = $meta_group_post_types;
@@ -54,7 +54,7 @@ class EditForm extends Form
         }
 
         if (isset($entity)) {
-            $this->add(new Hidden('id', array('hidden' => true, 'value' => $entity->id)));
+            $this->add(new Hidden('id', ['hidden' => true, 'value' => $entity->id]));
         }
         /* FINE BLOCCO */
 
@@ -63,12 +63,12 @@ class EditForm extends Form
     private function prepareValidation($id_tipologia_stato)
     {
 
-        $arr_exclude_required = array();
+        $arr_exclude_required = [];
 
-        $this->custom_validation = array();
+        $this->custom_validation = [];
 
-        $arr_exclude_required['1'] = array('nota', 'nota_new', 'meta_group_post_types');
-        $arr_exclude_required['default'] = array('nota', 'nota_new', 'meta_group_post_types');
+        $arr_exclude_required['1'] = ['nota', 'nota_new', 'meta_group_post_types'];
+        $arr_exclude_required['default'] = ['nota', 'nota_new', 'meta_group_post_types'];
 
         $this->compileValidation($id_tipologia_stato, $arr_exclude_required);
 
@@ -88,7 +88,7 @@ class EditForm extends Form
 
         $this->exclude_required = !$exclude_required ? $arr_exclude_required['default'] : $exclude_required;
 
-        $arr_render_required = array();
+        $arr_render_required = [];
         $render = array_keys($this->fields);
 
         foreach ($arr_exclude_required as $key => $val) {

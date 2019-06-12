@@ -1,5 +1,6 @@
 <?php
 namespace apps\admin\library\decorators\forms\inputs\Posts;
+
 use apps\admin\library\decorators\DecoratorInterface;
 use Phalcon\Forms\Element;
 
@@ -21,7 +22,8 @@ class InputLatitudine implements DecoratorInterface
         $this->element = $el;
     }
 
-    public function decorate(){
+    public function decorate()
+    {
         $this->element->setAttribute('grid_class', 'col-xs-4');
         $this->element->setAttribute('id', 'lat');
         $this->element->setAttribute('placeholder', 'Formato google es: 42.9988569447');

@@ -84,10 +84,10 @@ class MetaGroupPostType extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'                => 'id',
             'id_tipologia_post' => 'id_tipologia_post',
-            'id_meta_group' => 'id_meta_group',
-            'attivo' => 'attivo'
+            'id_meta_group'     => 'id_meta_group',
+            'attivo'            => 'attivo'
         ];
     }
 

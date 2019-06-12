@@ -157,21 +157,21 @@ class ViewItaly extends \Phalcon\Mvc\Model
     public function columnMap()
     {
         return [
-            'istat' => 'istat',
-            'comune' => 'comune',
-            'cap' => 'cap',
-            'regione' => 'regione',
-            'provincia' => 'provincia',
-            'prefisso' => 'prefisso',
-            'cod_fisco' => 'cod_fisco',
-            'superficie' => 'superficie',
+            'istat'         => 'istat',
+            'comune'        => 'comune',
+            'cap'           => 'cap',
+            'regione'       => 'regione',
+            'provincia'     => 'provincia',
+            'prefisso'      => 'prefisso',
+            'cod_fisco'     => 'cod_fisco',
+            'superficie'    => 'superficie',
             'num_residenti' => 'num_residenti',
-            'lng' => 'lng',
-            'lat' => 'lat',
-            'abitanti' => 'abitanti',
-            'patrono_nome' => 'patrono_nome',
-            'patrono_data' => 'patrono_data',
-            'indirizzo' => 'indirizzo'
+            'lng'           => 'lng',
+            'lat'           => 'lat',
+            'abitanti'      => 'abitanti',
+            'patrono_nome'  => 'patrono_nome',
+            'patrono_data'  => 'patrono_data',
+            'indirizzo'     => 'indirizzo'
         ];
     }
 

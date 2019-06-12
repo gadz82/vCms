@@ -1,5 +1,7 @@
 <?php
-class CronController extends ControllerBase{
+
+class CronController extends ControllerBase
+{
 
     /**
      * @var DateTime
@@ -11,7 +13,8 @@ class CronController extends ControllerBase{
      */
     protected $connection;
 
-    public function initialize(){
+    public function initialize()
+    {
         parent::initialize();
         ini_set('max_execution_time', 0);
         set_time_limit(0);

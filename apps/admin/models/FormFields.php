@@ -158,20 +158,20 @@ class FormFields extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_form' => 'id_form',
+            'id'                       => 'id',
+            'id_form'                  => 'id_form',
             'id_tipologia_form_fields' => 'id_tipologia_form_fields',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'name' => 'name',
-            'label' => 'label',
-            'placeholder' => 'placeholder',
-            'value' => 'value',
-            'obbligatorio' => 'obbligatorio',
-            'ordine' => 'ordine',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'id_tipologia_stato'       => 'id_tipologia_stato',
+            'name'                     => 'name',
+            'label'                    => 'label',
+            'placeholder'              => 'placeholder',
+            'value'                    => 'value',
+            'obbligatorio'             => 'obbligatorio',
+            'ordine'                   => 'ordine',
+            'data_creazione'           => 'data_creazione',
+            'data_aggiornamento'       => 'data_aggiornamento',
+            'id_utente'                => 'id_utente',
+            'attivo'                   => 'attivo'
         ];
     }
 

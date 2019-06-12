@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,69 +22,69 @@ class TipologiePostMigration_108 extends Migration
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 2,
-                            'first' => true
+                            'size'          => 2,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'descrizione',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 175,
-                            'after' => 'id'
+                            'size'    => 175,
+                            'after'   => 'id'
                         ]
                     ),
                     new Column(
                         'slug',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 75,
-                            'after' => 'descrizione'
+                            'size'    => 75,
+                            'after'   => 'descrizione'
                         ]
                     ),
                     new Column(
                         'admin_menu',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "0",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'slug'
+                            'size'    => 1,
+                            'after'   => 'slug'
                         ]
                     ),
                     new Column(
                         'admin_icon',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'notNull' => true,
-                            'size' => 50,
-                            'after' => 'admin_menu'
+                            'size'    => 50,
+                            'after'   => 'admin_menu'
                         ]
                     ),
                     new Column(
                         'ordine',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 2,
-                            'after' => 'admin_icon'
+                            'size'    => 2,
+                            'after'   => 'admin_icon'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
-                            'size' => 1,
-                            'after' => 'ordine'
+                            'size'    => 1,
+                            'after'   => 'ordine'
                         ]
                     )
                 ],
@@ -93,9 +93,9 @@ class TipologiePostMigration_108 extends Migration
                     new Index('slug_tp', ['slug'], 'UNIQUE')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '8',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '8',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

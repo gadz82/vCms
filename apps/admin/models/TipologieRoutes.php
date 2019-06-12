@@ -104,13 +104,13 @@ class TipologieRoutes extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'descrizione' => 'descrizione',
-            'metodo' => 'metodo',
-            'ordine' => 'ordine',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'descrizione'        => 'descrizione',
+            'metodo'             => 'metodo',
+            'ordine'             => 'ordine',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

@@ -15,7 +15,8 @@ use Phalcon\Forms\Form;
  * Class Forms
  * @package apps\site\library
  */
-class Forms  {
+class Forms
+{
 
     /**
      * @param $form_key
@@ -23,7 +24,8 @@ class Forms  {
      * @param Tags $tags Istanza corrente della classe Tags
      * @return array|bool
      */
-    public static function getForm($form_key, $id_post){
+    public static function getForm($form_key, $id_post)
+    {
         $formFields = \FormFields::query()
             ->innerJoin('Forms', 'Forms.id = FormFields.id_form AND Forms.attivo = 1 AND Forms.id_tipologia_stato = 2')
             ->where('FormFields.attivo = 1 AND Forms.key = ?1')
@@ -33,20 +35,20 @@ class Forms  {
             ->groupBy('FormFields.id, Forms.id')
             ->orderBy('FormFields.ordine')
             ->cache([
-                "key" => "getFormsFieldsByKey".$form_key,
+                "key"      => "getFormsFieldsByKey" . $form_key,
                 "lifetime" => 12400
             ])->execute();
 
-        if(!$formFields) return false;
+        if (!$formFields) return false;
 
         $form = new Form();
 
-        foreach($formFields as $field){
-            if($field->obbligatorio){
-                $field->placeholder = $field->placeholder.' *';
-                $field->label = $field->label.' *';
+        foreach ($formFields as $field) {
+            if ($field->obbligatorio) {
+                $field->placeholder = $field->placeholder . ' *';
+                $field->label = $field->label . ' *';
             }
-            switch($field->id_tipologia_form_fields){
+            switch ($field->id_tipologia_form_fields) {
                 case 1: //testo
                 case 3: //telefono
                     $input = new Text($field->name, ['class' => 'form-control form-item']);
@@ -64,11 +66,11 @@ class Forms  {
                 case 8: //Multi Select
                     $values = explode(',', $field->value);
                     $options = [];
-                    if(!empty($values)){
-                        foreach($values as $val){
-                            if(strpos($val, ':') !== false){
+                    if (!empty($values)) {
+                        foreach ($values as $val) {
+                            if (strpos($val, ':') !== false) {
                                 list($key, $v) = explode(':', $val);
-                                if(empty($key) || empty($v)) continue;
+                                if (empty($key) || empty($v)) continue;
 
                                 $options[$key] = $v;
                             } else {
@@ -78,33 +80,33 @@ class Forms  {
                     } else {
                         continue;
                     }
-                    if(empty($options)) continue;
-                    if($field->id_tipologia_form_fields == 8){
+                    if (empty($options)) continue;
+                    if ($field->id_tipologia_form_fields == 8) {
                         $attributes = [
-                            'class' => 'form-control form-item selectpicker',
-                            'data-style' => 'btn-flat btn-white',
-                            'multiple' => 'multiple',
-                            'data-actions-box' => true,
-                            'data-size' => 5,
-                            'data-width' => '100%',
-                            'data-live-search' => true,
+                            'class'                     => 'form-control form-item selectpicker',
+                            'data-style'                => 'btn-flat btn-white',
+                            'multiple'                  => 'multiple',
+                            'data-actions-box'          => true,
+                            'data-size'                 => 5,
+                            'data-width'                => '100%',
+                            'data-live-search'          => true,
                             'data-selected-text-format' => 'count>1',
-                            'useEmpty' => false,
-                            'title' => $field->placeholder,
-                            'emptyText' => '---'
+                            'useEmpty'                  => false,
+                            'title'                     => $field->placeholder,
+                            'emptyText'                 => '---'
                         ];
-                        $fname = $field->name.'[]';
+                        $fname = $field->name . '[]';
                     } else {
                         $attributes = [
-                            'class' => 'form-control form-item selectpicker',
-                            'data-style' => 'btn-flat btn-white',
-                            'data-size' => 5,
-                            'data-width' => '100%',
-                            'data-live-search' => true,
+                            'class'                     => 'form-control form-item selectpicker',
+                            'data-style'                => 'btn-flat btn-white',
+                            'data-size'                 => 5,
+                            'data-width'                => '100%',
+                            'data-live-search'          => true,
                             'data-selected-text-format' => 'count>1',
-                            'useEmpty' => false,
-                            'title' => $field->placeholder,
-                            'emptyText' => '---',
+                            'useEmpty'                  => false,
+                            'title'                     => $field->placeholder,
+                            'emptyText'                 => '---',
                         ];
                         $fname = $field->name;
                     }
@@ -118,8 +120,8 @@ class Forms  {
                     $input = new Check($field->name, ['labeled' => true]);
                     break;
             }
-            if(isset($input)){
-                if($field->obbligatorio){
+            if (isset($input)) {
+                if ($field->obbligatorio) {
                     $input->setAttribute('required', $field->obbligatorio)->setAttribute('aria-required', $field->obbligatorio);
                 }
                 $input->setLabel($field->label);
@@ -132,14 +134,14 @@ class Forms  {
 
         $formEnt = \Forms::findFirst([
             'conditions' => 'key = ?1',
-            'bind' => [1 => $form_key],
-            'cache' => [
-                "key" => "getFormByKey".$form_key,
+            'bind'       => [1 => $form_key],
+            'cache'      => [
+                "key"      => "getFormByKey" . $form_key,
                 "lifetime" => 12400
             ]
         ]);
 
-        if(!$formEnt) return false;
+        if (!$formEnt) return false;
         //$security = Di::getDefault()->get('security');
         $post_id = new Hidden('id_post');
         $post_id->setAttribute('value', $id_post)->setAttribute('hidden', true);
@@ -158,7 +160,7 @@ class Forms  {
         $form->add($form_csrf);
 
         return [
-            'form' => $form,
+            'form'       => $form,
             'formEntity' => $formEnt,
             'formFields' => $formFields
         ];

@@ -115,7 +115,8 @@ class Volantini extends BaseModel
         return parent::find($parameters);
     }
 
-    public static function trashImages(Volantini $volantino) {
+    public static function trashImages(Volantini $volantino)
+    {
         $upload_path = self::getVolantinoPath($volantino);
         $upload_dir = BASE_DIR . '/../public/raw/volantini/' . $upload_path;
         if (!file_exists($upload_dir)) return false;
@@ -130,8 +131,9 @@ class Volantini extends BaseModel
         return true;
     }
 
-    public static function getVolantinoPath(Volantini $volantino){
-        $upload_path = $volantino->id.DIRECTORY_SEPARATOR;
+    public static function getVolantinoPath(Volantini $volantino)
+    {
+        $upload_path = $volantino->id . DIRECTORY_SEPARATOR;
         return $upload_path;
 
     }
@@ -168,38 +170,40 @@ class Volantini extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_tipologia_volantino' => 'id_tipologia_volantino',
+            'id'                         => 'id',
+            'id_tipologia_stato'         => 'id_tipologia_stato',
+            'id_tipologia_volantino'     => 'id_tipologia_volantino',
             'id_tipologia_punto_vendita' => 'id_tipologia_punto_vendita',
-            'id_regione' => 'id_regione',
-            'id_punto_vendita' => 'id_punto_vendita',
-            'titolo' => 'titolo',
-            'anno' => 'anno',
-            'numero' => 'numero',
-            'data_inizio_pubblicazione' => 'data_inizio_pubblicazione',
-            'data_fine_pubblicazione' => 'data_fine_pubblicazione',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'id_regione'                 => 'id_regione',
+            'id_punto_vendita'           => 'id_punto_vendita',
+            'titolo'                     => 'titolo',
+            'anno'                       => 'anno',
+            'numero'                     => 'numero',
+            'data_inizio_pubblicazione'  => 'data_inizio_pubblicazione',
+            'data_fine_pubblicazione'    => 'data_fine_pubblicazione',
+            'data_creazione'             => 'data_creazione',
+            'data_aggiornamento'         => 'data_aggiornamento',
+            'attivo'                     => 'attivo'
         ];
     }
 
-    public function beforeCreate(){
+    public function beforeCreate()
+    {
         return $this->checkUnique();
     }
 
-    public function checkUnique(){
-        if($this->attivo == '0') return true;
+    public function checkUnique()
+    {
+        if ($this->attivo == '0') return true;
 
         $parameters = [
-            'id_tipologia_stato' => $this->id_tipologia_stato,
-            'id_tipologia_volantino' => $this->id_tipologia_volantino,
+            'id_tipologia_stato'         => $this->id_tipologia_stato,
+            'id_tipologia_volantino'     => $this->id_tipologia_volantino,
             'id_tipologia_punto_vendita' => $this->id_tipologia_punto_vendita,
-            'id_regione' => $this->id_regione,
-            'anno' => $this->anno,
-            'numero' => $this->numero,
-            'attivo' => '1'
+            'id_regione'                 => $this->id_regione,
+            'anno'                       => $this->anno,
+            'numero'                     => $this->numero,
+            'attivo'                     => '1'
         ];
         $conditions = [
             'id_tipologia_stato = :id_tipologia_stato:',
@@ -210,20 +214,20 @@ class Volantini extends BaseModel
             'numero = :numero:',
             'attivo = :attivo:'
         ];
-        if(!is_null($this->id_punto_vendita) && !empty($this->id_punto_vendita)){
+        if (!is_null($this->id_punto_vendita) && !empty($this->id_punto_vendita)) {
             $conditions[] = 'id_punto_vendita = :id_punto_vendita:';
             $parameters['id_punto_vendita'] = $this->id_punto_vendita;
         }
-        if(!is_null($this->id) && !empty($this->id)){
+        if (!is_null($this->id) && !empty($this->id)) {
             $conditions[] = 'id != :id:';
             $parameters['id'] = $this->id;
         }
         $vol_check = self::findFirst([
             'conditions' => implode(' AND ', $conditions),
-            'bind' => $parameters
+            'bind'       => $parameters
         ]);
 
-        if($vol_check){
+        if ($vol_check) {
             $this->appendMessage(new \Phalcon\Mvc\Model\Message('Errore, record duplicato'));
             return false;
         }
@@ -241,7 +245,8 @@ class Volantini extends BaseModel
         return parent::findFirst($parameters);
     }
 
-    public function beforeSave(){
+    public function beforeSave()
+    {
         return $this->checkUnique();
     }
 }

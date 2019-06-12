@@ -1,6 +1,6 @@
 <?php
 
-class TipologieApplicazione  extends BaseModel
+class TipologieApplicazione extends BaseModel
 {
 
     /**
@@ -34,36 +34,38 @@ class TipologieApplicazione  extends BaseModel
     public $attivo;
 
     /**
-	 * Allows to query a set of records that match the specified conditions
-	 *
-	 * @param mixed $parameters
-	 * @return TipologieStatoUtente[]
-	 */
-	public static function find($parameters = null) {
-		$key = 'tipologie_applicazione_find.' . md5 ( json_encode ( $parameters ) );
-		$rs = apcu_fetch ( $key );
-		if (! $rs) {
-			$rs = parent::find ( $parameters );
-			apcu_store ( $key, $rs );
-		}
-		return $rs;
-	}
+     * Allows to query a set of records that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return TipologieStatoUtente[]
+     */
+    public static function find($parameters = null)
+    {
+        $key = 'tipologie_applicazione_find.' . md5(json_encode($parameters));
+        $rs = apcu_fetch($key);
+        if (!$rs) {
+            $rs = parent::find($parameters);
+            apcu_store($key, $rs);
+        }
+        return $rs;
+    }
 
-	/**
-	 * Allows to query the first record that match the specified conditions
-	 *
-	 * @param mixed $parameters
-	 * @return RuoliPermessi
-	 */
-	public static function findFirst($parameters = null) {
-		$key = 'tipologie_applicazione_find_first.'. md5 ( json_encode ( $parameters ) );
-		$rs = apcu_fetch ( $key );
-		if (! $rs) {
-			$rs = parent::findFirst ( $parameters );
-			apcu_store ( $key, $rs );
-		}
-		return $rs;
-	}
+    /**
+     * Allows to query the first record that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return RuoliPermessi
+     */
+    public static function findFirst($parameters = null)
+    {
+        $key = 'tipologie_applicazione_find_first.' . md5(json_encode($parameters));
+        $rs = apcu_fetch($key);
+        if (!$rs) {
+            $rs = parent::findFirst($parameters);
+            apcu_store($key, $rs);
+        }
+        return $rs;
+    }
 
     /**
      * Initialize method for model.
@@ -73,7 +75,7 @@ class TipologieApplicazione  extends BaseModel
 
         $this->hasMany('id', 'Applicazioni', 'id_tipologia_applicazione', ['alias' => 'Applicazioni', 'reusable' => true]);
     }
-	
+
     /**
      * Returns table name mapped in the model.
      *
@@ -93,10 +95,10 @@ class TipologieApplicazione  extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 

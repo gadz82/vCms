@@ -110,14 +110,14 @@ class FlatTranslations extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_applicazione' => 'id_applicazione',
-            'original_string' => 'original_string',
-            'translation' => 'translation',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'id_applicazione'    => 'id_applicazione',
+            'original_string'    => 'original_string',
+            'translation'        => 'translation',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'id_utente'          => 'id_utente',
+            'attivo'             => 'attivo'
         ];
     }
 

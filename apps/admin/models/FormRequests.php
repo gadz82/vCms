@@ -107,13 +107,13 @@ class FormRequests extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_form' => 'id_form',
-            'id_post' => 'id_post',
-            'letto' => 'letto',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'id_form'            => 'id_form',
+            'id_post'            => 'id_post',
+            'letto'              => 'letto',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

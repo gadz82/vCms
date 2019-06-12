@@ -13,7 +13,8 @@ use Phalcon\Mvc\Dispatcher as MvcDispatcher;
  *
  * Handles not-found controller/actions
  */
-class NotFoundPlugin extends Plugin {
+class NotFoundPlugin extends Plugin
+{
 
     /**
      * This action is executed before execute any action in the application
@@ -21,25 +22,26 @@ class NotFoundPlugin extends Plugin {
      * @param Event $event
      * @param Dispatcher $dispatcher
      */
-    public function beforeException(Event $event, MvcDispatcher $dispatcher, \Exception $exception) {
+    public function beforeException(Event $event, MvcDispatcher $dispatcher, \Exception $exception)
+    {
         if ($exception instanceof DispatcherException) {
-            switch ($exception->getCode ()) {
+            switch ($exception->getCode()) {
                 case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND :
                 case Dispatcher::EXCEPTION_ACTION_NOT_FOUND :
-                    $dispatcher->forward ( array (
+                    $dispatcher->forward([
                         'controller' => 'errors',
-                        'action' => 'show404'
-                    ) );
+                        'action'     => 'show404'
+                    ]);
                     return false;
             }
         }
-        \PhalconDebug::debug(  $exception->getMessage ()  );
+        \PhalconDebug::debug($exception->getMessage());
         //var_dump($exception->getMessage ());exit();
 
-        $dispatcher->forward ( array (
+        $dispatcher->forward([
             'controller' => 'errors',
-            'action' => 'show500'
-        ) );
+            'action'     => 'show500'
+        ]);
         return false;
     }
 }

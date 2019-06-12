@@ -18,46 +18,46 @@ class ItNewsFilterMigration_103 extends Migration
     public function morph()
     {
         $this->morphTable('_it_news_filter', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_post',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'categoria',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'id_post'
                         ]
                     ),
                     new Column(
                         'key_categoria',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 75,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 75,
                             'after' => 'categoria'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('id_post', ['id_post'], 'UNIQUE'),
                     new Index('key_categoria', ['key_categoria'], null)
@@ -66,18 +66,18 @@ class ItNewsFilterMigration_103 extends Migration
                     new Reference(
                         '_it_news_filter_post_fk',
                         [
-                            'referencedTable' => '_it_news',
-                            'columns' => ['id_post'],
+                            'referencedTable'   => '_it_news',
+                            'columns'           => ['id_post'],
                             'referencedColumns' => ['id_post'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'CASCADE'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'CASCADE'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '1',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '1',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'latin1_swedish_ci'
                 ],
             ]

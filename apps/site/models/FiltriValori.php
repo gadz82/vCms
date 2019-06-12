@@ -106,8 +106,8 @@ class FiltriValori extends BaseModel
         $this->hasMany('id', 'PostsFiltri', 'id_filtro_valore', ['alias' => 'PostsFiltri', 'reusable' => true]);
         $this->belongsTo('id_filtro', '\Filtri', 'id', ['alias' => 'Filtri', 'reusable' => true]);
         $this->belongsTo('id_filtro_valore_parent', '\FiltriValori', 'id', [
-            'alias' => 'FiltroValoreParent',
-            'reusable' => true,
+            'alias'      => 'FiltroValoreParent',
+            'reusable'   => true,
             'foreignKey' => [
                 'allowNulls' => true
             ]
@@ -133,16 +133,16 @@ class FiltriValori extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_filtro' => 'id_filtro',
+            'id'                      => 'id',
+            'id_filtro'               => 'id_filtro',
             'id_filtro_valore_parent' => 'id_filtro_valore_parent',
-            'valore' => 'valore',
-            'key' => 'key',
-            'meta_title' => 'meta_title',
-            'meta_description' => 'meta_description',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'valore'                  => 'valore',
+            'key'                     => 'key',
+            'meta_title'              => 'meta_title',
+            'meta_description'        => 'meta_description',
+            'data_creazione'          => 'data_creazione',
+            'data_aggiornamento'      => 'data_aggiornamento',
+            'attivo'                  => 'attivo'
         ];
     }
 

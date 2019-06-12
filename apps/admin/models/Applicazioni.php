@@ -1,6 +1,7 @@
 <?php
 
-class Applicazioni extends \BaseModel {
+class Applicazioni extends \BaseModel
+{
 
     /**
      *
@@ -100,7 +101,7 @@ class Applicazioni extends \BaseModel {
      */
     public function initialize()
     {
-    	parent::initialize ();
+        parent::initialize();
 
         $this->hasMany('id', 'ApplicazioniUtenti', 'id_applicazione', ['alias' => 'ApplicazioniUtenti', 'reusable' => true]);
         $this->hasMany('id', 'Posts', 'id_applicazione', ['alias' => 'Posts', 'reusable' => true]);
@@ -123,31 +124,32 @@ class Applicazioni extends \BaseModel {
         return 'applicazioni';
     }
 
-    public function afterCreate(){
+    public function afterCreate()
+    {
         $con = Phalcon\Di::getDefault()->get('db');
         $query = '
         INSERT INTO 
           `applicazioni_routes` (`id_applicazione`, `id_tipologia_stato`, `id_tipologia_route`, `nome`, `path`, `params`, `ordine`, `data_creazione`, `data_aggiornamento`, `attivo`)
         VALUES
-            ('.$this->id.', 1, 1, \'Home Page\', \'/\', \'{\"module\":\"site\",\"controller\":\"index\",\"action\":\"index\"}\', 1, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'404\', \'/404\', \'{\"module\":\"site\",\"controller\":\"errors\",\"action\":\"show404\"}\', 2, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Pagina\', \'/{post_slug:[a-z\\-]+}\', \'{\"module\":\"site\",\"controller\":\"entity\",\"action\":\"read\",\"post_type_slug\":\"pagina\",\"params\":1}\', 3, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'List Tipologia Post\', \'/{post_type_slug:[a-z\\-]+}/\', \'{\"module\":\"site\",\"controller\":\"list\",\"action\":\"list\",\"post_type_slug\":1}\', 4, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'List Tipologia Post Filtrata\', \'/{post_type_slug:[a-z\\-]+}/:action/:params\', \'{\"module\":\"site\",\"controller\":\"list\",\"action\":2,\"post_type_slug\":1,\"params\":3}\', 5, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Dettaglio Post\', \'/{post_type_slug:[a-z\\-]+}/{post_slug:[a-z0-9\\-]+}\', \'{\"module\":\"site\",\"controller\":\"entity\",\"action\":\"read\",\"post_type_slug\":1,\"post_slug\":2}\', 6, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'PDF Post\', \'/{post_type_slug:[a-z\\-]+}/{post_slug:[a-z0-9\\-]+}.pdf\', \'{\"module\":\"site\",\"controller\":\"pdf\",\"action\":\"read\",\"post_type_slug\":1,\"post_slug\":2}\', 7, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'User Area\', \'/user\', \'{\"module\":\"site\",\"controller\":\"users\",\"action\":\"index\"}\', 8, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'User Area Azione Specifica\', \'/user/:action\', \'{\"module\":\"site\",\"controller\":\"users\",\"action\":1,\"params\":2}\', 9, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Endpoint Ajax\', \'/ajax/:action/:params\', \'{\"module\":\"site\",\"controller\":\"ajax\",\"action\":1,\"params\":2}\', 10, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Form Request\', \'/forms/:action/:params\', \'{\"module\":\"site\",\"controller\":\"forms\",\"action\":1,\"params\":2}\', 11, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Rendering Media\', \'/media/:action/:params\', \'{\"module\":\"site\",\"controller\":\"media\",\"action\":1,\"params\":2}\', 12, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Sitemap\', \'/sitemap.xml\', \'{\"module\":\"site\",\"controller\":\"sitemap\",\"action\":\"index\"}\', 13, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Api Root\', \'/api\', \'{\"module\":\"api\",\"controller\":\"api\",\"action\":\"index\"}\', 14, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Api Controller\', \'/api/:controller\', \'{\"module\":\"api\",\"controller\":1,\"action\":\"index\"}\', 15, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Api Taxonomy services\', \'/api/taxonomies/:action(/:params)\', \'{\"module\":\"api\",\"controller\":\"taxonomy\",\"action\":1,\"params\":2}\', 16, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Listing Post Type\', \'/api/entities/{post_type_slug:[a-z\\-]+}/\', \'{\"module\":\"api\",\"controller\":\"list\",\"action\":\"fetch\",\"post_type_slug\":1}\', 17, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Listing Post Type with Filters\', \'/api/entities/{post_type_slug:[a-z\\-]+}/:action/:params\', \'{\"module\":\"api\",\"controller\":\"list\",\"action\":2,\"post_type_slug\":1,\"params\":3}\', 18, NOW(), NOW(), 1),
-            ('.$this->id.', 1, 1, \'Api Entity Detail\', \'/api/entities/read/{post_type_slug:[a-z\\-]+}/{post_slug:[0-9{11}]+}\', \'{\"module\":\"api\",\"controller\":\"entity\",\"action\":\"read\",\"post_type_slug\":1,\"params\":2}\', 19, NOW(), NOW(), 1);
+            (' . $this->id . ', 1, 1, \'Home Page\', \'/\', \'{\"module\":\"site\",\"controller\":\"index\",\"action\":\"index\"}\', 1, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'404\', \'/404\', \'{\"module\":\"site\",\"controller\":\"errors\",\"action\":\"show404\"}\', 2, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Pagina\', \'/{post_slug:[a-z\\-]+}\', \'{\"module\":\"site\",\"controller\":\"entity\",\"action\":\"read\",\"post_type_slug\":\"pagina\",\"params\":1}\', 3, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'List Tipologia Post\', \'/{post_type_slug:[a-z\\-]+}/\', \'{\"module\":\"site\",\"controller\":\"list\",\"action\":\"list\",\"post_type_slug\":1}\', 4, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'List Tipologia Post Filtrata\', \'/{post_type_slug:[a-z\\-]+}/:action/:params\', \'{\"module\":\"site\",\"controller\":\"list\",\"action\":2,\"post_type_slug\":1,\"params\":3}\', 5, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Dettaglio Post\', \'/{post_type_slug:[a-z\\-]+}/{post_slug:[a-z0-9\\-]+}\', \'{\"module\":\"site\",\"controller\":\"entity\",\"action\":\"read\",\"post_type_slug\":1,\"post_slug\":2}\', 6, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'PDF Post\', \'/{post_type_slug:[a-z\\-]+}/{post_slug:[a-z0-9\\-]+}.pdf\', \'{\"module\":\"site\",\"controller\":\"pdf\",\"action\":\"read\",\"post_type_slug\":1,\"post_slug\":2}\', 7, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'User Area\', \'/user\', \'{\"module\":\"site\",\"controller\":\"users\",\"action\":\"index\"}\', 8, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'User Area Azione Specifica\', \'/user/:action\', \'{\"module\":\"site\",\"controller\":\"users\",\"action\":1,\"params\":2}\', 9, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Endpoint Ajax\', \'/ajax/:action/:params\', \'{\"module\":\"site\",\"controller\":\"ajax\",\"action\":1,\"params\":2}\', 10, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Form Request\', \'/forms/:action/:params\', \'{\"module\":\"site\",\"controller\":\"forms\",\"action\":1,\"params\":2}\', 11, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Rendering Media\', \'/media/:action/:params\', \'{\"module\":\"site\",\"controller\":\"media\",\"action\":1,\"params\":2}\', 12, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Sitemap\', \'/sitemap.xml\', \'{\"module\":\"site\",\"controller\":\"sitemap\",\"action\":\"index\"}\', 13, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Api Root\', \'/api\', \'{\"module\":\"api\",\"controller\":\"api\",\"action\":\"index\"}\', 14, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Api Controller\', \'/api/:controller\', \'{\"module\":\"api\",\"controller\":1,\"action\":\"index\"}\', 15, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Api Taxonomy services\', \'/api/taxonomies/:action(/:params)\', \'{\"module\":\"api\",\"controller\":\"taxonomy\",\"action\":1,\"params\":2}\', 16, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Listing Post Type\', \'/api/entities/{post_type_slug:[a-z\\-]+}/\', \'{\"module\":\"api\",\"controller\":\"list\",\"action\":\"fetch\",\"post_type_slug\":1}\', 17, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Listing Post Type with Filters\', \'/api/entities/{post_type_slug:[a-z\\-]+}/:action/:params\', \'{\"module\":\"api\",\"controller\":\"list\",\"action\":2,\"post_type_slug\":1,\"params\":3}\', 18, NOW(), NOW(), 1),
+            (' . $this->id . ', 1, 1, \'Api Entity Detail\', \'/api/entities/read/{post_type_slug:[a-z\\-]+}/{post_slug:[0-9{11}]+}\', \'{\"module\":\"api\",\"controller\":\"entity\",\"action\":\"read\",\"post_type_slug\":1,\"params\":2}\', 19, NOW(), NOW(), 1);
         ';
         $con->query($query);
 
@@ -155,11 +157,11 @@ class Applicazioni extends \BaseModel {
         $option = \Options::findFirstByOptionName('reindex_queue');
 
         $tp_ids = [];
-        foreach($tipologiePosts as $tp){
+        foreach ($tipologiePosts as $tp) {
             $tp_ids[] = $tp->id;
         }
 
-        if($option){
+        if ($option) {
             $option->option_value = json_encode($tp_ids);;
             $option->save();
         } else {
@@ -179,17 +181,18 @@ class Applicazioni extends \BaseModel {
      * Steo 6 : Form in status Disabled(3)
      * Step 7 : Delete Flat Tables
      */
-    public function triggerDelete(){
+    public function triggerDelete()
+    {
         /*
          * Step 1
          */
         $routes = ApplicazioniRoutes::find([
             'conditions' => 'id_applicazione = ?1',
-            'bind' => [1 => $this->id]
+            'bind'       => [1 => $this->id]
         ]);
 
-        if($routes){
-            foreach($routes as $r){
+        if ($routes) {
+            foreach ($routes as $r) {
                 $r->delete();
             }
         }
@@ -199,11 +202,11 @@ class Applicazioni extends \BaseModel {
          */
         $domini = ApplicazioniDomini::find([
             'conditions' => 'id_applicazione = ?1',
-            'bind' => [1 => $this->id]
+            'bind'       => [1 => $this->id]
         ]);
 
-        if($domini){
-            foreach($domini as $d){
+        if ($domini) {
+            foreach ($domini as $d) {
                 $d->delete();
             }
         }
@@ -213,11 +216,11 @@ class Applicazioni extends \BaseModel {
          */
         $utenti = ApplicazioniUtenti::find([
             'conditions' => 'id_applicazione = ?1',
-            'bind' => [1 => $this->id]
+            'bind'       => [1 => $this->id]
         ]);
 
-        if($utenti){
-            foreach($utenti as $u){
+        if ($utenti) {
+            foreach ($utenti as $u) {
                 $u->delete();
             }
         }
@@ -227,11 +230,11 @@ class Applicazioni extends \BaseModel {
          */
         $posts = Posts::find([
             'conditions' => 'id_applicazione = ?1',
-            'bind'  => [1 => $this->id]
+            'bind'       => [1 => $this->id]
         ]);
 
-        if($posts){
-            foreach($posts as $post){
+        if ($posts) {
+            foreach ($posts as $post) {
                 $post->delete();
                 $post->triggerSave(true);
             }
@@ -242,11 +245,11 @@ class Applicazioni extends \BaseModel {
          */
         $blocks = Blocks::find([
             'conditions' => 'id_applicazione = ?1',
-            'bind'  => [1 => $this->id]
+            'bind'       => [1 => $this->id]
         ]);
 
-        if($blocks){
-            foreach($blocks as $block){
+        if ($blocks) {
+            foreach ($blocks as $block) {
                 $block->delete();
             }
         }
@@ -256,11 +259,11 @@ class Applicazioni extends \BaseModel {
          */
         $forms = Forms::find([
             'conditions' => 'id_applicazione = ?1',
-            'bind'  => [1 => $this->id]
+            'bind'       => [1 => $this->id]
         ]);
 
-        if($forms){
-            foreach($forms as $form){
+        if ($forms) {
+            foreach ($forms as $form) {
                 $form->id_tipologia_stato = 3;
                 $form->save();
             }
@@ -270,7 +273,7 @@ class Applicazioni extends \BaseModel {
          * Step 7
          */
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterDeleteApplication', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterDeleteApplication', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $eventsManager->fire('dispatch:afterDeleteApplication', $this);
     }
 

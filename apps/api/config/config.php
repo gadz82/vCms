@@ -9,14 +9,14 @@ if (file_exists(__DIR__ . '/config.locale.php')) {
 } else {
     return new \Phalcon\Config ([
         'application' => [
-            'controllersDir' 	=> __DIR__ . '/../controllers/',
-            'modelsDir' 		=> __DIR__ . '/../../site/models/',
-            'migrationsDir' 	=> __DIR__ . '/../migrations/',
-            'viewsDir' 			=> __DIR__ . '/../views/',
-            'pluginsDir' 		=> __DIR__ . '/../plugins/',
-            'libraryDir' 		=> __DIR__ . '/../library/',
-            'formsDir' 			=> __DIR__ . '/../forms/',
-            'cacheDir' 			=> __DIR__ . '/../cache/'
+            'controllersDir' => __DIR__ . '/../controllers/',
+            'modelsDir'      => __DIR__ . '/../../site/models/',
+            'migrationsDir'  => __DIR__ . '/../migrations/',
+            'viewsDir'       => __DIR__ . '/../views/',
+            'pluginsDir'     => __DIR__ . '/../plugins/',
+            'libraryDir'     => __DIR__ . '/../library/',
+            'formsDir'       => __DIR__ . '/../forms/',
+            'cacheDir'       => __DIR__ . '/../cache/'
         ]
     ]);
 }

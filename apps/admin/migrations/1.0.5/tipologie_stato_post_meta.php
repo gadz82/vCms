@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,40 +22,40 @@ class TipologieStatoPostMetaMigration_105 extends Migration
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 2,
-                            'first' => true
+                            'size'          => 2,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'descrizione',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 175,
-                            'after' => 'id'
+                            'size'    => 175,
+                            'after'   => 'id'
                         ]
                     ),
                     new Column(
                         'ordine',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 2,
-                            'after' => 'descrizione'
+                            'size'    => 2,
+                            'after'   => 'descrizione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
-                            'size' => 1,
-                            'after' => 'ordine'
+                            'size'    => 1,
+                            'after'   => 'ordine'
                         ]
                     )
                 ],
@@ -63,9 +63,9 @@ class TipologieStatoPostMetaMigration_105 extends Migration
                     new Index('PRIMARY', ['id'], 'PRIMARY')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '3',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '3',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,81 +22,81 @@ class TipologieStatoUserMigration_110 extends Migration
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 2,
-                            'first' => true
+                            'size'          => 2,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'descrizione',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'notNull' => true,
-                            'size' => 50,
-                            'after' => 'id'
+                            'size'    => 50,
+                            'after'   => 'id'
                         ]
                     ),
                     new Column(
                         'avanzamento',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 3,
-                            'after' => 'descrizione'
+                            'notNull'  => true,
+                            'size'     => 3,
+                            'after'    => 'descrizione'
                         ]
                     ),
                     new Column(
                         'soglia_giorni',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'avanzamento'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'avanzamento'
                         ]
                     ),
                     new Column(
                         'ordine',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'soglia_giorni'
+                            'notNull'  => true,
+                            'size'     => 1,
+                            'after'    => 'soglia_giorni'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'ordine'
+                            'size'    => 1,
+                            'after'   => 'ordine'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "1",
+                            'type'     => Column::TYPE_INTEGER,
+                            'default'  => "1",
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_aggiornamento'
+                            'notNull'  => true,
+                            'size'     => 1,
+                            'after'    => 'data_aggiornamento'
                         ]
                     )
                 ],
@@ -106,9 +106,9 @@ class TipologieStatoUserMigration_110 extends Migration
                     new Index('attivo_2', ['attivo'], null)
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '6',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '6',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_swedish_ci'
                 ],
             ]

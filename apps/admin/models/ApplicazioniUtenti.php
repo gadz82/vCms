@@ -92,11 +92,11 @@ class ApplicazioniUtenti extends \BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_applicazione' => 'id_applicazione',
+            'id'                     => 'id',
+            'id_applicazione'        => 'id_applicazione',
             'id_utente_applicazione' => 'id_utente_applicazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'data_aggiornamento'     => 'data_aggiornamento',
+            'attivo'                 => 'attivo'
         ];
     }
 

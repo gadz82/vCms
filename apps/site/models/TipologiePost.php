@@ -105,13 +105,13 @@ class TipologiePost extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'slug' => 'slug',
-            'admin_menu' => 'admin_menu',
-            'admin_icon' => 'admin_icon',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'slug'        => 'slug',
+            'admin_menu'  => 'admin_menu',
+            'admin_icon'  => 'admin_icon',
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 

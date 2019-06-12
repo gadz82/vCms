@@ -16,15 +16,16 @@ use Phalcon\Mvc\Dispatcher as MvcDispatcher;
 class AppSyncPlugin extends Plugin
 {
 
-    public function triggerEditSingleEntity(Event $event, \Posts $post){
+    public function triggerEditSingleEntity(Event $event, \Posts $post)
+    {
         $option = \Options::findFirst([
             'conditions' => 'option_name = "app_md5" AND attivo = 1',
-            'cache' => [
-                'key' => 'app_option_md5',
+            'cache'      => [
+                'key'      => 'app_option_md5',
                 'lifetime' => 1800
             ]
         ]);
-        if(!$option){
+        if (!$option) {
             $option = new \Options();
             $option->option_name = 'app_md5';
             $option->option_value = $post->data_aggiornamento;
@@ -35,15 +36,16 @@ class AppSyncPlugin extends Plugin
         }
     }
 
-    public function triggerDeleteSingleEntity(Event $event, \Posts $post){
+    public function triggerDeleteSingleEntity(Event $event, \Posts $post)
+    {
         $option = \Options::findFirst([
             'conditions' => 'option_name = "app_md5" AND attivo = 1',
-            'cache' => [
-                'key' => 'app_option_md5',
+            'cache'      => [
+                'key'      => 'app_option_md5',
                 'lifetime' => 1800
             ]
         ]);
-        if(!$option){
+        if (!$option) {
             $option = new \Options();
             $option->option_name = 'app_md5';
             $option->option_value = $post->data_aggiornamento;

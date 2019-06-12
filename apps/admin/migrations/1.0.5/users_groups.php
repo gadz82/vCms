@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,58 +22,58 @@ class UsersGroupsMigration_105 extends Migration
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 4,
-                            'first' => true
+                            'size'          => 4,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'titolo',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 75,
-                            'after' => 'id'
+                            'size'    => 75,
+                            'after'   => 'id'
                         ]
                     ),
                     new Column(
                         'visitors',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'titolo'
+                            'size'    => 1,
+                            'after'   => 'titolo'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'visitors'
+                            'size'    => 1,
+                            'after'   => 'visitors'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
-                            'size' => 1,
+                            'type'  => Column::TYPE_TIMESTAMP,
+                            'size'  => 1,
                             'after' => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_aggiornamento'
+                            'size'    => 1,
+                            'after'   => 'data_aggiornamento'
                         ]
                     )
                 ],
@@ -82,9 +82,9 @@ class UsersGroupsMigration_105 extends Migration
                     new Index('attivo', ['attivo'], null)
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '2',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '2',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

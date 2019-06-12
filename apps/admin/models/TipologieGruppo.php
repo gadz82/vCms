@@ -74,13 +74,13 @@ class TipologieGruppo extends BaseModel
     {
         parent::initialize();
 
-        $this->hasMany('id', 'Gruppi', 'id_tipologia_gruppo', array(
+        $this->hasMany('id', 'Gruppi', 'id_tipologia_gruppo', [
             'alias' => 'Gruppi', 'reusable' => true
-        ));
+        ]);
 
-        $this->allowEmptyStringValues(array(
+        $this->allowEmptyStringValues([
             'vincoli_model'
-        ));
+        ]);
     }
 
     /**
@@ -95,6 +95,6 @@ class TipologieGruppo extends BaseModel
 
     public function afterFetch()
     {
-        $this->vincoli_controller = !empty ($this->vincoli_controller) ? json_decode($this->vincoli_controller, true) : array();
+        $this->vincoli_controller = !empty ($this->vincoli_controller) ? json_decode($this->vincoli_controller, true) : [];
     }
 }

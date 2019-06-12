@@ -1,13 +1,16 @@
 <?php
-class IndexController extends ControllerBase {
-	
-	public function initialize() {
-		// Set the document title
-		$this->tag->setTitle ( 'Dashboard' );
-		parent::initialize ();
-	}
 
-	public function indexAction()
+class IndexController extends ControllerBase
+{
+
+    public function initialize()
+    {
+        // Set the document title
+        $this->tag->setTitle('Dashboard');
+        parent::initialize();
+    }
+
+    public function indexAction()
     {
         parent::indexAction();
         $auth_user = $this->getDI()->getSession()->get('auth-identity');
@@ -23,7 +26,7 @@ class IndexController extends ControllerBase {
                 'order' => 'data_creazione DESC'
             ]
         );*/
-		$this->view->richieste = FormRequests::query()
+        $this->view->richieste = FormRequests::query()
             ->columns([
                 'FormRequests.id AS id',
                 'FormRequests.data_creazione AS data_creazione',
@@ -53,57 +56,59 @@ class IndexController extends ControllerBase {
 
         $this->view->dashboard = 'dashboard_admin';
 
-        $this->addLibraryAssets(array(
+        $this->addLibraryAssets([
             'knob',
             'dataTables'
-        ), 'index-index');
+        ], 'index-index');
         $this->assets->addJs('assets/admin/js/index/index.js');
     }
 
-	public function indexStatusAction(){
+    public function indexStatusAction()
+    {
 
         $tipologiePosts = TipologiePost::find()->toArray();
         $option = Options::findFirstByOptionName('reindex_queue');
         $reindex = [];
-        if($option){
+        if ($option) {
             $reindex = json_decode($option->option_value, true);
         }
 
         $nr = count($tipologiePosts);
-        for($i = 0; $i < $nr; $i++){
+        for ($i = 0; $i < $nr; $i++) {
             $tipologiePosts[$i]['status'] = in_array($tipologiePosts[$i]['id'], $reindex) ? 'ko' : 'ok';
-            $tipologiePosts[$i]['numero_post'] = Posts::count('id_tipologia_post = '.$tipologiePosts[$i]['id']);
+            $tipologiePosts[$i]['numero_post'] = Posts::count('id_tipologia_post = ' . $tipologiePosts[$i]['id']);
         }
         $this->assets->addJs('assets/admin/js/index/indexStatus.js');
 
         $this->view->post_types = $tipologiePosts;
     }
 
-    public function rebuildIndexAction(){
-        if($this->request->isPost() && $this->request->isAjax()){
+    public function rebuildIndexAction()
+    {
+        if ($this->request->isPost() && $this->request->isAjax()) {
             $params = $this->request->getPost();
-            if(!isset($params['id_tipologia_post'])) $this->response->setStatusCode(500, 'Bad Request');
+            if (!isset($params['id_tipologia_post'])) $this->response->setStatusCode(500, 'Bad Request');
             $flatTablesManager = new \apps\admin\plugins\FlatTablesManagerPlugin();
 
             $postType = TipologiePost::findFirstById($params['id_tipologia_post']);
-            if(!$postType) $this->response->setStatusCode(500, 'Tipologia Post Inesistente');
+            if (!$postType) $this->response->setStatusCode(500, 'Tipologia Post Inesistente');
 
             $indexRs = $flatTablesManager->indexPostType($postType);
-            if($indexRs['success']){
+            if ($indexRs['success']) {
                 $option = \Options::findFirstByOptionName('reindex_queue');
-                if($option){
+                if ($option) {
                     $post_types_to_reindex = json_decode($option->option_value, true);
                     $key = array_search($params['id_tipologia_post'], $post_types_to_reindex);
-                    if($key !== false){
+                    if ($key !== false) {
                         unset($post_types_to_reindex[$key]);
                     }
                     $option->option_value = json_encode(array_values($post_types_to_reindex));
                     $option->save();
                 }
             }
-            $this->response->setJsonContent ( array (
+            $this->response->setJsonContent([
                 'success' => $indexRs
-            ));
+            ]);
             return $this->response;
         } else {
             $this->response->redirect('index/index');

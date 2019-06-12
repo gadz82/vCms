@@ -181,20 +181,20 @@ class Volantini extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_tipologia_volantino' => 'id_tipologia_volantino',
+            'id'                         => 'id',
+            'id_tipologia_stato'         => 'id_tipologia_stato',
+            'id_tipologia_volantino'     => 'id_tipologia_volantino',
             'id_tipologia_punto_vendita' => 'id_tipologia_punto_vendita',
-            'id_regione' => 'id_regione',
-            'id_punto_vendita' => 'id_punto_vendita',
-            'titolo' => 'titolo',
-            'anno' => 'anno',
-            'numero' => 'numero',
-            'data_inizio_pubblicazione' => 'data_inizio_pubblicazione',
-            'data_fine_pubblicazione' => 'data_fine_pubblicazione',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'id_regione'                 => 'id_regione',
+            'id_punto_vendita'           => 'id_punto_vendita',
+            'titolo'                     => 'titolo',
+            'anno'                       => 'anno',
+            'numero'                     => 'numero',
+            'data_inizio_pubblicazione'  => 'data_inizio_pubblicazione',
+            'data_fine_pubblicazione'    => 'data_fine_pubblicazione',
+            'data_creazione'             => 'data_creazione',
+            'data_aggiornamento'         => 'data_aggiornamento',
+            'attivo'                     => 'attivo'
         ];
     }
 }

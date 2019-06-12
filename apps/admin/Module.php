@@ -35,14 +35,14 @@ class Module implements ModuleDefinitionInterface
     public function registerAutoloaders(DiInterface $di = null)
     {
         $loader = new Loader();
-        $loader->registerDirs ([
-        		__DIR__.'/controllers/',
-        		__DIR__.'/models/'
+        $loader->registerDirs([
+            __DIR__ . '/controllers/',
+            __DIR__ . '/models/'
 
-        ])->registerNamespaces ([
-        		'apps\admin\plugins' => __DIR__.'/plugins/',
-        		'apps\admin\library' => __DIR__.'/library/',
-        		'apps\admin\forms' => __DIR__.'/forms/'
+        ])->registerNamespaces([
+            'apps\admin\plugins' => __DIR__ . '/plugins/',
+            'apps\admin\library' => __DIR__ . '/library/',
+            'apps\admin\forms'   => __DIR__ . '/forms/'
         ]);
         $loader->register();
     }
@@ -53,89 +53,89 @@ class Module implements ModuleDefinitionInterface
     public function registerServices(DiInterface $di)
     {
 
-    	define ( 'BASE_DIR', dirname ( __DIR__ ) );
-    	define ( 'APP_DIR', BASE_DIR . '/admin' );
+        define('BASE_DIR', dirname(__DIR__));
+        define('APP_DIR', BASE_DIR . '/admin');
 
         $config = $di->get('baseConfig');
-        if(file_exists(__DIR__.'/config/config.php')){
-            $moduleConfig = include __DIR__.'/config/config.php';
+        if (file_exists(__DIR__ . '/config/config.php')) {
+            $moduleConfig = include __DIR__ . '/config/config.php';
             $config->merge($moduleConfig);
         }
-        $di->set ( 'config', $config );
+        $di->set('config', $config);
         $di->remove('baseConfig');
 
         define('APPLICATION_ENV', $config->application->appEnv);
 
-        if($config->application->appEnv) $di->setShared ( 'config', $config );
+        if ($config->application->appEnv) $di->setShared('config', $config);
 
-		// EventsManager
-		$di->setShared ( 'dispatcher', function () use($di) {
-			$public_controllers = [
-				'session' => [
+        // EventsManager
+        $di->setShared('dispatcher', function () use ($di) {
+            $public_controllers = [
+                'session' => [
                     'index',
                     'login'
-				],
-				'errors' => [
-					'show401',
-					'show404',
-					'show500'
-				],
-				'Asset' => [
-					'js',
-					'css'
-				]
-			];
+                ],
+                'errors'  => [
+                    'show401',
+                    'show404',
+                    'show500'
+                ],
+                'Asset'   => [
+                    'js',
+                    'css'
+                ]
+            ];
 
-			$eventsManager = new EventsManager ();
-			$eventsManager->attach ( 'dispatch:beforeDispatch', new SecurityPlugin($public_controllers) );
-			$eventsManager->attach ( 'dispatch:beforeException', new NotFoundPlugin() );
-			$eventsManager->attach ( 'dispatch:beforeExecuteRoute', new CheckRoutePlugin() );
+            $eventsManager = new EventsManager ();
+            $eventsManager->attach('dispatch:beforeDispatch', new SecurityPlugin($public_controllers));
+            $eventsManager->attach('dispatch:beforeException', new NotFoundPlugin());
+            $eventsManager->attach('dispatch:beforeExecuteRoute', new CheckRoutePlugin());
 
-			$dispatcher = new Dispatcher ();
-			$dispatcher->setEventsManager ( $eventsManager );
-			return $dispatcher;
-		} );
+            $dispatcher = new Dispatcher ();
+            $dispatcher->setEventsManager($eventsManager);
+            return $dispatcher;
+        });
 
-		/**
-		 * The URL component is used to generate all kind of urls in the application
-		 */
-		$di->setShared('url', function () use($config) {
-			$url = new UrlResolver ();
-			$url->setBaseUri ($config->application->baseUri);
-			return $url;
-		} );
+        /**
+         * The URL component is used to generate all kind of urls in the application
+         */
+        $di->setShared('url', function () use ($config) {
+            $url = new UrlResolver ();
+            $url->setBaseUri($config->application->baseUri);
+            return $url;
+        });
 
-		/**
-		 * Setting up the view component
-		 */
-		$di->setShared('view', function () use($config) {
-			$view = new View ();
-			$view->setViewsDir($config->application->viewsDir );
-			$view->registerEngines([
-                '.volt' => function ($view, $di) use($config) {
+        /**
+         * Setting up the view component
+         */
+        $di->setShared('view', function () use ($config) {
+            $view = new View ();
+            $view->setViewsDir($config->application->viewsDir);
+            $view->registerEngines([
+                '.volt' => function ($view, $di) use ($config) {
 
-                    $volt = new VoltEngine ( $view, $di );
+                    $volt = new VoltEngine ($view, $di);
 
                     $volt->setOptions([
-                        'compiledPath' => $config->application->cacheDir,
+                        'compiledPath'      => $config->application->cacheDir,
                         'compiledSeparator' => '_'
                     ]);
 
-                    $compiler = $volt->getCompiler ();
-                    $compiler->addFilter ( 'round', 'round' );
-                    $compiler->addFunction ( 'in_array', 'in_array' );
-                    $compiler->addFunction ( 'array_key_exists', 'array_key_exists' );
-                    $compiler->addFunction ( 'implode', 'implode' );
-                    $compiler->addFunction ( 'fb', 'fb' );
-                    $compiler->addFunction ( 'strtotime', 'strtotime' );
-                    $compiler->addFunction ( 'substr', 'substr' );
-                    $compiler->addFunction ( 'str_replace', 'str_replace' );
-                    $compiler->addFunction ( 'strpos', 'strpos' );
-                    $compiler->addFunction ( 'date', 'date' );
-                    $compiler->addFunction ( 'strtotime', 'strtotime' );
-                    $compiler->addFunction ( 'camelize', function($str){
+                    $compiler = $volt->getCompiler();
+                    $compiler->addFilter('round', 'round');
+                    $compiler->addFunction('in_array', 'in_array');
+                    $compiler->addFunction('array_key_exists', 'array_key_exists');
+                    $compiler->addFunction('implode', 'implode');
+                    $compiler->addFunction('fb', 'fb');
+                    $compiler->addFunction('strtotime', 'strtotime');
+                    $compiler->addFunction('substr', 'substr');
+                    $compiler->addFunction('str_replace', 'str_replace');
+                    $compiler->addFunction('strpos', 'strpos');
+                    $compiler->addFunction('date', 'date');
+                    $compiler->addFunction('strtotime', 'strtotime');
+                    $compiler->addFunction('camelize', function ($str) {
                         return Text::camelize($str);
-                    } );
+                    });
                     return $volt;
                 }
             ]);
@@ -146,12 +146,12 @@ class Module implements ModuleDefinitionInterface
         /**
          * Database connection is created based in the parameters defined in the configuration file
          */
-        $di->setShared('db', function () use($config) {
-            $dbConfig = $config->database->toArray ();
+        $di->setShared('db', function () use ($config) {
+            $dbConfig = $config->database->toArray();
             $adapter = $dbConfig ['adapter'];
-            unset ( $dbConfig ['adapter'] );
+            unset ($dbConfig ['adapter']);
             $class = 'Phalcon\Db\Adapter\Pdo\\' . $adapter;
-            return new $class ( $dbConfig );
+            return new $class ($dbConfig);
         });
 
         // ModelManager
@@ -162,7 +162,7 @@ class Module implements ModuleDefinitionInterface
         // Metadata per MODEL -> APC
         $di->setShared('modelsMetadata', function () {
             return new MetaDataAdapter ([
-                'prefix' => 'cmsio-metadata',
+                'prefix'   => 'cmsio-metadata',
                 'lifetime' => 86400
             ]);
         });
@@ -170,54 +170,54 @@ class Module implements ModuleDefinitionInterface
         // Session manager
         $di->setShared('session', function () {
             $session = new SessionAdapter ();
-            $session->start ();
+            $session->start();
             return $session;
         });
 
         // Gestione COOKIES
         $di->setShared('cookies', function () {
             $cookies = new Cookies ();
-            $cookies->useEncryption ( true );
+            $cookies->useEncryption(true);
             return $cookies;
         });
 
         // Configurazione CRYPT
         $di->setShared('crypt', function () {
             $crypt = new Crypt ();
-            $crypt->setKey ( '1E3#xJ71([k?J-Y' );
+            $crypt->setKey('1E3#xJ71([k?J-Y');
             return $crypt;
-        } );
+        });
 
         // Configuarazione SECURITY
         $di->setShared('security', function () {
             $security = new Security ();
             // Set the password hashing factor to 12 rounds
-            $security->setWorkFactor ( 12 );
+            $security->setWorkFactor(12);
             return $security;
-        } );
+        });
 
         // Configurazione FLASH con css custom
         $di->setShared('flash', function () {
             return new Flash ([
-                'error' => 'alert alert-danger alert-dismissable',
+                'error'   => 'alert alert-danger alert-dismissable',
                 'success' => 'alert alert-success alert-dismissable',
-                'notice' => 'alert alert-info alert-dismissable',
-                'plain' => 'alert-plain alert-dismissable'
+                'notice'  => 'alert alert-info alert-dismissable',
+                'plain'   => 'alert-plain alert-dismissable'
             ]);
         });
 
         // Configurazione FLASHSESSION con css custom
         $di->setShared('flashSession', function () {
             return new FlashSession([
-                'error' => 'alert alert-danger alert-dismissable',
+                'error'   => 'alert alert-danger alert-dismissable',
                 'success' => 'alert alert-success alert-dismissable',
-                'notice' => 'alert alert-info alert-dismissable',
-                'plain' => 'alert-plain alert-dismissable'
+                'notice'  => 'alert alert-info alert-dismissable',
+                'plain'   => 'alert-plain alert-dismissable'
             ]);
         });
 
         // Configurazione CACHE per MODEL
-        $di->setShared ( 'modelsCache', function(){
+        $di->setShared('modelsCache', function () {
             // Cache data for one day by default
             $frontCache = new \Phalcon\Cache\Frontend\Data([
                 "lifetime" => 86400
@@ -230,7 +230,7 @@ class Module implements ModuleDefinitionInterface
         });
 
         // Set the views cache service
-        $di->setShared ( 'viewCache', function () {
+        $di->setShared('viewCache', function () {
             // Cache data for one day by default
             $frontCache = new OutputFrontend([
                 "lifetime" => 86400
@@ -243,39 +243,39 @@ class Module implements ModuleDefinitionInterface
             return $cache;
         });
 
-        $di->setShared ( 'forms', function () {
+        $di->setShared('forms', function () {
             return new FormManager ();
         });
 
-        $di->set ( 'auth', function () {
+        $di->set('auth', function () {
             return new \apps\admin\library\Auth();
         });
 
-        $di->setShared ( 'mailer', function () {
+        $di->setShared('mailer', function () {
             return new Mailer();
         });
 
-        $di->setShared ( 'excel', function () {
+        $di->setShared('excel', function () {
             require_once __DIR__ . '/library/PHPExcel.php';
             return new \PHPExcel();
         });
 
-        $di->set ( 'menu', function () {
+        $di->set('menu', function () {
             return new \apps\admin\library\Menu();
         });
 
-        $di->setShared ( 'uploader', function () {
+        $di->setShared('uploader', function () {
             return new \apps\admin\library\UploadHandler();
         });
 
-        if($config->debug->tools){
-            if($config->debug->error_reporting !== 0) error_reporting($config->debug->error_reporting);
-            if($config->debug->display_errors !== 0) ini_set('display_errors', $config->debug->display_errors);
+        if ($config->debug->tools) {
+            if ($config->debug->error_reporting !== 0) error_reporting($config->debug->error_reporting);
+            if ($config->debug->display_errors !== 0) ini_set('display_errors', $config->debug->display_errors);
         }
 
-        if ( $di->has('debugbar') ) {
+        if ($di->has('debugbar')) {
             $debugbar = $di['debugbar'];
-            if($config->debug->tools || $di['session']->has('debug')){
+            if ($config->debug->tools || $di['session']->has('debug')) {
                 $debugbar->attachDb('db');
                 $debugbar->enable();
             } else {

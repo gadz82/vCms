@@ -16,10 +16,10 @@ class IndexForm extends Form
         $auth = $this->getAuth();
 
         // Colonne del model che non devono essere renderizzate
-        $exclude_fields = array('content', 'attivo');
+        $exclude_fields = ['content', 'attivo'];
 
         // Ordine delle colonne del model. Se non non presenti tutte, quelle escluse vengono aggiunte in coda nell'ordine presente nel model
-        $order_fields = array();
+        $order_fields = [];
 
         // Generazione campi
         $fields = $this->getAutoRenderByModel(new \Tags(), 'Tags', $exclude_fields, $order_fields, true);

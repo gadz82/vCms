@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,25 +22,25 @@ class ItalySardegna2017Migration_110 extends Migration
                     new Column(
                         'istat_old',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'    => 11,
+                            'first'   => true
                         ]
                     ),
                     new Column(
                         'istat_new',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'size' => 11,
+                            'type'  => Column::TYPE_INTEGER,
+                            'size'  => 11,
                             'after' => 'istat_old'
                         ]
                     ),
                     new Column(
                         'comune',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'istat_new'
                         ]
                     )
@@ -49,9 +49,9 @@ class ItalySardegna2017Migration_110 extends Migration
                     new Index('PRIMARY', ['istat_old'], 'PRIMARY')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

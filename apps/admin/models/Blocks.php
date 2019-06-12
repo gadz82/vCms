@@ -149,7 +149,8 @@ class Blocks extends BaseModel
         return 'blocks';
     }
 
-    public function beforeUpdate(){
+    public function beforeUpdate()
+    {
         $old = Blocks::findFirstById($this->id);
 
         $history = new BlocksHistory();
@@ -179,20 +180,20 @@ class Blocks extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_applicazione' => 'id_applicazione',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_tipologia_block' => 'id_tipologia_block',
-            'id_block_tag' => 'id_block_tag',
-            'titolo' => 'titolo',
-            'key' => 'key',
-            'content' => 'content',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
+            'id'                        => 'id',
+            'id_applicazione'           => 'id_applicazione',
+            'id_tipologia_stato'        => 'id_tipologia_stato',
+            'id_tipologia_block'        => 'id_tipologia_block',
+            'id_block_tag'              => 'id_block_tag',
+            'titolo'                    => 'titolo',
+            'key'                       => 'key',
+            'content'                   => 'content',
+            'data_creazione'            => 'data_creazione',
+            'data_aggiornamento'        => 'data_aggiornamento',
             'data_inizio_pubblicazione' => 'data_inizio_pubblicazione',
-            'data_fine_pubblicazione' => 'data_fine_pubblicazione',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'data_fine_pubblicazione'   => 'data_fine_pubblicazione',
+            'id_utente'                 => 'id_utente',
+            'attivo'                    => 'attivo'
         ];
     }
 

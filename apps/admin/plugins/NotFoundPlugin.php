@@ -31,19 +31,19 @@ class NotFoundPlugin extends Plugin
                 case Dispatcher::EXCEPTION_ACTION_NOT_FOUND :
                     $dispatcher->forward([
                         'controller' => 'errors',
-                        'action' => 'show404'
+                        'action'     => 'show404'
                     ]);
                     return false;
             }
         }
         $dispatcher->forward([
             'controller' => 'errors',
-            'action' => 'show500',
-            'params' => [
+            'action'     => 'show500',
+            'params'     => [
                 'error_messge' => $exception->getMessage(),
-                'error_code' => $exception->getCode(),
-                'error_file' => $exception->getFile(),
-                'error_trace' => $exception->getTrace()
+                'error_code'   => $exception->getCode(),
+                'error_file'   => $exception->getFile(),
+                'error_trace'  => $exception->getTrace()
             ]
         ]);
 

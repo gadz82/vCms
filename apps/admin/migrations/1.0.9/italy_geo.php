@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,33 +22,33 @@ class ItalyGeoMigration_109 extends Migration
                     new Column(
                         'istat',
                         [
-                            'type' => Column::TYPE_BIGINTEGER,
+                            'type'    => Column::TYPE_BIGINTEGER,
                             'notNull' => true,
-                            'size' => 20,
-                            'first' => true
+                            'size'    => 20,
+                            'first'   => true
                         ]
                     ),
                     new Column(
                         'comune',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'istat'
                         ]
                     ),
                     new Column(
                         'lng',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'comune'
                         ]
                     ),
                     new Column(
                         'lat',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'lng'
                         ]
                     )
@@ -57,9 +57,9 @@ class ItalyGeoMigration_109 extends Migration
                     new Index('PRIMARY', ['istat'], 'PRIMARY')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

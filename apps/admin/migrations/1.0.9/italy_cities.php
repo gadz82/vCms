@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,65 +22,65 @@ class ItalyCitiesMigration_109 extends Migration
                     new Column(
                         'istat',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'    => 11,
+                            'first'   => true
                         ]
                     ),
                     new Column(
                         'comune',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'istat'
                         ]
                     ),
                     new Column(
                         'regione',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 50,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 50,
                             'after' => 'comune'
                         ]
                     ),
                     new Column(
                         'provincia',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 2,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 2,
                             'after' => 'regione'
                         ]
                     ),
                     new Column(
                         'prefisso',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 7,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 7,
                             'after' => 'provincia'
                         ]
                     ),
                     new Column(
                         'cod_fisco',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 10,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 10,
                             'after' => 'prefisso'
                         ]
                     ),
                     new Column(
                         'superficie',
                         [
-                            'type' => Column::TYPE_DOUBLE,
-                            'size' => 1,
+                            'type'  => Column::TYPE_DOUBLE,
+                            'size'  => 1,
                             'after' => 'cod_fisco'
                         ]
                     ),
                     new Column(
                         'num_residenti',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'size' => 11,
+                            'type'  => Column::TYPE_INTEGER,
+                            'size'  => 11,
                             'after' => 'superficie'
                         ]
                     )
@@ -89,9 +89,9 @@ class ItalyCitiesMigration_109 extends Migration
                     new Index('PRIMARY', ['istat'], 'PRIMARY')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

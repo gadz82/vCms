@@ -84,10 +84,10 @@ class FiltriGroupPostType extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'                => 'id',
             'id_tipologia_post' => 'id_tipologia_post',
-            'id_filtri_group' => 'id_filtri_group',
-            'attivo' => 'attivo'
+            'id_filtri_group'   => 'id_filtri_group',
+            'attivo'            => 'attivo'
         ];
     }
 

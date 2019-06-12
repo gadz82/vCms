@@ -163,21 +163,21 @@ class PuntiVendita extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'                         => 'id',
             'id_tipologia_punto_vendita' => 'id_tipologia_punto_vendita',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_regione' => 'id_regione',
-            'comune' => 'comune',
-            'nome' => 'nome',
-            'data' => 'data',
-            'lat' => 'lat',
-            'lng' => 'lng',
-            'address' => 'address',
-            'id_pdv' => 'id_pdv',
-            'coop' => 'coop',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'id_tipologia_stato'         => 'id_tipologia_stato',
+            'id_regione'                 => 'id_regione',
+            'comune'                     => 'comune',
+            'nome'                       => 'nome',
+            'data'                       => 'data',
+            'lat'                        => 'lat',
+            'lng'                        => 'lng',
+            'address'                    => 'address',
+            'id_pdv'                     => 'id_pdv',
+            'coop'                       => 'coop',
+            'data_creazione'             => 'data_creazione',
+            'data_aggiornamento'         => 'data_aggiornamento',
+            'attivo'                     => 'attivo'
         ];
     }
 

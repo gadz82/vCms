@@ -247,7 +247,7 @@ class Users extends BaseModel
             'email',
             new EmailValidator(
                 [
-                    'model' => $this,
+                    'model'   => $this,
                     'message' => 'Inserisci una mail valida',
                 ]));
         $validator->add(
@@ -294,35 +294,35 @@ class Users extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_users_groups' => 'id_users_groups',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_tipologia_user' => 'id_tipologia_user',
-            'username' => 'username',
-            'email' => 'email',
-            'nome' => 'nome',
-            'cognome' => 'cognome',
-            'telefono' => 'telefono',
-            'indirizzo' => 'indirizzo',
-            'localita' => 'localita',
-            'cap' => 'cap',
-            'data_di_nascita' => 'data_di_nascita',
-            'validation_token' => 'validation_token',
-            'token_validated' => 'token_validated',
-            'password' => 'password',
-            'password_reset_token' => 'password_reset_token',
-            'validation_expiration_date' => 'validation_expiration_date',
+            'id'                             => 'id',
+            'id_users_groups'                => 'id_users_groups',
+            'id_tipologia_stato'             => 'id_tipologia_stato',
+            'id_tipologia_user'              => 'id_tipologia_user',
+            'username'                       => 'username',
+            'email'                          => 'email',
+            'nome'                           => 'nome',
+            'cognome'                        => 'cognome',
+            'telefono'                       => 'telefono',
+            'indirizzo'                      => 'indirizzo',
+            'localita'                       => 'localita',
+            'cap'                            => 'cap',
+            'data_di_nascita'                => 'data_di_nascita',
+            'validation_token'               => 'validation_token',
+            'token_validated'                => 'token_validated',
+            'password'                       => 'password',
+            'password_reset_token'           => 'password_reset_token',
+            'validation_expiration_date'     => 'validation_expiration_date',
             'reset_password_expiration_date' => 'reset_password_expiration_date',
-            'user_registration_date' => 'user_registration_date',
-            'user_last_login' => 'user_last_login',
-            'ip_address' => 'ip_address',
-            'facebook_auth_id' => 'facebook_auth_id',
-            'facebook_auth_token' => 'facebook_auth_token',
-            'google_auth_id' => 'google_auth_id',
-            'google_auth_token' => 'google_auth_token',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'user_registration_date'         => 'user_registration_date',
+            'user_last_login'                => 'user_last_login',
+            'ip_address'                     => 'ip_address',
+            'facebook_auth_id'               => 'facebook_auth_id',
+            'facebook_auth_token'            => 'facebook_auth_token',
+            'google_auth_id'                 => 'google_auth_id',
+            'google_auth_token'              => 'google_auth_token',
+            'data_creazione'                 => 'data_creazione',
+            'data_aggiornamento'             => 'data_aggiornamento',
+            'attivo'                         => 'attivo'
         ];
     }
 

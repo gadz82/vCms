@@ -1,6 +1,7 @@
 <?php
 
-class NotificheUsers extends BaseModel {
+class NotificheUsers extends BaseModel
+{
 
     /**
      *
@@ -113,15 +114,15 @@ class NotificheUsers extends BaseModel {
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'                 => 'id',
             'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_notifica' => 'id_notifica',
-            'id_user_device' => 'id_user_device',
-            'data_invio' => 'data_invio',
+            'id_notifica'        => 'id_notifica',
+            'id_user_device'     => 'id_user_device',
+            'data_invio'         => 'data_invio',
             'data_schedulazione' => 'data_schedulazione',
-            'data_creazione' => 'data_creazione',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

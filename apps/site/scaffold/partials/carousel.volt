@@ -14,23 +14,26 @@
                 <div class="col-md-3 col-sm-6 bottommargin">
                     <div class="ipost clearfix">
                         <div class="entry-image">
-                            <a href="{{entity.readLink}}"><img class="image_fade" src="/files/small/{{entity.filename}}" alt="{{entity.titolo}}"></a>
+                            <a href="{{ entity.readLink }}"><img class="image_fade"
+                                                                 src="/files/small/{{ entity.filename }}"
+                                                                 alt="{{ entity.titolo }}"></a>
                         </div>
                         <div class="entry-title">
-                            <h3><a href="{{entity.readLink}}">{{entity.titolo}}</a></h3>
+                            <h3><a href="{{ entity.readLink }}">{{ entity.titolo }}</a></h3>
                         </div>
                         <ul class="entry-meta clearfix">
-                            <li><i class="icon-calendar3"></i> {{date('d/m/Y', strtotime(entity.data_inizio_pubblicazione))}}</li>
+                            <li>
+                                <i class="icon-calendar3"></i> {{ date('d/m/Y', strtotime(entity.data_inizio_pubblicazione)) }}
+                            </li>
                         </ul>
                         <div class="entry-content">
-                            <p>{{entity.excerpt|striptags}}</p>
+                            <p>{{ entity.excerpt|striptags }}</p>
                         </div>
                     </div>
                 </div>
             {% endfor %}
         </div>
     </div>
-
 
 
 </div>

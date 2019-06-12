@@ -60,7 +60,7 @@ class TipologieStatoPostMeta extends BaseModel
      */
     public function initialize()
     {
-    	parent::initialize ();
+        parent::initialize();
 
         $this->hasMany('id', 'PostsMeta', 'id_tipologia_stato', ['alias' => 'PostsMeta', 'reusable' => true]);
     }
@@ -84,10 +84,10 @@ class TipologieStatoPostMeta extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 

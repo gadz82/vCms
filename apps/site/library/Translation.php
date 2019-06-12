@@ -1,16 +1,19 @@
 <?php
 namespace apps\site\library;
+
 use Phalcon\Tag;
 
-class Translation extends Tag {
+class Translation extends Tag
+{
 
-    protected static function t($string){
+    protected static function t($string)
+    {
         $translation = \FlatTranslations::findFirst([
-            'columns' => 'translation',
+            'columns'    => 'translation',
             'conditions' => 'original_string = ?1 AND id_applicazione = ?2 AND attivo = 1',
-            'bind' => [1 => $string, 2 => \apps\site\library\Cms::getIstance()->id_application],
-            'cache' => [
-                'key' => 'translationFor'.$string.\apps\site\library\Cms::getIstance()->id_application,
+            'bind'       => [1 => $string, 2 => \apps\site\library\Cms::getIstance()->id_application],
+            'cache'      => [
+                'key'      => 'translationFor' . $string . \apps\site\library\Cms::getIstance()->id_application,
                 'lifetime' => 360000
             ]
         ]);

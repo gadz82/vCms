@@ -39,12 +39,13 @@ class TipologieStatoForm extends BaseModel
      * @param mixed $parameters
      * @return TipologieStatoForm[]|TipologieStatoForm
      */
-    public static function find($parameters = null) {
-        $key = 'tipologie_stato_form_find.' . md5 ( json_encode ( $parameters ) );
-        $rs = apcu_fetch ( $key );
-        if (! $rs) {
-            $rs = parent::find ( $parameters );
-            apcu_store ( $key, $rs );
+    public static function find($parameters = null)
+    {
+        $key = 'tipologie_stato_form_find.' . md5(json_encode($parameters));
+        $rs = apcu_fetch($key);
+        if (!$rs) {
+            $rs = parent::find($parameters);
+            apcu_store($key, $rs);
         }
         return $rs;
     }
@@ -55,12 +56,13 @@ class TipologieStatoForm extends BaseModel
      * @param mixed $parameters
      * @return TipologieStatoForm
      */
-    public static function findFirst($parameters = null) {
-        $key = 'tipologie_stato_form_find_first.' . md5 ( json_encode ( $parameters ) );
-        $rs = apcu_fetch ( $key );
-        if (! $rs) {
-            $rs = parent::findFirst ( $parameters );
-            apcu_store ( $key, $rs );
+    public static function findFirst($parameters = null)
+    {
+        $key = 'tipologie_stato_form_find_first.' . md5(json_encode($parameters));
+        $rs = apcu_fetch($key);
+        if (!$rs) {
+            $rs = parent::findFirst($parameters);
+            apcu_store($key, $rs);
         }
         return $rs;
     }
@@ -94,10 +96,10 @@ class TipologieStatoForm extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 

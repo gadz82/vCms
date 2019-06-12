@@ -93,12 +93,12 @@ class Tags extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'              => 'id',
             'id_applicazione' => 'id_applicazione',
-            'titolo' => 'titolo',
-            'tag' => 'tag',
-            'content' => 'content',
-            'attivo' => 'attivo'
+            'titolo'          => 'titolo',
+            'tag'             => 'tag',
+            'content'         => 'content',
+            'attivo'          => 'attivo'
         ];
     }
 

@@ -121,8 +121,9 @@ class PostsMeta extends BaseModel
         return parent::find($parameters);
     }
 
-    public static function getMetaValue(PostsMeta $postsMeta){
-        switch($postsMeta->Meta->TipologieMeta->descrizione){
+    public static function getMetaValue(PostsMeta $postsMeta)
+    {
+        switch ($postsMeta->Meta->TipologieMeta->descrizione) {
             case "Intero":
                 $meta_value = $postsMeta->meta_value_int;
                 break;
@@ -173,7 +174,7 @@ class PostsMeta extends BaseModel
      */
     public function initialize()
     {
-    	parent::initialize();
+        parent::initialize();
 
         $this->belongsTo('post_id', '\Posts', 'id', ['alias' => 'Posts', 'reusable' => true]);
         $this->belongsTo('id_tipologia_post_meta', '\TipologieMeta', 'id', ['alias' => 'TipologieMeta', 'reusable' => true]);
@@ -239,8 +240,9 @@ class PostsMeta extends BaseModel
         }
     }
 
-    public function setMetaValue(PostsMeta $postMeta, $tipologia_meta, $valore){
-        switch($tipologia_meta){
+    public function setMetaValue(PostsMeta $postMeta, $tipologia_meta, $valore)
+    {
+        switch ($tipologia_meta) {
             case "Intero":
                 $postMeta->meta_value_int = (int)$valore;
                 break;
@@ -248,7 +250,7 @@ class PostsMeta extends BaseModel
                 $postMeta->meta_value_decimal = $valore;
                 break;
             case "Stringa":
-                $postMeta->meta_value_varchar = substr($valore, 0,255);
+                $postMeta->meta_value_varchar = substr($valore, 0, 255);
                 break;
             case "Testo":
                 $postMeta->meta_value_text = $valore;
@@ -284,22 +286,22 @@ class PostsMeta extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'post_id' => 'post_id',
+            'id'                     => 'id',
+            'post_id'                => 'post_id',
             'id_tipologia_post_meta' => 'id_tipologia_post_meta',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_meta' => 'id_meta',
-            'id_post_meta_group' => 'id_post_meta_group',
-            'meta_key' => 'meta_key',
-            'meta_value_int' => 'meta_value_int',
-        	'meta_value_decimal' => 'meta_value_decimal',
-            'meta_value_varchar' => 'meta_value_varchar',
-            'meta_value_text' => 'meta_value_text',
-            'meta_value_datetime' => 'meta_value_datetime',
-            'meta_value_files' => 'meta_value_files',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'id_tipologia_stato'     => 'id_tipologia_stato',
+            'id_meta'                => 'id_meta',
+            'id_post_meta_group'     => 'id_post_meta_group',
+            'meta_key'               => 'meta_key',
+            'meta_value_int'         => 'meta_value_int',
+            'meta_value_decimal'     => 'meta_value_decimal',
+            'meta_value_varchar'     => 'meta_value_varchar',
+            'meta_value_text'        => 'meta_value_text',
+            'meta_value_datetime'    => 'meta_value_datetime',
+            'meta_value_files'       => 'meta_value_files',
+            'data_creazione'         => 'data_creazione',
+            'data_aggiornamento'     => 'data_aggiornamento',
+            'attivo'                 => 'attivo'
         ];
     }
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,50 +18,50 @@ class RegioniPacMigration_111 extends Migration
     public function morph()
     {
         $this->morphTable('regioni_pac', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 2,
-                            'first' => true
+                            'size'          => 2,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_regione_italy',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'descrizione',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 255,
-                            'after' => 'id_regione_italy'
+                            'size'    => 255,
+                            'after'   => 'id_regione_italy'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'descrizione'
+                            'size'    => 1,
+                            'after'   => 'descrizione'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('attivo', ['attivo'], null),
                     new Index('id_regione_italy', ['id_regione_italy'], null)
@@ -70,18 +70,18 @@ class RegioniPacMigration_111 extends Migration
                     new Reference(
                         'regioni_pac_ibfk_1',
                         [
-                            'referencedTable' => 'italy_regions',
-                            'columns' => ['id_regione_italy'],
+                            'referencedTable'   => 'italy_regions',
+                            'columns'           => ['id_regione_italy'],
                             'referencedColumns' => ['id_regione'],
-                            'onUpdate' => 'RESTRICT',
-                            'onDelete' => 'RESTRICT'
+                            'onUpdate'          => 'RESTRICT',
+                            'onDelete'          => 'RESTRICT'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '21',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '21',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

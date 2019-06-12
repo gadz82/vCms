@@ -106,13 +106,13 @@ class PostsFiltri extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_post' => 'id_post',
-            'id_filtro' => 'id_filtro',
-            'id_filtro_valore' => 'id_filtro_valore',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'id_post'            => 'id_post',
+            'id_filtro'          => 'id_filtro',
+            'id_filtro_valore'   => 'id_filtro_valore',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

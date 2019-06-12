@@ -47,22 +47,24 @@ class FilesSizes extends BaseModel
      */
     public $attivo;
 
-    public static function find($parameters = null) {
-        $key = 'files_sizes_find.' . md5 ( json_encode ( $parameters ) );
-        $rs = apcu_fetch ( $key );
-        if (! $rs) {
-            $rs = parent::find ( $parameters );
-            apcu_store ( $key, $rs );
+    public static function find($parameters = null)
+    {
+        $key = 'files_sizes_find.' . md5(json_encode($parameters));
+        $rs = apcu_fetch($key);
+        if (!$rs) {
+            $rs = parent::find($parameters);
+            apcu_store($key, $rs);
         }
         return $rs;
     }
 
-    public static function findFirst($parameters = null) {
-        $key = 'files_sizes_find_first.' . md5 ( json_encode ( $parameters ) );
-        $rs = apcu_fetch ( $key );
-        if (! $rs) {
-            $rs = parent::findFirst ( $parameters );
-            apcu_store ( $key, $rs );
+    public static function findFirst($parameters = null)
+    {
+        $key = 'files_sizes_find_first.' . md5(json_encode($parameters));
+        $rs = apcu_fetch($key);
+        if (!$rs) {
+            $rs = parent::findFirst($parameters);
+            apcu_store($key, $rs);
         }
         return $rs;
     }
@@ -95,12 +97,12 @@ class FilesSizes extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'key' => 'key',
-            'max_width' => 'max_width',
+            'id'         => 'id',
+            'key'        => 'key',
+            'max_width'  => 'max_width',
             'max_height' => 'max_height',
-            'crop' => 'crop',
-            'attivo' => 'attivo'
+            'crop'       => 'crop',
+            'attivo'     => 'attivo'
         ];
     }
 

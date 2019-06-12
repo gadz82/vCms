@@ -115,7 +115,8 @@ class ApplicazioniRoutes extends BaseModel
         $this->belongsTo('id_tipologia_route', '\TipologieRoutes', 'id', ['alias' => 'TipologieRoutes', 'reusable' => true]);
     }
 
-    public function validation(){
+    public function validation()
+    {
         $validator = new Phalcon\Validation();
         $validator->add(
             'params',
@@ -143,17 +144,17 @@ class ApplicazioniRoutes extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_applicazione' => 'id_applicazione',
+            'id'                 => 'id',
+            'id_applicazione'    => 'id_applicazione',
             'id_tipologia_stato' => 'id_tipologia_stato',
             'id_tipologia_route' => 'id_tipologia_route',
-            'nome' => 'nome',
-            'path' => 'path',
-            'params' => 'params',
-            'ordine' => 'ordine',
-            'data_creazione' => 'data_creazione',
+            'nome'               => 'nome',
+            'path'               => 'path',
+            'params'             => 'params',
+            'ordine'             => 'ordine',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

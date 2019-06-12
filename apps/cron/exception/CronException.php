@@ -15,12 +15,13 @@ class CronException extends \Exception
 
     public function __construct($message, $code, $entity = null, Exception $previous = null)
     {
-        if($entity instanceof Model) $entity = $entity->toArray();
+        if ($entity instanceof Model) $entity = $entity->toArray();
         $this->entity = json_encode($entity);
         parent::__construct($message, $code, $previous);
     }
 
-    public function getEntity(){
+    public function getEntity()
+    {
         return $this->entity;
     }
 }

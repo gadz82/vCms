@@ -153,20 +153,20 @@ class Files extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'                 => 'id',
             'id_tipologia_stato' => 'id_tipologia_stato',
-            'original_filename' => 'original_filename',
-            'filename' => 'filename',
-            'filetype' => 'filetype',
-            'filesize' => 'filesize',
-            'filepath' => 'filepath',
-            'fileurl' => 'fileurl',
-            'priorita' => 'priorita',
-            'alt' => 'alt',
-            'private' => 'private',
-            'data_creazione' => 'data_creazione',
+            'original_filename'  => 'original_filename',
+            'filename'           => 'filename',
+            'filetype'           => 'filetype',
+            'filesize'           => 'filesize',
+            'filepath'           => 'filepath',
+            'fileurl'            => 'fileurl',
+            'priorita'           => 'priorita',
+            'alt'                => 'alt',
+            'private'            => 'private',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

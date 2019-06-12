@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,48 +22,48 @@ class TipologiePuntoVenditaMigration_112 extends Migration
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 2,
-                            'first' => true
+                            'size'          => 2,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'descrizione',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 175,
-                            'after' => 'id'
+                            'size'    => 175,
+                            'after'   => 'id'
                         ]
                     ),
                     new Column(
                         'codice',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 50,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 50,
                             'after' => 'descrizione'
                         ]
                     ),
                     new Column(
                         'ordine',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 2,
-                            'after' => 'codice'
+                            'size'    => 2,
+                            'after'   => 'codice'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'default' => "1",
-                            'size' => 1,
-                            'after' => 'ordine'
+                            'size'    => 1,
+                            'after'   => 'ordine'
                         ]
                     )
                 ],
@@ -72,9 +72,9 @@ class TipologiePuntoVenditaMigration_112 extends Migration
                     new Index('attivo', ['attivo'], null)
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

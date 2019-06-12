@@ -85,36 +85,40 @@ class MetaGroupPostType extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'                => 'id',
             'id_tipologia_post' => 'id_tipologia_post',
-            'id_meta_group' => 'id_meta_group',
-            'attivo' => 'attivo'
+            'id_meta_group'     => 'id_meta_group',
+            'attivo'            => 'attivo'
         ];
     }
 
-    public function afterSave(){
+    public function afterSave()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);
     }
 
-    private function getTipologiePost(){
+    private function getTipologiePost()
+    {
         return TipologiePost::query()
             ->innerJoin('MetaGroupPostType', 'mgpt.id_tipologia_post = TipologiePost.id AND mgpt.attivo = 1', 'mgpt')
-            ->where('mgpt.id_meta_group = '.$this->id.' AND TipologiePost.attivo = 1')
+            ->where('mgpt.id_meta_group = ' . $this->id . ' AND TipologiePost.attivo = 1')
             ->groupBy('TipologiePost.id')
             ->execute()->toArray();
     }
 
-    public function afterCreate(){
+    public function afterCreate()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);
     }
 
-    public function beforeDelete(){
+    public function beforeDelete()
+    {
         $eventsManager = new Phalcon\Events\Manager();
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);

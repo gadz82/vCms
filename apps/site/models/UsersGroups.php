@@ -97,12 +97,12 @@ class UsersGroups extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'titolo' => 'titolo',
-            'visitors' => 'visitors',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'titolo'             => 'titolo',
+            'visitors'           => 'visitors',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

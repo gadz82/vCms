@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,89 +18,89 @@ class RuoliPermessiMigration_111 extends Migration
     public function morph()
     {
         $this->morphTable('ruoli_permessi', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 4,
-                            'first' => true
+                            'size'          => 4,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_ruolo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 3,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 3,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'livello',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "0",
+                            'type'     => Column::TYPE_INTEGER,
+                            'default'  => "0",
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id_ruolo'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id_ruolo'
                         ]
                     ),
                     new Column(
                         'risorsa',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'notNull' => true,
-                            'size' => 50,
-                            'after' => 'livello'
+                            'size'    => 50,
+                            'after'   => 'livello'
                         ]
                     ),
                     new Column(
                         'azione',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 255,
-                            'after' => 'risorsa'
+                            'size'    => 255,
+                            'after'   => 'risorsa'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'azione'
+                            'size'    => 1,
+                            'after'   => 'azione'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "1",
+                            'type'     => Column::TYPE_INTEGER,
+                            'default'  => "1",
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_aggiornamento'
+                            'notNull'  => true,
+                            'size'     => 1,
+                            'after'    => 'data_aggiornamento'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('id_ruolo', ['id_ruolo'], null),
                     new Index('attivo', ['attivo'], null)
@@ -109,18 +109,18 @@ class RuoliPermessiMigration_111 extends Migration
                     new Reference(
                         'fk_ruoli_permessi_ruoli',
                         [
-                            'referencedTable' => 'ruoli',
-                            'columns' => ['id_ruolo'],
+                            'referencedTable'   => 'ruoli',
+                            'columns'           => ['id_ruolo'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '96',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '96',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_swedish_ci'
                 ],
             ]

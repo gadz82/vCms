@@ -18,7 +18,8 @@ use Phalcon\Validation\Validator\Regex as RegexValidator;
  * Utility per velocizzare la gestione e l'auto generazione dei Form in base al Model passato
  * @package apps\admin\forms
  */
-class Form extends \Phalcon\Forms\Form {
+class Form extends \Phalcon\Forms\Form
+{
 
     /**
      * @var
@@ -42,22 +43,23 @@ class Form extends \Phalcon\Forms\Form {
      * @param bool $renderError
      * @return string
      */
-    public function render($name, $renderError = false) {
-        $element = $this->get ( $name );
-        $messages = $element->getMessages ();
+    public function render($name, $renderError = false)
+    {
+        $element = $this->get($name);
+        $messages = $element->getMessages();
 
-        if ($messages->count () > 0) {
-            $element->setAttribute ( 'class', $element->getAttribute ( 'class' ) . ' error' );
-            $element->setUserOption ( 'group-class', $element->getUserOption ( 'group-class', '' ) . ' error' );
+        if ($messages->count() > 0) {
+            $element->setAttribute('class', $element->getAttribute('class') . ' error');
+            $element->setUserOption('group-class', $element->getUserOption('group-class', '') . ' error');
         }
 
-        if ($element->getAttribute ( 'required' )) {
-            $element->setLabel ( $element->getLabel () . ' *' );
+        if ($element->getAttribute('required')) {
+            $element->setLabel($element->getLabel() . ' *');
         }
 
-        $html = parent::render ( $name );
+        $html = parent::render($name);
         if ($renderError) {
-            $html .= $this->renderErrorFor ( $name );
+            $html .= $this->renderErrorFor($name);
         }
 
         return $html;
@@ -68,12 +70,13 @@ class Form extends \Phalcon\Forms\Form {
      * @param $name
      * @return string
      */
-    public function renderErrorFor($name) {
-        $messages = $this->getMessagesFor ( $name );
+    public function renderErrorFor($name)
+    {
+        $messages = $this->getMessagesFor($name);
 
-        if ($messages->count () > 0) {
-            $messages->rewind ();
-            return '<div class="form-label-error">' . $this->getMessagesFor ( $name )->current () . '</div>';
+        if ($messages->count() > 0) {
+            $messages->rewind();
+            return '<div class="form-label-error">' . $this->getMessagesFor($name)->current() . '</div>';
         }
 
         return '';
@@ -85,14 +88,15 @@ class Form extends \Phalcon\Forms\Form {
      * @param array|null $options
      * @return string
      */
-    public function label($name, array $options = null) {
-        $element = $this->get ( $name );
+    public function label($name, array $options = null)
+    {
+        $element = $this->get($name);
 
-        if ($element->getAttribute ( 'required' )) {
-            $element->setLabel ( $element->getLabel () . ' *' );
+        if ($element->getAttribute('required')) {
+            $element->setLabel($element->getLabel() . ' *');
         }
 
-        return parent::label ( $name, null );
+        return parent::label($name, null);
     }
 
     /**
@@ -100,9 +104,10 @@ class Form extends \Phalcon\Forms\Form {
      * @param $name
      * @return string
      */
-    public function hasErrorFor($name) {
-        $messages = $this->getMessagesFor ( $name );
-        return ($messages->count () > 0) ? 'has-error' : '';
+    public function hasErrorFor($name)
+    {
+        $messages = $this->getMessagesFor($name);
+        return ($messages->count() > 0) ? 'has-error' : '';
     }
 
     /**
@@ -110,8 +115,9 @@ class Form extends \Phalcon\Forms\Form {
      * @todo attualmente non funziona, va fatto refactoring.
      * @return string
      */
-    public function getCsrf() {
-        return $this->security->getToken ();
+    public function getCsrf()
+    {
+        return $this->security->getToken();
     }
 
     /**
@@ -124,9 +130,9 @@ class Form extends \Phalcon\Forms\Form {
      */
     public function add(\Phalcon\Forms\ElementInterface $element, $position = null, $type = null)
     {
-        $name = \Phalcon\Text::camelize(str_replace(' ', '_',  $element->getLabel()));
-        $InputDecorator = "apps\\admin\\library\\decorators\\forms\\inputs\\".$this->modelName."\\Input".$name;
-        if(class_exists($InputDecorator)){
+        $name = \Phalcon\Text::camelize(str_replace(' ', '_', $element->getLabel()));
+        $InputDecorator = "apps\\admin\\library\\decorators\\forms\\inputs\\" . $this->modelName . "\\Input" . $name;
+        if (class_exists($InputDecorator)) {
             $element = (new $InputDecorator($element))->decorate();
         }
         parent::add($element, $position, $type);
@@ -142,36 +148,37 @@ class Form extends \Phalcon\Forms\Form {
      * @param bool $multiSelect
      * @return array
      */
-    protected function getAutoRenderByModel(\Phalcon\Mvc\Model $model, $modelName, $excludeFields = array(), $orderFields = array(), $multiSelect = false) {
-        $autoFields = array ();
+    protected function getAutoRenderByModel(\Phalcon\Mvc\Model $model, $modelName, $excludeFields = [], $orderFields = [], $multiSelect = false)
+    {
+        $autoFields = [];
         $this->view = $this->getDi()->getView();
         $this->modelName = $modelName;
 
-        if($this->view->exists('partials/forms/'.$this->modelName.'/before')) $this->view->{$this->modelName.'_before_form'} = 'partials/forms/'.$this->modelName.'/before';
-        if($this->view->exists('partials/forms/'.$this->modelName.'/after')) $this->view->{$this->modelName.'_after_after'} = 'partials/forms/'.$this->modelName.'/after';
+        if ($this->view->exists('partials/forms/' . $this->modelName . '/before')) $this->view->{$this->modelName . '_before_form'} = 'partials/forms/' . $this->modelName . '/before';
+        if ($this->view->exists('partials/forms/' . $this->modelName . '/after')) $this->view->{$this->modelName . '_after_after'} = 'partials/forms/' . $this->modelName . '/after';
 
-        $modelsManager = $model->getModelsManager ();
-        $relations = $modelsManager->getRelations ( $modelName );
+        $modelsManager = $model->getModelsManager();
+        $relations = $modelsManager->getRelations($modelName);
 
-        $metaData = $model->getModelsMetaData ();
-        $dataTypes = $metaData->getDataTypes ( $model );
-        $this->attributes = $metaData->getAttributes ( $model );
+        $metaData = $model->getModelsMetaData();
+        $dataTypes = $metaData->getDataTypes($model);
+        $this->attributes = $metaData->getAttributes($model);
 
-        $array_relations = array ();
-        $count = count ( $relations );
-        for($i = 0; $i < $count; $i ++) {
-            $array_relations [$relations [$i]->getFields ()] = $relations [$i]->getReferencedModel ();
+        $array_relations = [];
+        $count = count($relations);
+        for ($i = 0; $i < $count; $i++) {
+            $array_relations [$relations [$i]->getFields()] = $relations [$i]->getReferencedModel();
         }
 
-        $array_fields = array ();
-        foreach ( $dataTypes as $field => $type ) {
+        $array_fields = [];
+        foreach ($dataTypes as $field => $type) {
 
-            if (in_array ( $field, $excludeFields ))
+            if (in_array($field, $excludeFields))
                 continue;
 
             switch ($type) {
                 case Column::TYPE_INTEGER :
-                    if (stripos ( $field, 'id_tipologia_' ) !== false) {
+                    if (stripos($field, 'id_tipologia_') !== false) {
                         $array_fields ['select'] [] = $field;
                     } else {
                         $array_fields ['int'] [] = $field;
@@ -191,127 +198,127 @@ class Form extends \Phalcon\Forms\Form {
             }
         }
 
-        foreach ( $array_fields as $type => $fields ) {
+        foreach ($array_fields as $type => $fields) {
 
             switch ($type) {
                 case 'int' :
-                    $count = count ( $fields );
-                    for($i = 0; $i < $count; $i ++) {
-                        $label = ucfirst ( str_replace ( '_', ' ', $fields [$i] ) );
-                        $f = new Numeric ( $fields [$i], array (
-                            'class' => 'form-control',
+                    $count = count($fields);
+                    for ($i = 0; $i < $count; $i++) {
+                        $label = ucfirst(str_replace('_', ' ', $fields [$i]));
+                        $f = new Numeric ($fields [$i], [
+                            'class'       => 'form-control',
                             'placeholder' => $label,
-                            'min' => '1'
-                        ) );
-                        $f->setLabel ( $label );
+                            'min'         => '1'
+                        ]);
+                        $f->setLabel($label);
                         $autoFields [$fields [$i]] = $f;
                     }
                     break;
                 case 'text' :
-                    $count = count ( $fields );
-                    for($i = 0; $i < $count; $i ++) {
+                    $count = count($fields);
+                    for ($i = 0; $i < $count; $i++) {
 
-                        $label = ucfirst ( str_replace ( '_', ' ', $fields [$i] ) );
-                        if (stripos ( $fields [$i], 'email' ) !== false) {
-                            $f = new Email ( $fields [$i], array (
-                                'class' => 'form-control',
+                        $label = ucfirst(str_replace('_', ' ', $fields [$i]));
+                        if (stripos($fields [$i], 'email') !== false) {
+                            $f = new Email ($fields [$i], [
+                                'class'       => 'form-control',
                                 'placeholder' => $label
-                            ) );
+                            ]);
                         } else {
-                            $f = new Text ( $fields [$i], array (
-                                'class' => 'form-control',
+                            $f = new Text ($fields [$i], [
+                                'class'       => 'form-control',
                                 'placeholder' => $label
-                            ) );
+                            ]);
                         }
-                        $f->setLabel ( $label );
+                        $f->setLabel($label);
                         $autoFields [$fields [$i]] = $f;
                     }
                     break;
                 case 'textarea' :
-                    $count = count ( $fields );
-                    for($i = 0; $i < $count; $i ++) {
+                    $count = count($fields);
+                    for ($i = 0; $i < $count; $i++) {
 
-                        $label = ucfirst ( str_replace ( '_', ' ', $fields [$i] ) );
-                        $f = new TextArea ( $fields [$i], array (
-                            'class' => 'form-control',
+                        $label = ucfirst(str_replace('_', ' ', $fields [$i]));
+                        $f = new TextArea ($fields [$i], [
+                            'class'       => 'form-control',
                             'placeholder' => $label,
-                            'rows' => '4',
-                            'cols' => '50'
-                        ) );
-                        $f->setLabel ( $label );
+                            'rows'        => '4',
+                            'cols'        => '50'
+                        ]);
+                        $f->setLabel($label);
 
                         $autoFields [$fields [$i]] = $f;
                     }
                     break;
                 case 'date' :
-                    $count = count ( $fields );
-                    for($i = 0; $i < $count; $i ++) {
+                    $count = count($fields);
+                    for ($i = 0; $i < $count; $i++) {
 
-                        $label = ucfirst ( str_replace ( '_', ' ', $fields [$i] ) );
-                        $f = new Text ( $fields [$i], array (
-                            'class' => 'form-control range-datepicker',
+                        $label = ucfirst(str_replace('_', ' ', $fields [$i]));
+                        $f = new Text ($fields [$i], [
+                            'class'       => 'form-control range-datepicker',
                             'placeholder' => $label
-                        ) );
-                        $f->setLabel ( $label );
+                        ]);
+                        $f->setLabel($label);
 
                         $autoFields [$fields [$i]] = $f;
                     }
                     break;
                 case 'select' :
-                    $count = count ( $fields );
-                    for($i = 0; $i < $count; $i ++) {
+                    $count = count($fields);
+                    for ($i = 0; $i < $count; $i++) {
 
-                        $label = ucfirst ( str_replace ( '_', ' ', $fields [$i] ) );
+                        $label = ucfirst(str_replace('_', ' ', $fields [$i]));
 
-                        if (isset ( $this->view->{$array_relations [$fields [$i]]} )) {
+                        if (isset ($this->view->{$array_relations [$fields [$i]]})) {
                             $select_field = $this->view->{$array_relations [$fields [$i]]};
                         } else {
-                            $select_field = $array_relations [$fields [$i]]::find ( array (
+                            $select_field = $array_relations [$fields [$i]]::find([
                                 'conditions' => 'attivo = 1',
-                                'columns' => 'id,descrizione',
-                                'order' => 'ordine ASC',
-                                'cache' => array (
-                                    'key' => $array_relations [$fields [$i]] . '-find',
+                                'columns'    => 'id,descrizione',
+                                'order'      => 'ordine ASC',
+                                'cache'      => [
+                                    'key'      => $array_relations [$fields [$i]] . '-find',
                                     'lifetime' => 86400
-                                )
-                            ) );
+                                ]
+                            ]);
                         }
 
                         if ($multiSelect) {
-                            $f = new Select ( $fields [$i] . '[]', $select_field, array (
-                                'class' => 'form-control selectpicker',
-                                'using' => array (
+                            $f = new Select ($fields [$i] . '[]', $select_field, [
+                                'class'                     => 'form-control selectpicker',
+                                'using'                     => [
                                     'id',
                                     'descrizione'
-                                ),
-                                'data-style' => 'btn-flat btn-white',
-                                'multiple' => 'multiple',
-                                'data-actions-box' => true,
-                                'data-size' => 5,
-                                'data-width' => '100%',
-                                'data-live-search' => true,
+                                ],
+                                'data-style'                => 'btn-flat btn-white',
+                                'multiple'                  => 'multiple',
+                                'data-actions-box'          => true,
+                                'data-size'                 => 5,
+                                'data-width'                => '100%',
+                                'data-live-search'          => true,
                                 'data-selected-text-format' => 'count>1',
-                                'useEmpty' => false,
-                                'emptyText' => '---'
-                            ) );
+                                'useEmpty'                  => false,
+                                'emptyText'                 => '---'
+                            ]);
                         } else {
-                            $f = new Select ( $fields [$i], $select_field, array (
-                                'class' => 'form-control selectpicker',
-                                'using' => array (
+                            $f = new Select ($fields [$i], $select_field, [
+                                'class'                     => 'form-control selectpicker',
+                                'using'                     => [
                                     'id',
                                     'descrizione'
-                                ),
-                                'data-style' => 'btn-flat btn-white',
-                                'data-size' => 5,
-                                'data-width' => '100%',
-                                'data-live-search' => true,
+                                ],
+                                'data-style'                => 'btn-flat btn-white',
+                                'data-size'                 => 5,
+                                'data-width'                => '100%',
+                                'data-live-search'          => true,
                                 'data-selected-text-format' => 'count>1',
-                                'useEmpty' => true,
-                                'emptyText' => '---'
-                            ) );
+                                'useEmpty'                  => true,
+                                'emptyText'                 => '---'
+                            ]);
                         }
 
-                        $f->setLabel ( $label );
+                        $f->setLabel($label);
 
                         $autoFields [$fields [$i]] = $f;
                     }
@@ -319,23 +326,23 @@ class Form extends \Phalcon\Forms\Form {
             }
         }
 
-        $sort_autoFields = array ();
-        $count = count ( $this->attributes );
-        for($i = 0; $i < $count; $i ++) {
-            if (array_key_exists ( $this->attributes [$i], $autoFields ))
+        $sort_autoFields = [];
+        $count = count($this->attributes);
+        for ($i = 0; $i < $count; $i++) {
+            if (array_key_exists($this->attributes [$i], $autoFields))
                 $sort_autoFields [$this->attributes [$i]] = $autoFields [$this->attributes [$i]];
         }
 
-        if (! empty ( $orderFields )) {
-            $sort_autoFields_custom = array ();
+        if (!empty ($orderFields)) {
+            $sort_autoFields_custom = [];
 
-            $count = count ( $orderFields );
-            for($i = 0; $i < $count; $i ++) {
-                if (array_key_exists ( $orderFields [$i], $autoFields ))
+            $count = count($orderFields);
+            for ($i = 0; $i < $count; $i++) {
+                if (array_key_exists($orderFields [$i], $autoFields))
                     $sort_autoFields_custom [$orderFields [$i]] = $autoFields [$orderFields [$i]];
             }
 
-            return array_unique ( array_merge ( $sort_autoFields_custom, $sort_autoFields ) );
+            return array_unique(array_merge($sort_autoFields_custom, $sort_autoFields));
         } else {
 
             return $sort_autoFields;
@@ -348,31 +355,32 @@ class Form extends \Phalcon\Forms\Form {
      * @param array $orderFields
      * @return array
      */
-    protected function reorderFields($autoFields, $orderFields = array()) {
-        $sort_autoFields = array ();
-        $count = count ( $this->attributes );
-        for($i = 0; $i < $count; $i ++) {
-            if (array_key_exists ( $this->attributes [$i], $autoFields ))
+    protected function reorderFields($autoFields, $orderFields = [])
+    {
+        $sort_autoFields = [];
+        $count = count($this->attributes);
+        for ($i = 0; $i < $count; $i++) {
+            if (array_key_exists($this->attributes [$i], $autoFields))
                 $sort_autoFields [$this->attributes [$i]] = $autoFields [$this->attributes [$i]];
         }
-        if (! empty ( $orderFields )) {
-            $sort_autoFields_custom = array ();
+        if (!empty ($orderFields)) {
+            $sort_autoFields_custom = [];
 
-            $count = count ( $orderFields );
-            for($i = 0; $i < $count; $i ++) {
-                if (array_key_exists ( $orderFields [$i], $autoFields ))
+            $count = count($orderFields);
+            for ($i = 0; $i < $count; $i++) {
+                if (array_key_exists($orderFields [$i], $autoFields))
                     $sort_autoFields_custom [$orderFields [$i]] = $autoFields [$orderFields [$i]];
             }
 
-            $arr = array_unique ( array_merge ( $sort_autoFields_custom, $sort_autoFields ) );
-            $arr2 = array_diff ( $autoFields, $arr );
+            $arr = array_unique(array_merge($sort_autoFields_custom, $sort_autoFields));
+            $arr2 = array_diff($autoFields, $arr);
 
-            return array_unique ( array_merge ( $arr, $arr2 ) );
+            return array_unique(array_merge($arr, $arr2));
         } else {
 
-            $arr2 = array_diff ( $autoFields, $sort_autoFields );
+            $arr2 = array_diff($autoFields, $sort_autoFields);
 
-            return array_unique ( array_merge ( $sort_autoFields, $arr2 ) );
+            return array_unique(array_merge($sort_autoFields, $arr2));
         }
     }
 
@@ -383,27 +391,28 @@ class Form extends \Phalcon\Forms\Form {
      * @param array $exclude_required
      * @return mixed
      */
-    protected function addValidateControl($autoFields, $customValidation = array(), $exclude_required = array()) {
-        foreach ( $autoFields as $key => $f ) {
-            if (! $f->getAttribute ( 'disabled' ) && ! in_array ( $key, $exclude_required )) {
-                $f->setAttribute ( 'required', true );
-                $f->addValidator ( new PresenceOf ( array (
-                    'message' => 'Selezione un valore per [' . $f->getLabel () . ']'
-                ) ) );
+    protected function addValidateControl($autoFields, $customValidation = [], $exclude_required = [])
+    {
+        foreach ($autoFields as $key => $f) {
+            if (!$f->getAttribute('disabled') && !in_array($key, $exclude_required)) {
+                $f->setAttribute('required', true);
+                $f->addValidator(new PresenceOf ([
+                    'message' => 'Selezione un valore per [' . $f->getLabel() . ']'
+                ]));
             }
-            if (stripos ( $key, 'email' ) !== false && stripos ( $key, 'tipologia_' ) === false && ! in_array ( $key, $exclude_required )) {
-                $f->addValidator ( new EmailValidator ( array (
-                    'message' => 'Inserire un indirizzo e-mail un valore per [' . $f->getLabel () . ']'
-                ) ) );
+            if (stripos($key, 'email') !== false && stripos($key, 'tipologia_') === false && !in_array($key, $exclude_required)) {
+                $f->addValidator(new EmailValidator ([
+                    'message' => 'Inserire un indirizzo e-mail un valore per [' . $f->getLabel() . ']'
+                ]));
             }
-            if (array_key_exists ( $key, $customValidation )) {
+            if (array_key_exists($key, $customValidation)) {
                 if ($customValidation [$key] == 'regex_numeric') {
-                    $f->addValidator ( new RegexValidator ( array (
+                    $f->addValidator(new RegexValidator ([
                         'pattern' => '/^[0-9]*$/',
-                        'message' => 'Inserire solo numeri per [' . $f->getLabel () . ']'
-                    ) ) );
+                        'message' => 'Inserire solo numeri per [' . $f->getLabel() . ']'
+                    ]));
                 } else {
-                    $f->addValidator ($customValidation [$key]);
+                    $f->addValidator($customValidation [$key]);
                 }
             }
         }
@@ -415,8 +424,9 @@ class Form extends \Phalcon\Forms\Form {
      * Ritorna oggetto in sessione di Auth
      * @return mixed
      */
-    protected function getAuth() {
-        return $this->getDI ()->getSession ()->get ( 'auth-identity' );
+    protected function getAuth()
+    {
+        return $this->getDI()->getSession()->get('auth-identity');
     }
 
 }

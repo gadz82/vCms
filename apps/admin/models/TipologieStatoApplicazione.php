@@ -60,7 +60,7 @@ class TipologieStatoApplicazione extends BaseModel
      */
     public function initialize()
     {
-    	parent::initialize ();
+        parent::initialize();
 
         $this->hasMany('id', 'Applicazioni', 'id_tipologia_stato', ['alias' => 'Applicazioni']);
     }
@@ -84,10 +84,10 @@ class TipologieStatoApplicazione extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,137 +18,137 @@ class FilesMigration_100 extends Migration
     public function morph()
     {
         $this->morphTable('files', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_tipologia_stato',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'original_filename',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 100,
-                            'after' => 'id_tipologia_stato'
+                            'size'    => 100,
+                            'after'   => 'id_tipologia_stato'
                         ]
                     ),
                     new Column(
                         'filename',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 100,
-                            'after' => 'original_filename'
+                            'size'    => 100,
+                            'after'   => 'original_filename'
                         ]
                     ),
                     new Column(
                         'filetype',
                         [
-                            'type' => Column::TYPE_CHAR,
+                            'type'    => Column::TYPE_CHAR,
                             'notNull' => true,
-                            'size' => 20,
-                            'after' => 'filename'
+                            'size'    => 20,
+                            'after'   => 'filename'
                         ]
                     ),
                     new Column(
                         'filesize',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 10,
-                            'after' => 'filetype'
+                            'notNull'  => true,
+                            'size'     => 10,
+                            'after'    => 'filetype'
                         ]
                     ),
                     new Column(
                         'filepath',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 255,
-                            'after' => 'filesize'
+                            'size'    => 255,
+                            'after'   => 'filesize'
                         ]
                     ),
                     new Column(
                         'fileurl',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'default' => "",
                             'notNull' => true,
-                            'size' => 255,
-                            'after' => 'filepath'
+                            'size'    => 255,
+                            'after'   => 'filepath'
                         ]
                     ),
                     new Column(
                         'priorita',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'fileurl'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'fileurl'
                         ]
                     ),
                     new Column(
                         'alt',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'priorita'
                         ]
                     ),
                     new Column(
                         'data_creazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'alt'
+                            'size'    => 1,
+                            'after'   => 'alt'
                         ]
                     ),
                     new Column(
                         'data_aggiornamento',
                         [
-                            'type' => Column::TYPE_TIMESTAMP,
+                            'type'    => Column::TYPE_TIMESTAMP,
                             'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_creazione'
+                            'size'    => 1,
+                            'after'   => 'data_creazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'default' => "1",
+                            'type'     => Column::TYPE_INTEGER,
+                            'default'  => "1",
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_aggiornamento'
+                            'notNull'  => true,
+                            'size'     => 1,
+                            'after'    => 'data_aggiornamento'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('id_tipologia_stato', ['id_tipologia_stato'], null)
                 ],
@@ -156,18 +156,18 @@ class FilesMigration_100 extends Migration
                     new Reference(
                         'files_ibfk_1',
                         [
-                            'referencedTable' => 'tipologie_stato_file',
-                            'columns' => ['id_tipologia_stato'],
+                            'referencedTable'   => 'tipologie_stato_file',
+                            'columns'           => ['id_tipologia_stato'],
                             'referencedColumns' => ['id'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'NO ACTION'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'NO ACTION'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '16',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '16',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_swedish_ci'
                 ],
             ]

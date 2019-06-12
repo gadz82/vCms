@@ -78,10 +78,10 @@ class FilesUsersGroups extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_file' => 'id_file',
+            'id'            => 'id',
+            'id_file'       => 'id_file',
             'id_user_group' => 'id_user_group',
-            'attivo' => 'attivo'
+            'attivo'        => 'attivo'
         ];
     }
 

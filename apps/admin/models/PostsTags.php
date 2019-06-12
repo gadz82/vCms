@@ -85,10 +85,10 @@ class PostsTags extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'      => 'id',
             'id_post' => 'id_post',
-            'id_tag' => 'id_tag',
-            'attivo' => 'attivo'
+            'id_tag'  => 'id_tag',
+            'attivo'  => 'attivo'
         ];
     }
 

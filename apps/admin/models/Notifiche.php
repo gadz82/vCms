@@ -1,6 +1,7 @@
 <?php
 
-class Notifiche  extends BaseModel {
+class Notifiche extends BaseModel
+{
 
     /**
      *
@@ -138,19 +139,19 @@ class Notifiche  extends BaseModel {
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'                    => 'id',
             'id_tipologia_notifica' => 'id_tipologia_notifica',
-            'id_tipologia_stato' => 'id_tipologia_stato',
-            'titolo' => 'titolo',
-            'testo' => 'testo',
-            'navTo' => 'navTo',
-            'navToParams' => 'navToParams',
-            'data_invio' => 'data_invio',
-            'notifica_push' => 'notifica_push',
-            'ids_destinatari' => 'ids_destinatari',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'id_tipologia_stato'    => 'id_tipologia_stato',
+            'titolo'                => 'titolo',
+            'testo'                 => 'testo',
+            'navTo'                 => 'navTo',
+            'navToParams'           => 'navToParams',
+            'data_invio'            => 'data_invio',
+            'notifica_push'         => 'notifica_push',
+            'ids_destinatari'       => 'ids_destinatari',
+            'data_creazione'        => 'data_creazione',
+            'data_aggiornamento'    => 'data_aggiornamento',
+            'attivo'                => 'attivo'
         ];
     }
 

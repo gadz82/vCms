@@ -174,22 +174,22 @@ class Forms extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_applicazione' => 'id_applicazione',
-            'id_tipologia_form' => 'id_tipologia_form',
+            'id'                 => 'id',
+            'id_applicazione'    => 'id_applicazione',
+            'id_tipologia_form'  => 'id_tipologia_form',
             'id_tipologia_stato' => 'id_tipologia_stato',
-            'titolo' => 'titolo',
-            'testo' => 'testo',
-            'key' => 'key',
-            'email_to' => 'email_to',
-            'email_cc' => 'email_cc',
-            'email_bcc' => 'email_bcc',
-            'invio_utente' => 'invio_utente',
-            'submit_label' => 'submit_label',
-            'data_creazione' => 'data_creazione',
+            'titolo'             => 'titolo',
+            'testo'              => 'testo',
+            'key'                => 'key',
+            'email_to'           => 'email_to',
+            'email_cc'           => 'email_cc',
+            'email_bcc'          => 'email_bcc',
+            'invio_utente'       => 'invio_utente',
+            'submit_label'       => 'submit_label',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'id_utente'          => 'id_utente',
+            'attivo'             => 'attivo'
         ];
     }
 

@@ -128,16 +128,16 @@ class NotificheUsersCarEvents extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_tipologia_stato' => 'id_tipologia_stato',
+            'id'                     => 'id',
+            'id_tipologia_stato'     => 'id_tipologia_stato',
             'id_notifica_car_events' => 'id_notifica_car_events',
-            'id_user' => 'id_user',
-            'id_user_device' => 'id_user_device',
-            'data_schedulazione' => 'data_schedulazione',
-            'data_invio' => 'data_invio',
-            'data_creazione' => 'data_creazione',
-            'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'id_user'                => 'id_user',
+            'id_user_device'         => 'id_user_device',
+            'data_schedulazione'     => 'data_schedulazione',
+            'data_invio'             => 'data_invio',
+            'data_creazione'         => 'data_creazione',
+            'data_aggiornamento'     => 'data_aggiornamento',
+            'attivo'                 => 'attivo'
         ];
     }
 

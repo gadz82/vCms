@@ -81,7 +81,7 @@ class PostsFiles extends BaseModel
      */
     public function initialize()
     {
-    	parent::initialize();
+        parent::initialize();
 
         $this->belongsTo('id_post', '\Posts', 'id', ['alias' => 'Posts', 'reusable' => true]);
         $this->belongsTo('id_file', '\Files', 'id', ['alias' => 'Files', 'reusable' => true]);
@@ -107,13 +107,13 @@ class PostsFiles extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'                 => 'id',
             'id_tipologia_stato' => 'id_tipologia_stato',
-            'id_post' => 'id_post',
-            'id_file' => 'id_file',
-            'data_creazione' => 'data_creazione',
+            'id_post'            => 'id_post',
+            'id_file'            => 'id_file',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

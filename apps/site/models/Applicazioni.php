@@ -1,6 +1,7 @@
 <?php
 
-class Applicazioni extends \BaseModel {
+class Applicazioni extends \BaseModel
+{
 
     /**
      *
@@ -100,7 +101,7 @@ class Applicazioni extends \BaseModel {
      */
     public function initialize()
     {
-    	parent::initialize ();
+        parent::initialize();
         $this->belongsTo('id_tipologia_applicazione', 'TipologieApplicazione', 'id', ['alias' => 'TipologieApplicazione', 'reusable' => true]);
         $this->belongsTo('id_tipologia_stato', 'TipologieStatoApplicazione', 'id', ['alias' => 'TipologieStatoApplicazione', 'reusable' => true]);
     }
@@ -115,5 +116,5 @@ class Applicazioni extends \BaseModel {
         return 'applicazioni';
     }
 
-   
+
 }

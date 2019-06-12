@@ -11,8 +11,9 @@ class Collection extends \Phalcon\Assets\Collection
 {
     protected $assets_collections_expiration_token;
 
-    public function __construct($assets_collections_expiration_token) {
-       $this->assets_collections_expiration_token = $assets_collections_expiration_token;
+    public function __construct($assets_collections_expiration_token)
+    {
+        $this->assets_collections_expiration_token = $assets_collections_expiration_token;
     }
 
     /**
@@ -21,9 +22,10 @@ class Collection extends \Phalcon\Assets\Collection
      * @param string $targetUri
      * @return Collection
      */
-    public function setTargetUri($targetUri) {
-        if(!empty($this->assets_collections_expiration_token)){
-            $targetUri.= '?v='.$this->assets_collections_expiration_token;
+    public function setTargetUri($targetUri)
+    {
+        if (!empty($this->assets_collections_expiration_token)) {
+            $targetUri .= '?v=' . $this->assets_collections_expiration_token;
         }
         return parent::setTargetUri($targetUri);
 

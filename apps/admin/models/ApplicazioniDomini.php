@@ -86,7 +86,7 @@ class ApplicazioniDomini extends \BaseModel
         parent::initialize();
 
         $this->belongsTo('id_applicazione', '\Applicazioni', 'id', ['alias' => 'Applicazioni']);
-        $this->allowEmptyStringValues(array('referer'));
+        $this->allowEmptyStringValues(['referer']);
     }
 
     public function validation()
@@ -117,13 +117,13 @@ class ApplicazioniDomini extends \BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_applicazione' => 'id_applicazione',
-            'referer' => 'referer',
-            'ip_autorizzati' => 'ip_autorizzati',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'id_applicazione'    => 'id_applicazione',
+            'referer'            => 'referer',
+            'ip_autorizzati'     => 'ip_autorizzati',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'attivo' => 'attivo'
+            'attivo'             => 'attivo'
         ];
     }
 

@@ -78,10 +78,10 @@ class Regioni extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'               => 'id',
             'id_regione_italy' => 'id_regione_italy',
-            'descrizione' => 'descrizione',
-            'attivo' => 'attivo'
+            'descrizione'      => 'descrizione',
+            'attivo'           => 'attivo'
         ];
     }
 

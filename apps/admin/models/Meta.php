@@ -127,7 +127,7 @@ class Meta extends BaseModel
         $this->hasMany('id', 'PostsMeta', 'id_meta', ['alias' => 'PostsMeta', 'reusable' => true]);
         $this->belongsTo('id_meta_group', '\MetaGroup', 'id', ['alias' => 'MetaGroup', 'reusable' => true]);
         $this->belongsTo('id_tipologia_meta', '\TipologieMeta', 'id', ['alias' => 'TipologieMeta', 'reusable' => true]);
-        $this->allowEmptyStringValues(array('dataset'));
+        $this->allowEmptyStringValues(['dataset']);
     }
 
     /**
@@ -149,57 +149,61 @@ class Meta extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_meta_group' => 'id_meta_group',
-            'id_tipologia_meta' => 'id_tipologia_meta',
-            'key' => 'key',
-            'label' => 'label',
-            'dataset' => 'dataset',
-            'required' => 'required',
-            'hidden' => 'hidden',
-            'priorita' => 'priorita',
-            'data_creazione' => 'data_creazione',
+            'id'                 => 'id',
+            'id_meta_group'      => 'id_meta_group',
+            'id_tipologia_meta'  => 'id_tipologia_meta',
+            'key'                => 'key',
+            'label'              => 'label',
+            'dataset'            => 'dataset',
+            'required'           => 'required',
+            'hidden'             => 'hidden',
+            'priorita'           => 'priorita',
+            'data_creazione'     => 'data_creazione',
             'data_aggiornamento' => 'data_aggiornamento',
-            'id_utente' => 'id_utente',
-            'attivo' => 'attivo'
+            'id_utente'          => 'id_utente',
+            'attivo'             => 'attivo'
         ];
     }
 
-    public function afterSave(){
+    public function afterSave()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);
 
         $posts_meta = PostsMeta::find([
             'conditions' => 'id_tipologia_stato = 1 AND id_meta = :id_meta:',
-            'bind' => ['id_meta' => $this->id]
+            'bind'       => ['id_meta' => $this->id]
         ]);
-        foreach($posts_meta as $pm){
-            if($pm->meta_key !== $this->key){
+        foreach ($posts_meta as $pm) {
+            if ($pm->meta_key !== $this->key) {
                 $pm->meta_key = $this->key;
                 $pm->save();
             }
         }
     }
 
-    private function getTipologiePost(){
+    private function getTipologiePost()
+    {
         return TipologiePost::query()
             ->innerJoin('MetaGroupPostType', 'mgpt.id_tipologia_post = TipologiePost.id AND mgpt.attivo = 1', 'mgpt')
             ->innerJoin('MetaGroup', 'mg.id = mgpt.id_meta_group AND mg.attivo = 1', 'mg')
-            ->where('mg.id = '.$this->id_meta_group.' AND TipologiePost.attivo = 1')
+            ->where('mg.id = ' . $this->id_meta_group . ' AND TipologiePost.attivo = 1')
             ->groupBy('TipologiePost.id')
             ->execute()->toArray();
     }
 
-    public function afterCreate(){
+    public function afterCreate()
+    {
         $eventsManager = new Phalcon\Events\Manager();
-        $eventsManager->attach ('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->attach('dispatch:afterEditAttribute', new \apps\admin\plugins\FlatTablesManagerPlugin());
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);
     }
 
-    public function beforeDelete(){
+    public function beforeDelete()
+    {
         $eventsManager = new Phalcon\Events\Manager();
         $tipologiePost = $this->getTipologiePost();
         $eventsManager->fire('dispatch:afterEditAttribute', $tipologiePost);

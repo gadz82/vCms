@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,30 +18,30 @@ class ItPaginaFilterMigration_106 extends Migration
     public function morph()
     {
         $this->morphTable('_it_pagina_filter', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_post',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('id_post', ['id_post'], 'UNIQUE')
                 ],
@@ -49,18 +49,18 @@ class ItPaginaFilterMigration_106 extends Migration
                     new Reference(
                         '_it_pagina_filter_post_fk',
                         [
-                            'referencedTable' => '_it_pagina',
-                            'columns' => ['id_post'],
+                            'referencedTable'   => '_it_pagina',
+                            'columns'           => ['id_post'],
                             'referencedColumns' => ['id_post'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'CASCADE'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'CASCADE'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '3',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '3',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'latin1_swedish_ci'
                 ],
             ]

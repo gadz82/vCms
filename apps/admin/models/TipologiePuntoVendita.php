@@ -91,11 +91,11 @@ class TipologiePuntoVendita extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
+            'id'          => 'id',
             'descrizione' => 'descrizione',
-            'codice' => 'codice',
-            'ordine' => 'ordine',
-            'attivo' => 'attivo'
+            'codice'      => 'codice',
+            'ordine'      => 'ordine',
+            'attivo'      => 'attivo'
         ];
     }
 

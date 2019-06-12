@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,49 +22,49 @@ class ItalyProvinciesMigration_111 extends Migration
                     new Column(
                         'sigla',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 2,
-                            'first' => true
+                            'size'    => 2,
+                            'first'   => true
                         ]
                     ),
                     new Column(
                         'provincia',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'sigla'
                         ]
                     ),
                     new Column(
                         'superficie',
                         [
-                            'type' => Column::TYPE_DOUBLE,
-                            'size' => 1,
+                            'type'  => Column::TYPE_DOUBLE,
+                            'size'  => 1,
                             'after' => 'provincia'
                         ]
                     ),
                     new Column(
                         'residenti',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'size' => 11,
+                            'type'  => Column::TYPE_INTEGER,
+                            'size'  => 11,
                             'after' => 'superficie'
                         ]
                     ),
                     new Column(
                         'num_comuni',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'size' => 11,
+                            'type'  => Column::TYPE_INTEGER,
+                            'size'  => 11,
                             'after' => 'residenti'
                         ]
                     ),
                     new Column(
                         'id_regione',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'size' => 6,
+                            'type'  => Column::TYPE_INTEGER,
+                            'size'  => 6,
                             'after' => 'num_comuni'
                         ]
                     )
@@ -73,9 +73,9 @@ class ItalyProvinciesMigration_111 extends Migration
                     new Index('PRIMARY', ['sigla'], 'PRIMARY')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
             ]

@@ -84,10 +84,10 @@ class PostsUsersGroups extends BaseModel
     public function columnMap()
     {
         return [
-            'id' => 'id',
-            'id_post' => 'id_post',
+            'id'            => 'id',
+            'id_post'       => 'id_post',
             'id_user_group' => 'id_user_group',
-            'attivo' => 'attivo'
+            'attivo'        => 'attivo'
         ];
     }
 

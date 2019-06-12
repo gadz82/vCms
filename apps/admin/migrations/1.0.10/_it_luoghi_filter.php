@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -18,46 +18,46 @@ class ItLuoghiFilterMigration_110 extends Migration
     public function morph()
     {
         $this->morphTable('_it_luoghi_filter', [
-                'columns' => [
+                'columns'    => [
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_post',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'regione',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 255,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 255,
                             'after' => 'id_post'
                         ]
                     ),
                     new Column(
                         'key_regione',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 75,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 75,
                             'after' => 'regione'
                         ]
                     )
                 ],
-                'indexes' => [
+                'indexes'    => [
                     new Index('PRIMARY', ['id'], 'PRIMARY'),
                     new Index('id_post', ['id_post'], 'UNIQUE'),
                     new Index('key_regione', ['key_regione'], null)
@@ -66,18 +66,18 @@ class ItLuoghiFilterMigration_110 extends Migration
                     new Reference(
                         '_it_luoghi_filter_post_fk',
                         [
-                            'referencedTable' => '_it_luoghi',
-                            'columns' => ['id_post'],
+                            'referencedTable'   => '_it_luoghi',
+                            'columns'           => ['id_post'],
                             'referencedColumns' => ['id_post'],
-                            'onUpdate' => 'CASCADE',
-                            'onDelete' => 'CASCADE'
+                            'onUpdate'          => 'CASCADE',
+                            'onDelete'          => 'CASCADE'
                         ]
                     )
                 ],
-                'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '1',
-                    'ENGINE' => 'InnoDB',
+                'options'    => [
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '1',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'latin1_swedish_ci'
                 ],
             ]

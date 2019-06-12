@@ -25,29 +25,31 @@ class ApiController extends \Phalcon\Mvc\Controller
      */
     protected $id_application;
 
-    public static function getPostTypeMetaFields($post_type_slug){
+    public static function getPostTypeMetaFields($post_type_slug)
+    {
         $app = \apps\api\library\Cms::getIstance()->application;
         $postTypeMetaFields = Options::findFirst([
-            'conditions' => 'option_name = "columns_map_'.$app.'_'.$post_type_slug.'_meta" AND attivo = 1',
-            'cache' => [
-                "key" => $app.'_'.$post_type_slug.".meta_fields",
+            'conditions' => 'option_name = "columns_map_' . $app . '_' . $post_type_slug . '_meta" AND attivo = 1',
+            'cache'      => [
+                "key"      => $app . '_' . $post_type_slug . ".meta_fields",
                 "lifetime" => 56400
             ]
         ]);
-        if(!$postTypeMetaFields) return false;
+        if (!$postTypeMetaFields) return false;
         return json_decode($postTypeMetaFields->option_value, true);
     }
 
-    public static function getPostTypeFilterFields($post_type_slug){
+    public static function getPostTypeFilterFields($post_type_slug)
+    {
         $app = \apps\api\library\Cms::getIstance()->application;
         $postTypeFilterFields = Options::findFirst([
-            'conditions' => 'option_name = "columns_map_'.$app.'_'.$post_type_slug.'_filter" AND attivo = 1',
-            'cache' => [
-                "key" => $app.'_'.$post_type_slug.".filter_fields",
+            'conditions' => 'option_name = "columns_map_' . $app . '_' . $post_type_slug . '_filter" AND attivo = 1',
+            'cache'      => [
+                "key"      => $app . '_' . $post_type_slug . ".filter_fields",
                 "lifetime" => 56400
             ]
         ]);
-        if(!$postTypeFilterFields) return false;
+        if (!$postTypeFilterFields) return false;
         return json_decode($postTypeFilterFields->option_value, true);
     }
 
@@ -79,38 +81,43 @@ class ApiController extends \Phalcon\Mvc\Controller
         return $text;
     }
 
-    protected static function isTimestamp($string){
+    protected static function isTimestamp($string)
+    {
         try {
             new DateTime('@' . $string);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
         return true;
     }
 
-    protected static function getCurrentAppVersion(){
+    protected static function getCurrentAppVersion()
+    {
         $av = Options::findFirst([
             'conditions' => 'option_name = "current_app_version" AND attivo = 1',
-            'cache' => [
-                "key" => "current_app_version",
+            'cache'      => [
+                "key"      => "current_app_version",
                 "lifetime" => 12000
             ]
         ]);
-        if(!$av) return '1';
+        if (!$av) return '1';
         return $av->option_value;
     }
 
-    public function initialize(){
+    public function initialize()
+    {
         $this->connection = $this->getDI()->getDb();
         $this->application = \apps\api\library\Cms::getIstance()->application;
         $this->id_application = \apps\api\library\Cms::getIstance()->id_application;
     }
 
-    public function indexAction(){
+    public function indexAction()
+    {
 
     }
 
-    public function setResponse($data){
+    public function setResponse($data)
+    {
 
         $this->response->setJsonContent($data);
         /**
@@ -118,13 +125,14 @@ class ApiController extends \Phalcon\Mvc\Controller
          */
         $cb = $this->request->get('callback');
 
-        if($cb && !empty($cb)){
-            $this->response->setContent($cb.'('.$this->response->getContent().')');
+        if ($cb && !empty($cb)) {
+            $this->response->setContent($cb . '(' . $this->response->getContent() . ')');
         }
         return $this->response;
     }
 
-    protected function beginTransaction(){
+    protected function beginTransaction()
+    {
         $manager = new \Phalcon\Mvc\Model\Transaction\Manager();
         return $manager->get();
     }

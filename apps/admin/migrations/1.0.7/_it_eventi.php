@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
@@ -22,110 +22,110 @@ class ItEventiMigration_107 extends Migration
                     new Column(
                         'id',
                         [
-                            'type' => Column::TYPE_INTEGER,
-                            'unsigned' => true,
-                            'notNull' => true,
+                            'type'          => Column::TYPE_INTEGER,
+                            'unsigned'      => true,
+                            'notNull'       => true,
                             'autoIncrement' => true,
-                            'size' => 11,
-                            'first' => true
+                            'size'          => 11,
+                            'first'         => true
                         ]
                     ),
                     new Column(
                         'id_post',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 11,
-                            'after' => 'id'
+                            'notNull'  => true,
+                            'size'     => 11,
+                            'after'    => 'id'
                         ]
                     ),
                     new Column(
                         'id_tipologia_stato',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'     => Column::TYPE_INTEGER,
                             'unsigned' => true,
-                            'notNull' => true,
-                            'size' => 2,
-                            'after' => 'id_post'
+                            'notNull'  => true,
+                            'size'     => 2,
+                            'after'    => 'id_post'
                         ]
                     ),
                     new Column(
                         'id_users_groups',
                         [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 75,
+                            'type'  => Column::TYPE_VARCHAR,
+                            'size'  => 75,
                             'after' => 'id_tipologia_stato'
                         ]
                     ),
                     new Column(
                         'titolo',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 150,
-                            'after' => 'id_users_groups'
+                            'size'    => 150,
+                            'after'   => 'id_users_groups'
                         ]
                     ),
                     new Column(
                         'slug',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 150,
-                            'after' => 'titolo'
+                            'size'    => 150,
+                            'after'   => 'titolo'
                         ]
                     ),
                     new Column(
                         'excerpt',
                         [
-                            'type' => Column::TYPE_VARCHAR,
+                            'type'    => Column::TYPE_VARCHAR,
                             'notNull' => true,
-                            'size' => 255,
-                            'after' => 'slug'
+                            'size'    => 255,
+                            'after'   => 'slug'
                         ]
                     ),
                     new Column(
                         'testo',
                         [
-                            'type' => Column::TYPE_TEXT,
+                            'type'    => Column::TYPE_TEXT,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'excerpt'
+                            'size'    => 1,
+                            'after'   => 'excerpt'
                         ]
                     ),
                     new Column(
                         'data_inizio_pubblicazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
-                            'size' => 1,
+                            'type'  => Column::TYPE_DATETIME,
+                            'size'  => 1,
                             'after' => 'testo'
                         ]
                     ),
                     new Column(
                         'data_fine_pubblicazione',
                         [
-                            'type' => Column::TYPE_DATETIME,
-                            'size' => 1,
+                            'type'  => Column::TYPE_DATETIME,
+                            'size'  => 1,
                             'after' => 'data_inizio_pubblicazione'
                         ]
                     ),
                     new Column(
                         'timestamp',
                         [
-                            'type' => Column::TYPE_DATETIME,
+                            'type'    => Column::TYPE_DATETIME,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'data_fine_pubblicazione'
+                            'size'    => 1,
+                            'after'   => 'data_fine_pubblicazione'
                         ]
                     ),
                     new Column(
                         'attivo',
                         [
-                            'type' => Column::TYPE_INTEGER,
+                            'type'    => Column::TYPE_INTEGER,
                             'notNull' => true,
-                            'size' => 1,
-                            'after' => 'timestamp'
+                            'size'    => 1,
+                            'after'   => 'timestamp'
                         ]
                     )
                 ],
@@ -139,9 +139,9 @@ class ItEventiMigration_107 extends Migration
                     new Index('excerpt', ['excerpt'], 'FULLTEXT')
                 ],
                 'options' => [
-                    'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '1',
-                    'ENGINE' => 'InnoDB',
+                    'TABLE_TYPE'      => 'BASE TABLE',
+                    'AUTO_INCREMENT'  => '1',
+                    'ENGINE'          => 'InnoDB',
                     'TABLE_COLLATION' => 'latin1_swedish_ci'
                 ],
             ]
