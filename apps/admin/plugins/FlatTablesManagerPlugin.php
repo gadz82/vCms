@@ -931,6 +931,45 @@ class FlatTablesManagerPlugin extends Plugin
         }
     }
 
+    /**
+     * After Delete
+     *
+     * @param Event $event
+     * @param \TipologiePost $postType
+     * @return bool
+     */
+    public function afterDeleteApplication(Event $event, \Applicazioni $app){
+        $postTypes = \TipologiePost::find();
+
+        foreach($postTypes as $postType){
+            if(!$this->connection->tableExists('_'.$app->codice.'_'.$postType->slug.self::meta_suffix)){
+                return true;
+            } else {
+                if($this->connection->tableExists('_'.$app->codice.'_'.$postType->slug.self::meta_suffix)) $this->connection->dropTable('_'.$app->codice.'_'.$postType->slug.self::meta_suffix);
+                if($this->connection->tableExists('_'.$app->codice.'_'.$postType->slug.self::filtri_suffix)) $this->connection->dropTable('_'.$app->codice.'_'.$postType->slug.self::filtri_suffix);
+                $this->connection->dropTable('_'.$app->codice.'_'.$postType->slug.self::meta_suffix);
+            }
+            $optionsMeta = \Options::findFirstByOptionName('_'.$app->codice.'_'.$postType->slug.self::meta_suffix);
+            if($optionsMeta) $optionsMeta->delete();
+
+            $optionsFilters = \Options::findFirstByOptionName('_'.$app->codice.'_'.$postType->slug.self::filtri_suffix);
+            if($optionsFilters) $optionsFilters->delete();
+
+            $option = \Options::findFirstByOptionName('reindex_queue');
+
+            if($option) {
+                if (!empty($option->option_value)) {
+                    $value = json_decode($option->option_value, true);
+                    if($key = array_search($postType->id, $value) !== false){
+                        unset($value[$key]);
+                        $option->option_value = json_encode(array_values($value));
+                        $option->save();
+                    }
+                }
+            }
+        }
+    }
+
     public function triggerEditSingleEntity(Event $event, \Posts $post){
         $app = $post->Applicazioni;
         $metaFieldsKeys = \Options::findFirstByOptionName('columns_map_'.$app->codice.'_'.$post->TipologiePost->slug.self::meta_suffix);

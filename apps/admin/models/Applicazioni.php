@@ -170,9 +170,19 @@ class Applicazioni extends \BaseModel {
         }
     }
 
+    /**
+     * Step 1 : Delete Routes
+     * Step 2 : Delete Domini
+     * Step 3 : Delete Utenti
+     * Step 4 : Delete Posts
+     * Step 5 : Delete Flat Tables
+     */
     public function afterDelete(){
+        /*
+         * Step 1
+         */
         $routes = ApplicazioniRoutes::find([
-            'conditions' => 'id_applicaizone = ?1',
+            'conditions' => 'id_applicazione = ?1',
             'bind' => [1 => $this->id]
         ]);
 
@@ -182,7 +192,51 @@ class Applicazioni extends \BaseModel {
             }
         }
 
+        /*
+         * Step 2
+         */
+        $domini = ApplicazioniDomini::find([
+            'conditions' => 'id_applicazione = ?1',
+            'bind' => [1 => $this->id]
+        ]);
+
+        if($domini){
+            foreach($domini as $d){
+                $d->delete();
+            }
+        }
+
+        /*
+         * Step 3
+         */
+        $utenti = ApplicazioniUtenti::find([
+            'conditions' => 'id_applicazione = ?1',
+            'bind' => [1 => $this->id]
+        ]);
+
+        if($utenti){
+            foreach($utenti as $u){
+                $u->delete();
+            }
+        }
+
+        /*
+         * Step 4
+         */
+        $posts = Posts::find([
+            'conditions' => ['id_applicazione = ?1'],
+            'bind'  => [1 => $this->id]
+        ]);
+        foreach($posts as $post){
+            $post->delete();
+        }
+
+        /*
+         * Step 5
+         */
+        $eventsManager = new Phalcon\Events\Manager();
+        $eventsManager->attach ('dispatch:afterDeleteApplication', new \apps\admin\plugins\FlatTablesManagerPlugin() );
+        $eventsManager->fire('dispatch:afterDeleteApplication', $this);
     }
 
-   
 }
