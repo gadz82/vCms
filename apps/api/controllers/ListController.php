@@ -140,15 +140,14 @@ class ListController extends ApiController{
         for($i = 0; $i < $nr; $i++){
             $columns_select[] = "em.".$postTypeMetaFields[$i]." AS meta_".$postTypeMetaFields[$i];
         }
+
         $query = "SELECT SQL_CALC_FOUND_ROWS
                   e.*,
-                  f.*,
                   ".implode(','.PHP_EOL, $columns_select)."
                 FROM
                   `_".$this->application."_".$post_type_slug."` e
                 INNER JOIN `_".$this->application."_".$post_type_slug."_meta` em ON em.id_post = e.id_post
                 INNER JOIN `_".$this->application."_".$post_type_slug."_filter` ef ON ef.id_post = e.id_post
-                INNER JOIN files f ON f.id = em.immagine AND f.attivo = 1
                 WHERE
                     e.id_tipologia_stato = 1
                 AND
@@ -202,6 +201,27 @@ class ListController extends ApiController{
         $q = $this->connection->query($query);
         $q->setFetchMode(Phalcon\Db::FETCH_OBJ);
         $results = $q->fetchAll();
+
+        if(!empty($results)){
+            $nr = count($results);
+            for($i = 0; $i < $nr; $i++){
+                if(!is_null($results[$i]->meta_immagine)){
+                    $results[$i]->file = Files::findFirst([
+                        'conditions' => 'id = ?1',
+                        'bind' => [1 => $results[$i]->meta_immagine],
+                        'cache' => [
+                            "key" => "listFindFile".$results[$i]->meta_immagine,
+                            "lifetime" => 12400
+                        ]
+                    ]);
+
+                }
+                $results[$i]->readLink = $this->application == $this->config->application->defaultCode ?
+                    DIRECTORY_SEPARATOR.$post_type_slug.DIRECTORY_SEPARATOR.$results[$i]->slug :
+                    DIRECTORY_SEPARATOR.$this->application.DIRECTORY_SEPARATOR.$post_type_slug.DIRECTORY_SEPARATOR.$results[$i]->slug;
+            }
+        }
+
         $foundResults = $this->connection->query("SELECT FOUND_ROWS() as nr")->fetch();
         $pages = !is_null($limit) ? ceil($foundResults['nr']/$limit) : 1;
         return [

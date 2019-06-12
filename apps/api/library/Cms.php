@@ -1,5 +1,5 @@
 <?php
-namespace apps\site\library;
+namespace apps\api\library;
 
 use Phalcon\Di;
 
