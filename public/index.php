@@ -111,7 +111,6 @@ if (function_exists('apcu_add') && !function_exists('apc_add')) {
     class APCIterator extends APCUIterator {}
 }
 
-
 $application = new Application();
 $application->main();
 
