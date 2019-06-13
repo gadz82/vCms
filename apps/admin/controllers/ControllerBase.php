@@ -266,15 +266,15 @@ class ControllerBase extends Controller
             } else {
                 $header_alert['rebuild_index'] = '0';
             }
-
         }
-
-
         return $header_alert;
     }
 
     protected function appPicker()
     {
+        $this->view->appPickerActive = $this->config->application->multisite;
+        if(!$this->config->application->multisite) return;
+
         $this->view->availableApps = $apps = self::getAvailableApps();
 
         if ($this->session->has('current_app')) {
