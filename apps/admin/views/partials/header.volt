@@ -11,6 +11,7 @@
 		<!-- Navbar Right Menu -->
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
+				{% if appPickerActive is true %}
 				<li class="dropdown" style="margin-right:15px;">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="currentAppDD">
 						{% if currentApp is not defined or currentApp is null %}
@@ -30,6 +31,7 @@
 
 					</ul>
 				</li>
+				{% endif %}
 				<li class="dropdown tasks-menu" style="margin-right:30px;">
 					<a href="/" target="_blank">
 						<i class="fa fa-globe fa-lg"></i>

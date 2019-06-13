@@ -21,9 +21,9 @@ additiveCss is true %} {{ assets.outputCss('additiveCss') }} {% endif %}
 {{ stylesheet_link('assets/admin/css/common.css') }}
 
 <!--[if lt IE 9]>
-        	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    	<![endif]-->
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
 
 </head>
 
@@ -32,7 +32,7 @@ additiveCss is true %} {{ assets.outputCss('additiveCss') }} {% endif %}
 	{% endblock %} {% block wrapper %}
 	<div class="wrapper">
 
-		{% include "partials/header" with ['user': auth_user, 'header_alert': header_alert, 'current_app' : currentApp] %}
+		{% include "partials/header" with ['user': auth_user, 'header_alert': header_alert, 'current_app' : (currentApp is defined) ? currentApp : null] %}
 		{% include "partials/sidebar" with ['user_menu': auth_menu] %}
 		<div class="content-wrapper">
 			{{ content() }}
