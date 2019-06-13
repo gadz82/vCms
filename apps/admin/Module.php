@@ -66,8 +66,6 @@ class Module implements ModuleDefinitionInterface
 
         define('APPLICATION_ENV', $config->application->appEnv);
 
-        if ($config->application->appEnv) $di->setShared('config', $config);
-
         // EventsManager
         $di->setShared('dispatcher', function () use ($di) {
             $public_controllers = [
@@ -251,9 +249,7 @@ class Module implements ModuleDefinitionInterface
             return new \apps\admin\library\Auth();
         });
 
-        $di->setShared('mailer', function () {
-            return new Mailer();
-        });
+
 
         $di->setShared('excel', function () {
             require_once __DIR__ . '/library/PHPExcel.php';
