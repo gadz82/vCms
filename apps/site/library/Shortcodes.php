@@ -159,7 +159,7 @@ class Shortcodes extends Tag
 
         if (!$file) return;
 
-        $baseUri = $this->config->application->baseUri;
+        $baseUri = Cms::getIstance()->getConfig()->application->baseUri;
         $url = $file->private ?
             (is_null($size) ? $baseUri . 'media/render/' . $file->filename : $baseUri . 'media/render/' . $file->filename . '?size=' . $size) :
             (is_null($size) ? $baseUri . 'files/' . $file->filename : $baseUri . 'files/' . $size . '/' . $file->filename);

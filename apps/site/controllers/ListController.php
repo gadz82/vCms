@@ -35,6 +35,22 @@ class ListController extends ControllerBase
     private $listFilters = [];
 
     /**
+     * Lista dei risultati passati alla view
+     * @var array
+     */
+    protected $results = [];
+
+    /**
+     * @var string
+     */
+    protected $prevPageUrl;
+
+    /**
+     * @var string
+     */
+    protected $nextPageUrl;
+
+    /**
      * @see \Phalcon\Mvc\Controller
      */
     public function initialize()
@@ -149,7 +165,14 @@ class ListController extends ControllerBase
 
                 $this->tags->setTitle($meta_title);
                 $this->tags->setMetaDescription($meta_description . " - " . $this->config->application->appName);
-                $this->tags->setCanonicalUrl(\apps\site\library\Cms::getIstance()->getBaseUrl() . $get_params['_url']);
+
+                $canonicalUrl = $this->config->application->protocol.$this->config->application->siteUri.$get_params['_url'];
+
+                if($page > $this->defaultPage){
+                    $canonicalUrl.= '?page='.$page;
+                }
+                $this->tags->setCanonicalUrl($canonicalUrl);
+
                 $this->tags->setOgUrl(\apps\site\library\Cms::getIstance()->getBaseUrl() . $get_params['_url']);
                 if (!$this->view->emptyResult) {
                     $this->tags->setRobots('index, follow');
@@ -185,18 +208,25 @@ class ListController extends ControllerBase
             $this->view->post_type = $postType;
             $this->view->current_url_route = $get_params['_url'];
             $this->view->current_url = $this->currentUrl;
-            $this->view->results = $rs['rs'];
+            $this->view->results = $this->results = $rs['rs'];
             $this->view->shown_nr_results = count($rs['rs']);
             $this->view->current_page = $page;
             $this->view->total_results = $rs['nr_rs'];
             $this->view->total_pages = $rs['pages'];
             $this->view->filter_params = $filter_params;
 
-            $this->view->nextPageUrl = $page < $rs['pages'] ? $this->getListPageUrl('next', $page, $get_params['_url'], $orderBy, $limit, $search, $listType) : null;
-            $this->view->prevPageUrl = $page > $this->defaultPage ? $this->getListPageUrl('prev', $page, $get_params['_url'], $orderBy, $limit, $search, $listType) : null;
-            $this->view->pagingUrl = $this->getListPageUrl('paging', null, $get_params['_url'], $orderBy, $limit, $search, $listType);
+            $this->view->nextPageUrl = $this->nextPageUrl = $page < $rs['pages'] ? $this->getListPageUrl('next', $page, $get_params['_url'], $orderBy, $limit, $search, $listType) : null;
+            $this->view->prevPageUrl = $this->prevPageUrl = $page > $this->defaultPage ? $this->getListPageUrl('prev', $page, $get_params['_url'], $orderBy, $limit, $search, $listType) : null;
+
+            if(!is_null($this->nextPageUrl)) $this->tags->addPaginationNextLink($this->config->application->protocol.$this->config->application->siteUri.$this->nextPageUrl);
+            if(!is_null($this->prevPageUrl)) $this->tags->addPaginationPrevLink($this->config->application->protocol.$this->config->application->siteUri.$this->prevPageUrl);
+
             /*$this->view->listUrl = $this->getListPageUrl('list', null, $get_params['_url'], $orderBy, $limit, $this->defaultSearch, $listType);
             $this->view->gridUrl = $this->getListPageUrl('grid', null, $get_params['_url'], $orderBy, $limit, $this->defaultSearch, $listType);*/
+
+            $this->view->pagingUrl = $this->getListPageUrl('paging', null, $get_params['_url'], $orderBy, $limit, $search, $listType);
+            $this->view->listUrl = $this->getListPageUrl('list', null, $get_params['_url'], $orderBy, $limit, $search, $listType);
+            $this->view->gridUrl = $this->getListPageUrl('grid', null, $get_params['_url'], $orderBy, $limit, $search, $listType);
         }
     }
 

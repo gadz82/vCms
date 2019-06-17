@@ -1,6 +1,5 @@
 <?php
 namespace apps\site\library;
-
 use Phalcon\Di;
 
 class Cms
@@ -24,7 +23,7 @@ class Cms
      */
     public $userLoggedIn;
     /**
-     * @var Object
+     * @var \Phalcon\Config
      */
     protected $config;
 
@@ -68,6 +67,13 @@ class Cms
     {
         return $this->config->application->protocol
         . $this->config->application->siteUri;
+    }
+
+    /**
+     * @return \Phalcon\Config
+     */
+    public function getConfig(){
+        return $this->config;
     }
 
 }

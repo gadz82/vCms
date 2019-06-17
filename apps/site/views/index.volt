@@ -26,6 +26,7 @@
 	<!-- <meta name="theme-color" content="#ececec"> -->
 	{{ tags.getMetaDescription() }}
 	{{ tags.getCanonicalUrl() }}
+	{{ tags.getPaginationLinks() }}
 	{{ tags.getRobots() }}
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="Marchi Auto - Concessionaria Fiat, Abarth, Alfa Romeo in Umbria" />
@@ -40,6 +41,9 @@
 	{{ stylesheet_link('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css') }}
 	{{ tags.outputCssInline('inlineCssSiteTheme') }}
 	{{ assets.outputCss('cssSiteTheme') }}
+	<script type="application/ld+json">
+	{{ tags.getStructs() }}
+	</script>
 
 	<!--[if lt IE 9]>
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

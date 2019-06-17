@@ -18,8 +18,9 @@ return new \Phalcon\Config([
         'charset'  => 'utf8'
     ],
     'application' => [
-        'appName'        => 'VERTICALIZE',
-        'appEnv'         => 'development',
+        'appName'           => 'VERTICALIZE',
+        'appDescription'    => 'Vertical CMS based on Phalcon Framework',
+        'appEnv'            => 'development',
         'controllersDir' 	=> ABSOLUTE_DIR . 'apps/admin/controllers/',
         'modelsDir' 		=> ABSOLUTE_DIR . 'apps/admin/models/',
         'migrationsDir' 	=> ABSOLUTE_DIR . 'apps/admin/migrations/',

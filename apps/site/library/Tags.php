@@ -1,6 +1,7 @@
 <?php
 namespace apps\site\library;
 
+use apps\site\library\helpers\StructuredDataHelper;
 use Phalcon\Db;
 use Phalcon\Di;
 use Phalcon\Tag;
@@ -65,6 +66,16 @@ class Tags extends Tag
      * @var string
      */
     private $required_css = [];
+
+    /**
+     * @var string
+     */
+    private $paginationNext;
+
+    /**
+     * @var string
+     */
+    private $paginationPrev;
 
     /**
      * @param $block_key
@@ -297,7 +308,7 @@ class Tags extends Tag
      */
     public function getCanonicalUrl($tag = true)
     {
-        $content = !empty($this->canonical_url) ? $this->canonical_url : $this->getDi()->get('config')->application->protocol . "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        $content = !empty($this->canonical_url) ? $this->canonical_url : Cms::getIstance()->getConfig()->application->protocol . "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         return $tag ? parent::tagHtml('link', ['rel' => 'canonical', 'href' => $content]) : $content;
     }
 
@@ -400,6 +411,54 @@ class Tags extends Tag
             $return .= parent::tagHtml('link', ['rel' => 'stylesheet', 'type' => 'text/css', 'href' => $this->required_css[$i]], true);
         }
         return $tag ? $return : $this->required_css;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStructs()
+    {
+        return StructuredDataHelper::getIstance()->getStructs();
+    }
+
+    /**
+     * @param $key
+     * @param $val
+     */
+    public function addStruct($key, $val)
+    {
+        StructuredDataHelper::getIstance()->addStruct($key, $val);
+    }
+
+    /**
+     * @param $url
+     */
+    public function addPaginationPrevLink($url)
+    {
+        $this->paginationPrev = $url;
+    }
+
+    /**
+     * @param $url
+     */
+    public function addPaginationNextLink($url)
+    {
+        $this->paginationNext = $url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPaginationLinks()
+    {
+        $return = "";
+        if (!empty($this->paginationPrev)) {
+            $return .= parent::tagHtml('link', ['rel' => 'prev', 'href' => $this->paginationPrev]) . PHP_EOL;
+        }
+        if (!empty($this->paginationNext)) {
+            $return .= parent::tagHtml('link', ['rel' => 'next', 'href' => $this->paginationNext]) . PHP_EOL;
+        }
+        return $return;
     }
 
     /**
@@ -765,7 +824,7 @@ class Tags extends Tag
 
                 $nr = count($rs);
                 for ($i = 0; $i < $nr; $i++) {
-                    $rs[$i]->readLink = $application == Di::getDefault()->get('config')->application->defaultCode ?
+                    $rs[$i]->readLink = $application == Cms::getIstance()->getConfig()->application->defaultCode ?
                         DIRECTORY_SEPARATOR . $post_type_slug . DIRECTORY_SEPARATOR . $rs[$i]->slug :
                         DIRECTORY_SEPARATOR . $application . DIRECTORY_SEPARATOR . $post_type_slug . DIRECTORY_SEPARATOR . $rs[$i]->slug;
                 }

@@ -19,6 +19,7 @@ return new \Phalcon\Config([
     ],
     'application' => [
         'appName'        => 'VERTICALIZE',
+        'appDescription'    => 'Vertical CMS based on Phalcon Framework',
         'appEnv'         => 'staging',
         'controllersDir' 	=> ABSOLUTE_DIR . 'apps/admin/controllers/',
         'modelsDir' 		=> ABSOLUTE_DIR . 'apps/admin/models/',

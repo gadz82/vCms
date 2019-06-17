@@ -23,6 +23,7 @@ if (file_exists(__DIR__ . '/config.locale.php')) {
         ],
         'application' => [
             'appName'        => 'VERTICALIZE',
+            'appDescription'    => 'Vertical CMS based on Phalcon Framework',
             'appEnv'         => 'development',
             'controllersDir' 	=> ABSOLUTE_DIR . 'apps/admin/controllers/',
             'modelsDir' 		=> ABSOLUTE_DIR . 'apps/admin/models/',
