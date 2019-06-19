@@ -220,7 +220,7 @@ class ControllerBase extends Controller
         $this->controllerName = $this->router->getModuleName() . '/' . $this->router->getControllerName();
         $this->application = \apps\site\library\Cms::getIstance()->application;
         $this->id_application = \apps\site\library\Cms::getIstance()->id_application;
-
+        $this->view->appConfig = $this->config->application;
         // Prepend the application name to the title
         if (strpos($this->tag->getTitle(false), $this->config->application['appName']) === false) {
             $this->tag->appendTitle(' - ' . $this->config->application['appName']);

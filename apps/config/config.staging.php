@@ -18,9 +18,9 @@ return new \Phalcon\Config([
         'charset'  => 'utf8'
     ],
     'application' => [
-        'appName'        => 'VERTICALIZE',
+        'appName'           => 'VERTICALIZE',
         'appDescription'    => 'Vertical CMS based on Phalcon Framework',
-        'appEnv'         => 'staging',
+        'appEnv'            => 'staging',
         'controllersDir' 	=> ABSOLUTE_DIR . 'apps/admin/controllers/',
         'modelsDir' 		=> ABSOLUTE_DIR . 'apps/admin/models/',
         'migrationsDir' 	=> ABSOLUTE_DIR . 'apps/admin/migrations/',
@@ -30,12 +30,12 @@ return new \Phalcon\Config([
         'libraryDir' 		=> ABSOLUTE_DIR . 'apps/admin/library/',
         'formsDir' 			=> ABSOLUTE_DIR . 'apps/admin/forms/',
         'cacheDir' 			=> ABSOLUTE_DIR . 'apps/admin/cache/',
-        'baseUri'        => '/',
-        'siteUri'        => '//verticalize.loc',
-        'protocol'       => 'https:',
-        'multisite'      => true,
-        'defaultId'      => '1',
-        'defaultCode'    => 'it'
+        'baseUri'           => '/',
+        'siteUri'           => '//verticalize.loc',
+        'protocol'          => 'https:',
+        'multisite'         => true,
+        'defaultId'         => '1',
+        'defaultCode'       => 'it'
     ],
     'mailer'      => [
         'fromName'  => 'VERTICALIZE',

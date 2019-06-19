@@ -18,13 +18,13 @@ full-header
 			<div id="logo">
 				{% if currentRoute == '/' %}
 					<h1 class="hidden">
-						<span class="hidden">Cerboni Arredamenti Perugia</span>
+						<span class="hidden">{{ appConfig.appName }} - {{ appConfig.appDescription }}</span>
 					</h1>
-					<a href="/" class="standard-logo" data-dark-logo="/assets/site/images/logo-dark.png"><img src="/assets/site/images/logo.png" alt="Cerboni Arredamenti Perugia"></a>
-					<a href="/" class="retina-logo" data-dark-logo="/assets/site/images/logo-dark@2x.png"><img src="/assets/site/images/logo@2x.png" alt="Cerboni Arredamenti Perugia"></a>
+					<a href="/" class="standard-logo" data-dark-logo="/assets/site/images/logo-dark.png"><img src="/assets/site/images/logo.png" alt="{{ appConfig.appName }} - {{ appConfig.appDescription }}"></a>
+					<a href="/" class="retina-logo" data-dark-logo="/assets/site/images/logo-dark@2x.png"><img src="/assets/site/images/logo@2x.png" alt="{{ appConfig.appName }} - {{ appConfig.appDescription }}"></a>
 				{% else %}
-					<a href="/" class="standard-logo" data-dark-logo="/assets/site/images/logo-dark.png"><img src="/assets/site/images/logo.png" alt="Cerboni Arredamenti Perugia"></a>
-					<a href="/" class="retina-logo" data-dark-logo="/assets/site/images/logo-dark@2x.png"><img src="/assets/site/images/logo@2x.png" alt="Cerboni Arredamenti Perugia"></a>
+					<a href="/" class="standard-logo" data-dark-logo="/assets/site/images/logo-dark.png"><img src="/assets/site/images/logo.png"alt="{{ appConfig.appName }} - {{ appConfig.appDescription }}"></a>
+					<a href="/" class="retina-logo" data-dark-logo="/assets/site/images/logo-dark@2x.png"><img src="/assets/site/images/logo@2x.png" alt="{{ appConfig.appName }} - {{ appConfig.appDescription }}"></a>
 				{% endif %}
 			</div><!-- #logo end -->
 
