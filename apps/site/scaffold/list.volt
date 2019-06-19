@@ -5,7 +5,7 @@
         {% if hasFilters is true %}
             <span class="title">
                 {% for valore in filters %}
-                    {% if loop.first is false %} - {% endif %}{{ tags.translate(valore.valore) }}
+                    {% if loop.first is false %} - {% endif %}{{ __.t(valore.valore) }}
                 {% endfor %}
             </span>
         {% endif %}
@@ -22,7 +22,7 @@
                 <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
                     <a href="{{ applicationUrl ~ post_type.slug }}/" itemscope itemtype="http://schema.org/Thing"
                        itemprop="item">
-                        <span itemprop="name">{{ post_type.descrizione }}</span>
+                        <span itemprop="name">{{ __.t(post_type.descrizione) }}</span>
                     </a>
                     <meta itemprop="position" content="2"/>
                 </li>
@@ -32,7 +32,7 @@
                         itemscope itemtype="http://schema.org/ListItem">
                         <a href="{{ applicationUrl ~ post_type.slug }}/list{{ urlstring }}" itemscope
                            itemtype="http://schema.org/Thing" itemprop="item">
-                            <span itemprop="name">{{ tags.translate(valore.valore) }}</span>
+                            <span itemprop="name">{{ __.t(valore.valore) }}</span>
                         </a>
                         <meta itemprop="position" content="{{ loop.index+2 }}"/>
                     </li>
@@ -43,7 +43,7 @@
 
                     <a href="{{ applicationUrl ~ post_type.slug }}/" itemscope itemtype="http://schema.org/Thing"
                        itemprop="item">
-                        <span itemprop="name">{{ tags.translate(post_type.descrizione) }}</span>
+                        <span itemprop="name">{{ __.t(post_type.descrizione) }}</span>
                     </a>
                     <meta itemprop="position" content="2"/>
                 </li>
