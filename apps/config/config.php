@@ -39,7 +39,8 @@ if (file_exists(__DIR__ . '/config.locale.php')) {
             'protocol'       => 'https:',
             'multisite'      => true,
             'defaultId'      => '1',
-            'defaultCode'    => 'it'
+            'defaultCode'    => 'it',
+            'defaultHrefLang'   => 'it'
         ],
         'mailer'      => [
             'fromName'  => 'VERTICALIZE',

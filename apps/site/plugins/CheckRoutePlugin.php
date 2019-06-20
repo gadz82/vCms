@@ -73,14 +73,17 @@ class CheckRoutePlugin extends Plugin
                     $this->response->redirect('/' . $this->config->application->defaultCode . '/404');
                 } else {
                     \apps\site\library\Cms::getIstance()->id_application = $application->id;
+                    \apps\site\library\Cms::getIstance()->applicationHrefLang = $application->href_lang;
                     \apps\site\library\Cms::getIstance()->application = $application->codice;
                 }
             } else {
                 \apps\site\library\Cms::getIstance()->id_application = $this->config->application->defaultId;
+                \apps\site\library\Cms::getIstance()->applicationHrefLang = $this->config->application->defaultHrefLang;
                 \apps\site\library\Cms::getIstance()->application = $this->config->application->defaultCode;
             }
         } else {
             \apps\site\library\Cms::getIstance()->id_application = $this->config->application->defaultId;
+            \apps\site\library\Cms::getIstance()->applicationHrefLang =  $this->config->application->defaultHrefLang;
             \apps\site\library\Cms::getIstance()->application = $this->config->application->defaultCode;
         }
 

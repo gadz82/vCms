@@ -47,6 +47,12 @@ class Applicazioni extends \BaseModel
     public $descrizione;
 
     /**
+     * @var string
+     * @Column(type="string", nullable=false)
+     */
+    public $href_lang;
+
+    /**
      *
      * @var string
      * @Column(type="string", nullable=false)

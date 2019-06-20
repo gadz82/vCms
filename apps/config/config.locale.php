@@ -35,7 +35,8 @@ return new \Phalcon\Config([
         'protocol'       => 'https:',
         'multisite'      => true,
         'defaultId'      => '1',
-        'defaultCode'    => 'it'
+        'defaultCode'    => 'it',
+        'defaultHrefLang'   => 'it'
     ],
     'mailer'      => [
         'fromName'  => 'VERTICALIZE',

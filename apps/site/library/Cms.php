@@ -1,27 +1,40 @@
 <?php
 namespace apps\site\library;
+
 use Phalcon\Di;
 
 class Cms
 {
-
+    /**
+     * @var self
+     */
     public static $instance = null;
+
     /**
      * @var integer
      */
     public $id_application;
+
+    /**
+     * @var string
+     */
+    public $applicationHrefLang;
+
     /**
      * @var Application Code
      */
     public $application;
+
     /**
      * @var bool
      */
     public $adminLoggedIn;
+
     /**
      * @var bool
      */
     public $userLoggedIn;
+
     /**
      * @var \Phalcon\Config
      */
@@ -72,7 +85,8 @@ class Cms
     /**
      * @return \Phalcon\Config
      */
-    public function getConfig(){
+    public function getConfig()
+    {
         return $this->config;
     }
 
