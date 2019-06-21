@@ -87,7 +87,7 @@
     </div>
 
 </section><!-- #content end -->
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyC-mUEyQ8beUXdETOoi-V_SfPBxpYGo9OM"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?key=xxx"></script>
 
 {{tags.injectJsFromDi('/assets/site/js/jquery.gmap.js')}}
 {{tags.injectJsFromDi('/assets/site/js/gmap.js')}}
