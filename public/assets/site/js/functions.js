@@ -1621,6 +1621,9 @@ var SEMICOLON = SEMICOLON || {};
 								}, toAnimateDelayTime);
 							}
 						});
+						setTimeout(function () {
+							$(window).scroll();
+						},100);
 					}
 				});
 
