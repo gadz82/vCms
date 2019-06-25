@@ -245,7 +245,7 @@ class PostsController extends ControllerBase
         $params = $this->request->getPost();
 
         if (empty($params['Posts']['data_inizio_pubblicazione'])) $params['Posts']['data_inizio_pubblicazione'] = date('Y-m-d');
-        if (empty($params['Posts']['data_fine_pubblicazione'])) $params['Posts']['data_fine_pubblicazione'] = date('Y-m-d');
+        if (empty($params['Posts']['data_fine_pubblicazione'])) $params['Posts']['data_fine_pubblicazione'] = $params['Posts']['data_inizio_pubblicazione'];
         if (empty($params['Posts']['excerpt'])) $params['Posts']['excerpt'] = ' ';
 
         $auth = $this->getDI()->getSession()->get('auth-identity');
