@@ -51,7 +51,7 @@
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 	<![endif]-->
 
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129115330-1"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-xxxx-x"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}

@@ -1,11 +1,11 @@
 <!-- Header
 		============================================= -->
 <header id="header" class="no-sticky
-<?php /*
+{#
 {% if currentRoute == '/' %}
 transparent-header page-section dark
 {% endif %}
-*/ ?>
+#}
 full-header
 ">
 
