@@ -2833,6 +2833,24 @@ var SEMICOLON = SEMICOLON || {};
 			});
 			if( SEMICOLON.isMobile.any() ){
 				$body.addClass('device-touch');
+
+				var currentMenu;
+				$pagemenu.find('nav ul li a').off().on('click', function(e){
+					console.log($(this).attr('href'));
+					if($(this).attr('href') == '#'){
+						currentMenu = $(this).parent();
+						e.preventDefault();
+					} else {
+						var candidateCurrent = $(this).parent().parent().parent();
+						if(candidateCurrent.html() == currentMenu.html()){
+							return true;
+						} else {
+							e.preventDefault();
+							currentMenu = candidateCurrent;
+						}
+					}
+					return;
+				});
 			}
 			// var el = {
 			//     darkLogo : $("<img>", {src: defaultDarkLogo}),
