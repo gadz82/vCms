@@ -1744,7 +1744,6 @@ body.side-panel-left.side-push-panel.side-panel-open.stretched .slider-parallax-
 	z-index: 11;
 	margin-right: 5px;
 }
-
 #side-panel-trigger-close a { display: none; }
 
 #side-panel,
@@ -1778,4 +1777,4 @@ body.side-panel-open .body-overlay {
 	pointer-events: auto;
 }
 
-body.side-panel-open:not(.device-xs):not(.device-sm):not(.device-md) .body-overlay:hover { cursor: url('images/icons/close.png') 15 15, default; }
+body.side-panel-open:not(.device-xs):not(.device-sm):not(.device-md) .body-overlay:hover { cursor: url('/assets/site/images/icons/close.png') 15 15, default; }
