@@ -47,8 +47,10 @@ class SitemapController extends ControllerBase
             $n = count($postTypeFilterFields);
             if ($post_type->slug !== 'pagina') $links[] = $entity_base_url . '/';
             foreach ($rs as $e) {
-                if ($post_type->slug !== 'pagina' && $e->slug !== 'index') {
+                if ($post_type->slug !== 'pagina') {
                     $links[] = $entity_base_url . '/' . $e->slug;
+                } else {
+                    if ($e->slug !== 'index') $links[] = '/' . $e->slug;
                 }
                 $sub_models = [];
 
