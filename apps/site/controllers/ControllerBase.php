@@ -297,9 +297,10 @@ class ControllerBase extends Controller
                     $cssSiteTheme->addCss(self::$css_assets[$n]);
                 }
                 $cssSiteTheme->join(true);
-            case 'production':
-                $jsSiteTheme->addFilter(new Phalcon\Assets\Filters\Jsmin ());
-                $cssSiteTheme->addFilter(new Phalcon\Assets\Filters\Cssmin ());
+                if(APPLICATION_ENV == 'production'){
+                    $jsSiteTheme->addFilter(new Phalcon\Assets\Filters\Jsmin ());
+                    $cssSiteTheme->addFilter(new Phalcon\Assets\Filters\Cssmin ());
+                }
                 break;
         }
         $inlineCssSiteTheme = $this->assets->collection('inlineCssSiteTheme')
