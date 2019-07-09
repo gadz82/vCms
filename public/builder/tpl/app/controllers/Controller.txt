@@ -47,71 +47,66 @@ class <!-- CONTROLLER_NAME !-->Controller extends ControllerBase {
 	
 	public function searchAction(){
 						
-		if($this->request->isPost() || $this->request->hasPost('export')){
-			if($this->request->isAjax() || $this->request->hasPost('export')){
-					
-				if($this->request->hasPost('form_search')){
-					$data = $this->request->getPost('form_search');
-					parse_str($data,$search);
-				}else{
-					$search = $this->request->getPost();
-				}
-																
-				$query = self::fromInput($this->di, '<!-- CONTROLLER_NAME !-->', $search);
-				$query->andWhere('<!-- CONTROLLER_NAME !-->.attivo = 1');
-								
-				$query->innerJoin('TipologieStato<!-- CONTROLLER_NAME_SINGOLARE !-->', 'ts.id = <!-- CONTROLLER_NAME !-->.id_tipologia_stato AND ts.attivo = 1', 'ts');
-			
-				$this->persistent->parameters = $query->getParams();
-				$this->persistent->searchParams = $search;
-		
-				$parameters = $this->persistent->parameters;
-				if(!is_array($parameters)) $parameters = array();
-				
-				//verifica ordinamento
-				$sort = ($this->request->hasPost('sort') && !empty($this->request->getPost('sort'))) ? $this->request->getPost('sort') : 'id';
-				$order = ($this->request->hasPost('order') && !empty($this->request->getPost('order'))) ? $this->request->getPost('order') : 'DESC';
-				
-				$parameters ['order'] = '<!-- CONTROLLER_NAME !-->.' . $sort . ' ' . $order;
-				$parameters['group'] = '<!-- CONTROLLER_NAME !-->.id';
-			
-				//effettua la ricerca
-				$controller_data = <!-- CONTROLLER_NAME !-->::find($parameters);
-			
-				if($controller_data->count() == 0) return $this->response;
-									
-				//crea l'oggetto paginator
-				if($this->request->hasPost('export')){
-					$paginator = new Paginator(array('data'=>$controller_data, 'limit'=>65000, 'page'=>1));
-				}else{
-					$paginator = new Paginator(array(
-						'data'	=> $controller_data,
-						'limit'	=> ($this->request->hasPost('rows') && !empty($this->request->getPost('rows'))) ? $this->request->getPost('rows') : 20,
-						'page'	=> ($this->request->hasPost('page') && !empty($this->request->getPost('page'))) ? $this->request->getPost('page') : 1,
-					));
-				}
-			
-				$now = new DateTime(date('Y-m-d'));
-				$paging = $paginator->getPaginate();
-				foreach($paging->items as $item){	
-					$item->id_tipologia_stato = $item->TipologieStato<!-- CONTROLLER_NAME_SINGOLARE !-->->descrizione;
-					$item->id_tipologia_<!-- NOME_SINGOLARE !--> = $item->Tipologie<!-- CONTROLLER_NAME_SINGOLARE !-->->descrizione;
-					$item->avanzamento = $avanzamento;
-					
-				}
-				
-				if($this->request->hasPost('export')){
-					//crea un file excel con il risultato della ricerca
-					$this->jqGridExport($paging->items);
-				}else{
-					//crea l'array grid da passare a jqgrid
-					$grid = array('records' => $paging->total_items,'page' => $paging->current,'total' => $paging->total_pages,'rows' => $paging->items);
-						
-					$this->response->setJsonContent($grid);
-					return $this->response;
-				}
-			}
-		}
+		if(($this->request->isPost() && $this->request->isAjax()) || $this->request->hasPost('export')){
+
+            if($this->request->hasPost('form_search')){
+                $data = $this->request->getPost('form_search');
+                parse_str($data,$search);
+            }else{
+                $search = $this->request->getPost();
+            }
+
+            $query = self::fromInput($this->di, '<!-- CONTROLLER_NAME !-->', $search);
+            $query->andWhere('<!-- CONTROLLER_NAME !-->.attivo = 1');
+
+            $query->innerJoin('TipologieStato<!-- CONTROLLER_NAME_SINGOLARE !-->', 'ts.id = <!-- CONTROLLER_NAME !-->.id_tipologia_stato AND ts.attivo = 1', 'ts');
+
+            $this->persistent->parameters = $query->getParams();
+            $this->persistent->searchParams = $search;
+
+            $parameters = $this->persistent->parameters;
+            if(!is_array($parameters)) $parameters = array();
+
+            //verifica ordinamento
+            $sort = ($this->request->hasPost('sort') && !empty($this->request->getPost('sort'))) ? $this->request->getPost('sort') : 'id';
+            $order = ($this->request->hasPost('order') && !empty($this->request->getPost('order'))) ? $this->request->getPost('order') : 'DESC';
+
+            $parameters ['order'] = '<!-- CONTROLLER_NAME !-->.' . $sort . ' ' . $order;
+            $parameters['group'] = '<!-- CONTROLLER_NAME !-->.id';
+
+            $parameters['limit'] = ($this->request->hasPost('rows') && !empty($this->request->getPost('rows'))) ? $this->request->getPost('rows') : 20;
+
+            $parameters['offset'] = 0;
+            $page = 1;
+            if( $this->request->hasPost('page') && !empty($this->request->getPost('page')) ){
+                $page = $this->request->getPost('page');
+                $parameters['offset'] = ($page == 1) ? 0 : ($page-1)*$parameters['limit'];
+            }
+            $count = <!-- CONTROLLER_NAME !-->::count();
+
+            //effettua la ricerca
+            $controller_data = <!-- CONTROLLER_NAME !-->::find($parameters);
+
+            if($controller_data->count() == 0) return $this->response;
+
+            $now = new DateTime(date('Y-m-d'));
+
+            foreach($controller_data as $item){
+                $item->id_tipologia_stato = $item->TipologieStato<!-- CONTROLLER_NAME_SINGOLARE !-->->descrizione;
+                $item->id_tipologia_<!-- NOME_SINGOLARE !--> = $item->Tipologie<!-- CONTROLLER_NAME_SINGOLARE !-->->descrizione;
+            }
+
+            if($this->request->hasPost('export')){
+                //crea un file excel con il risultato della ricerca
+                $this->jqGridExport($controller_data);
+            }else{
+                //crea l'array grid da passare a jqgrid
+                $grid = array('records' => $count, 'page' => $page, 'total' => round($count/$parameters['limit']), 'rows' => $controller_data);
+
+                $this->response->setJsonContent($grid);
+                return $this->response;
+            }
+        }
 		
 		return $this->dispatcher->forward(array('controller'=>$this->controllerName, 'action'=>'index'));
 		
