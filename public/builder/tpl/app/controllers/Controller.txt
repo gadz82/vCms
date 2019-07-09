@@ -89,8 +89,6 @@ class <!-- CONTROLLER_NAME !-->Controller extends ControllerBase {
 
             if($controller_data->count() == 0) return $this->response;
 
-            $now = new DateTime(date('Y-m-d'));
-
             foreach($controller_data as $item){
                 $item->id_tipologia_stato = $item->TipologieStato<!-- CONTROLLER_NAME_SINGOLARE !-->->descrizione;
                 $item->id_tipologia_<!-- NOME_SINGOLARE !--> = $item->Tipologie<!-- CONTROLLER_NAME_SINGOLARE !-->->descrizione;
