@@ -88,18 +88,20 @@ class <!-- CONTROLLER_NAME !-->Controller extends ControllerBase {
             $controller_data = <!-- CONTROLLER_NAME !-->::find($parameters);
 
             if($controller_data->count() == 0) return $this->response;
-
+            $data = [];
             foreach($controller_data as $item){
                 $item->id_tipologia_stato = $item->TipologieStato<!-- CONTROLLER_NAME_SINGOLARE !-->->descrizione;
                 $item->id_tipologia_<!-- NOME_SINGOLARE !--> = $item->Tipologie<!-- CONTROLLER_NAME_SINGOLARE !-->->descrizione;
+                $data[] = $item;
             }
+
 
             if($this->request->hasPost('export')){
                 //crea un file excel con il risultato della ricerca
-                $this->jqGridExport($controller_data);
+                $this->jqGridExport($data);
             }else{
                 //crea l'array grid da passare a jqgrid
-                $grid = array('records' => $count, 'page' => $page, 'total' => round($count/$parameters['limit']), 'rows' => $controller_data);
+                $grid = array('records' => $count, 'page' => $page, 'total' => round($count/$parameters['limit']), 'rows' => $data);
 
                 $this->response->setJsonContent($grid);
                 return $this->response;
