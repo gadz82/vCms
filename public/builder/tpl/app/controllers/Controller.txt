@@ -66,6 +66,7 @@ class <!-- CONTROLLER_NAME !-->Controller extends ControllerBase {
 
             $parameters = $this->persistent->parameters;
             if(!is_array($parameters)) $parameters = array();
+            $count = <!-- CONTROLLER_NAME !-->::count($parameters);
 
             //verifica ordinamento
             $sort = ($this->request->hasPost('sort') && !empty($this->request->getPost('sort'))) ? $this->request->getPost('sort') : 'id';
@@ -82,7 +83,6 @@ class <!-- CONTROLLER_NAME !-->Controller extends ControllerBase {
                 $page = $this->request->getPost('page');
                 $parameters['offset'] = ($page == 1) ? 0 : ($page-1)*$parameters['limit'];
             }
-            $count = <!-- CONTROLLER_NAME !-->::count();
 
             //effettua la ricerca
             $controller_data = <!-- CONTROLLER_NAME !-->::find($parameters);
@@ -101,7 +101,7 @@ class <!-- CONTROLLER_NAME !-->Controller extends ControllerBase {
                 $this->jqGridExport($data);
             }else{
                 //crea l'array grid da passare a jqgrid
-                $grid = array('records' => $count, 'page' => $page, 'total' => round($count/$parameters['limit']), 'rows' => $data);
+                $grid = array('records' => $count, 'page' => $page, 'total' => ceil(($count+1)/$parameters['limit']), 'rows' => $data);
 
                 $this->response->setJsonContent($grid);
                 return $this->response;
