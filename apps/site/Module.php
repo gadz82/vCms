@@ -208,22 +208,20 @@ class Module implements ModuleDefinitionInterface
         });
 
         // Configurazione CACHE per MODEL
-        $di->set('modelsCache', function () {
+        $di->set('modelsCache', function () use ($config) {
             // Cache data for one day by default
             $frontCache = new \Phalcon\Cache\Frontend\Data([
                 "lifetime" => 86400
             ]);
             // Memcached connection settings
             $cache = new ApcBackend ($frontCache, [
-                'prefix' => 'cmsio-cache-'
+                'prefix' => $config->application->appName.'-cache-'
             ]);
             return $cache;
         });
 
-        $di->setShared('assets', new \apps\site\library\assets\Manager());
-
         // Set the views cache service
-        $di->set('viewCache', function () {
+        $di->set('viewCache', function () use ($config) {
             // Cache data for one day by default
             $frontCache = new OutputFrontend([
                 "lifetime" => 86400
@@ -231,10 +229,13 @@ class Module implements ModuleDefinitionInterface
 
             // Memcached connection settings
             $cache = new ApcBackend($frontCache, [
+                'prefix' => $config->application->appName.'-cache-',
                 'lifetime' => 86400
             ]);
             return $cache;
         });
+
+        $di->setShared('assets', new \apps\site\library\assets\Manager());
 
         $di->set('auth', function () {
             return new \apps\site\library\Auth();

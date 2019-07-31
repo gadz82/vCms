@@ -215,20 +215,20 @@ class Module implements ModuleDefinitionInterface
         });
 
         // Configurazione CACHE per MODEL
-        $di->setShared('modelsCache', function () {
+        $di->set('modelsCache', function () use ($config) {
             // Cache data for one day by default
             $frontCache = new \Phalcon\Cache\Frontend\Data([
                 "lifetime" => 86400
             ]);
             // Memcached connection settings
-            $cache = new ApcBackend($frontCache, [
-                'prefix' => 'cms-cache-'
+            $cache = new ApcBackend ($frontCache, [
+                'prefix' => $config->application->appName.'-cache-'
             ]);
             return $cache;
         });
 
         // Set the views cache service
-        $di->setShared('viewCache', function () {
+        $di->set('viewCache', function () use ($config) {
             // Cache data for one day by default
             $frontCache = new OutputFrontend([
                 "lifetime" => 86400
@@ -236,6 +236,7 @@ class Module implements ModuleDefinitionInterface
 
             // Memcached connection settings
             $cache = new ApcBackend($frontCache, [
+                'prefix' => $config->application->appName.'-cache-',
                 'lifetime' => 86400
             ]);
             return $cache;
