@@ -76,6 +76,7 @@ class FilesController extends ControllerBase
 
                 $parameters = $this->persistent->parameters;
                 if (!is_array($parameters)) $parameters = [];
+                $count = Files::count($parameters);
 
                 //verifica ordinamento
                 $order = ($this->request->hasPost('order') && !empty($this->request->getPost('order'))) ? $this->request->getPost('order') : 'DESC';
@@ -109,26 +110,20 @@ class FilesController extends ControllerBase
                 }
 
                 $parameters['group'] = 'Files.id';
+                $parameters['offset'] = 0;
+                $page = 1;
+
+                if ($this->request->hasPost('page') && !empty($this->request->getPost('page'))) {
+                    $page = $this->request->getPost('page');
+                    $parameters['offset'] = ($page == 1) ? 0 : ($page - 1) * $parameters['limit'];
+                }
 
                 //effettua la ricerca
                 $controller_data = Files::find($parameters);
 
                 if ($controller_data->count() == 0) return $this->response;
 
-                //crea l'oggetto paginator
-                if ($this->request->hasPost('export')) {
-                    $paginator = new Paginator(['data' => $controller_data, 'limit' => 65000, 'page' => 1]);
-                } else {
-                    $paginator = new Paginator([
-                        'data'  => $controller_data,
-                        'limit' => ($this->request->hasPost('rows') && !empty($this->request->getPost('rows'))) ? $this->request->getPost('rows') : 20,
-                        'page'  => ($this->request->hasPost('page') && !empty($this->request->getPost('page'))) ? $this->request->getPost('page') : 1,
-                    ]);
-                }
-
-                $now = new DateTime(date('Y-m-d'));
-                $paging = $paginator->getPaginate();
-                foreach ($paging->items as $item) {
+                foreach ($controller_data as $item) {
                     $item->id_tipologia_stato = $item->TipologieStatoFile->descrizione;
                     //$item->fileurl = '<a href="#" id="image-zoom-'.$item->id.'" data-image-zoom="'.$item->fileurl.'">Visualizza <i class="fa fa-search fa-fw"></i></a>';
                     if ($item->private) {
@@ -154,10 +149,10 @@ class FilesController extends ControllerBase
 
                 if ($this->request->hasPost('export')) {
                     //crea un file excel con il risultato della ricerca
-                    $this->jqGridExport($paging->items);
+                    $this->jqGridExport($data);
                 } else {
                     //crea l'array grid da passare a jqgrid
-                    $grid = ['records' => $paging->total_items, 'page' => $paging->current, 'total' => $paging->total_pages, 'rows' => $paging->items];
+                    $grid = ['records' => $count, 'page' => $page, 'total' => ceil(($count + 1) / $parameters['limit']), 'rows' => $data];
 
                     $this->response->setJsonContent($grid);
                     return $this->response;

@@ -114,6 +114,7 @@ class PostsController extends ControllerBase
 
                 $parameters = $this->persistent->parameters;
                 if (!is_array($parameters)) $parameters = [];
+                $count = Posts::count($parameters);
 
                 //verifica ordinamento
                 $sort = ($this->request->hasPost('sort') && !empty($this->request->getPost('sort'))) ? $this->request->getPost('sort') : 'id';
@@ -122,23 +123,20 @@ class PostsController extends ControllerBase
                 $parameters ['order'] = 'Posts.' . $sort . ' ' . $order;
                 $parameters['group'] = 'Posts.id';
 
+                $parameters['limit'] = ($this->request->hasPost('rows') && !empty($this->request->getPost('rows'))) ? $this->request->getPost('rows') : 20;
+
+                $parameters['offset'] = 0;
+                $page = 1;
+                if( $this->request->hasPost('page') && !empty($this->request->getPost('page')) ){
+                    $page = $this->request->getPost('page');
+                    $parameters['offset'] = ($page == 1) ? 0 : ($page-1)*$parameters['limit'];
+                }
+
                 $controller_data = Posts::find($parameters);
 
                 if ($controller_data->count() == 0) return $this->response;
 
-                //crea l'oggetto paginator
-                if ($this->request->hasPost('export')) {
-                    $paginator = new Paginator(['data' => $controller_data, 'limit' => 65000, 'page' => 1]);
-                } else {
-                    $paginator = new Paginator([
-                        'data'  => $controller_data,
-                        'limit' => ($this->request->hasPost('rows') && !empty($this->request->getPost('rows'))) ? $this->request->getPost('rows') : 20,
-                        'page'  => ($this->request->hasPost('page') && !empty($this->request->getPost('page'))) ? $this->request->getPost('page') : 1,
-                    ]);
-                }
-
-                $paging = $paginator->getPaginate();
-                foreach ($paging->items as $item) {
+                foreach ($controller_data as $item) {
                     $item->id_tipologia_stato = $item->TipologieStatoPost->descrizione;
                     $item->id_tipologia_post = $item->TipologiePost->descrizione;
                     $item->id_applicazione = $item->Applicazioni->descrizione;
@@ -147,16 +145,16 @@ class PostsController extends ControllerBase
                         '<a class="btn btn-success btn-sm" target="_blank" href="/' . $item->Applicazioni->codice . '/' . $item->TipologiePost->slug . '/' . $item->slug . '"><i class="fa fa-search"></i></a>';
                 }
 
+                //crea l'oggetto paginator
                 if ($this->request->hasPost('export')) {
-                    //crea un file excel con il risultato della ricerca
-                    $this->jqGridExport($paging->items);
+                    $paginator = new Paginator(['data' => $controller_data, 'limit' => 65000, 'page' => 1]);
                 } else {
-                    //crea l'array grid da passare a jqgrid
-                    $grid = ['records' => $paging->total_items, 'page' => $paging->current, 'total' => $paging->total_pages, 'rows' => $paging->items];
 
+                    $grid = ['records' => $count, 'page' => $page, 'total' => ceil(($count+1) / (int) $parameters['limit']), 'rows' => $controller_data];
                     $this->response->setJsonContent($grid);
                     return $this->response;
                 }
+
             }
         }
         return $this->dispatcher->forward(['controller' => $this->controllerName, 'action' => 'index']);
