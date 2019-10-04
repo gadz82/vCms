@@ -247,6 +247,8 @@ class ControllerBase extends Controller
         $this->view->application = $this->application;
         $this->view->id_application = $this->id_application;
         $this->view->currentRoute = $this->getDi()->get('router')->getRewriteUri();
+        $this->view->baseUrl = \apps\site\library\Cms::getIstance()->getApplicationUrl();
+        $this->view->baseApplicationUrl = \apps\site\library\Cms::getIstance()->getApplicationUrl($this->application);
         $this->view->applicationHrefLang = \apps\site\library\Cms::getIstance()->applicationHrefLang;
         $this->applicationUrl = $this->view->applicationUrl = \apps\site\library\Cms::getIstance()->getApplicationUrl($this->application, true);
 

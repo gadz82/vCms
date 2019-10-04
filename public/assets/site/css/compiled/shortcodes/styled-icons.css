@@ -67,7 +67,7 @@ body:not(.device-touch) .social-icon {
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2); }
 
 .i-alt {
-  background-image: url("images/icons/iconalt.svg");
+  background-image: url("/assets/site/images/icons/iconalt.svg");
   background-position: center center;
   background-size: 100% 100%; }
 
@@ -163,7 +163,7 @@ body:not(.device-touch) .social-icon {
   top: 0;
   left: 0;
   text-align: center;
-  background: rgba(0, 0, 0, 0.2) url("images/grid.png") repeat; }
+  background: rgba(0, 0, 0, 0.2) url("/assets/site/images/grid.png") repeat; }
 
 .i-overlay a {
   background: transparent; }

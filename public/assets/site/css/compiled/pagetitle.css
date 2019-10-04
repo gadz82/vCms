@@ -103,7 +103,7 @@ body.stretched .container-fullwidth .breadcrumb {
       margin: 20px 0 0 !important;
       justify-content: center; }
   #page-title.page-title-pattern {
-    background-image: url("images/pattern.png");
+    background-image: url("/assets/site/images/pattern.png");
     background-repeat: repeat;
     background-attachment: fixed; }
   #page-title.page-title-parallax {
@@ -111,7 +111,7 @@ body.stretched .container-fullwidth .breadcrumb {
     text-shadow: none;
     border-bottom: none;
     background-color: transparent;
-    background-image: url("images/parallax/parallax-bg.jpg");
+    background-image: url("/assets/site/images/parallax/parallax-bg.jpg");
     background-attachment: fixed;
     background-position: 50% 0;
     background-repeat: no-repeat; }

@@ -1363,7 +1363,7 @@ body:not(.device-touch) .button.button-full strong {
   padding: 2px;
   z-index: -1;
   box-shadow: none;
-  background-image: url("images/icons/iconalt.svg");
+  background-image: url("/assets/site/images/icons/iconalt.svg");
   background-position: center center;
   background-size: 100% 100%;
   -webkit-transition: -webkit-transform 0.5s, opacity 0.5s, background-color 0.5s;
@@ -1703,7 +1703,7 @@ body:not(.device-touch) .social-icon {
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2); }
 
 .i-alt {
-  background-image: url("images/icons/iconalt.svg");
+  background-image: url("/assets/site/images/icons/iconalt.svg");
   background-position: center center;
   background-size: 100% 100%; }
 
@@ -1799,7 +1799,7 @@ body:not(.device-touch) .social-icon {
   top: 0;
   left: 0;
   text-align: center;
-  background: rgba(0, 0, 0, 0.2) url("images/grid.png") repeat; }
+  background: rgba(0, 0, 0, 0.2) url("/assets/site/images/grid.png") repeat; }
 
 .i-overlay a {
   background: transparent; }
@@ -3712,7 +3712,7 @@ body:not(.device-touch) .rounded-skill {
 .owl-carousel.owl-loading {
   display: block;
   min-height: 100px;
-  background: url("images/preloader.gif") no-repeat center center; }
+  background: url("/assets/site/images/preloader.gif") no-repeat center center; }
 
 .owl-carousel .owl-refresh .owl-item {
   display: none; }
@@ -4124,7 +4124,7 @@ body:not(.device-touch) .text-overlay {
   /* IE10+ */
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.85) 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#a6000000', GradientType=0);
   /* IE6-9 */
   backface-visibility: hidden; }
 
@@ -4406,7 +4406,7 @@ h4, h5, h6 {
 /* Fancy Title - Bottom Short Border
 -----------------------------------------------------------------*/
 .fancy-title.title-dotted-border {
-  background: url("images/icons/dotted.png") repeat-x center; }
+  background: url("/assets/site/images/icons/dotted.png") repeat-x center; }
 
 /* Sub Heading
 -----------------------------------------------------------------*/
