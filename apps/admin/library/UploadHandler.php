@@ -726,8 +726,9 @@ class UploadHandler
     {
         $new_name = $this->trim_file_name($file_path, $name, $size, $type, $error, $index, $content_range);
         $extension = pathinfo($new_name, PATHINFO_EXTENSION);
-
-        return date('Ymd') . '_' . md5($name) . '.' . $extension;
+        $name = date('Ymd') . '_' . md5($new_name) . '.' . $extension;
+        $name = $this->trim_file_name($file_path, $name, $size, $type, $error, $index, $content_range);
+        return $this->get_unique_filename($file_path, $this->fix_file_extension($file_path, $name, $size, $type, $error, $index, $content_range), $size, $type, $error, $index, $content_range);
     }
 
     protected function validate($uploaded_file, $file, $error, $index)
