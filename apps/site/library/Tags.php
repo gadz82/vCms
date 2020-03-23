@@ -327,7 +327,7 @@ class Tags extends Tag
     public function getRobots($tag = true)
     {
         $content = !empty($this->robots) ? $this->robots : 'index/follow';
-        return $tag ? parent::tagHtml('meta', ['name' => 'robots', 'cotent' => $content]) : $content;
+        return $tag ? parent::tagHtml('meta', ['name' => 'robots', 'content' => $content]) : $content;
     }
 
     /**
