@@ -65,7 +65,7 @@ class SessionController extends ControllerBase
     public function destroyAction()
     {
         apcu_clear_cache();
-        apcu_delete('cmsio-acl');
+        apcu_delete($this->config->application->appName.'-cache-');
         apcu_delete('cmsio-metadata');
 
         unlink(APP_DIR . '/cache/acl/data.txt');
