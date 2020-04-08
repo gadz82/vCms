@@ -84,6 +84,7 @@ class Tags extends Tag
      */
     public static function renderBlock($block_key, $include_tags = true)
     {
+        
         $code_block = \Blocks::findFirst([
             'conditions' => 'key = ?1 AND id_applicazione = ?2',
             'bind'       => [1 => $block_key, 2 => \apps\site\library\Cms::getIstance()->id_application],
@@ -92,7 +93,9 @@ class Tags extends Tag
                 "lifetime" => 12400
             ]
         ]);
-        if (!$code_block) return false;
+
+
+        if (!$block_key) return false;
         $return = "";
         if ($code_block) {
             if ($include_tags) {

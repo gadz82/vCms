@@ -38,6 +38,17 @@ class Shortcodes extends Tag
         }, $string);
     }
 
+    public function shortcode_renderButton($link = "#", $button_text = "", $button_class = "button", $container_class = "col text-center")
+    {
+
+        return parent::tagHtml('div', ['class' => $container_class]) .
+        parent::tagHtml('a', ['class' => 'button ' . $button_class, 'href' => $link]) .
+        $button_text .
+        parent::tagHtmlClose('a') .
+        parent::tagHtmlClose('div');
+
+    }
+
     private function executeShortcode($fnName, $args = [])
     {
         $cacheKey = $fnName . implode('|', $args);
