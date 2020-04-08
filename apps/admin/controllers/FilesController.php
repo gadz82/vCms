@@ -122,7 +122,7 @@ class FilesController extends ControllerBase
                 $controller_data = Files::find($parameters);
 
                 if ($controller_data->count() == 0) return $this->response;
-
+                $returnData = [];
                 foreach ($controller_data as $item) {
                     $item->id_tipologia_stato = $item->TipologieStatoFile->descrizione;
                     //$item->fileurl = '<a href="#" id="image-zoom-'.$item->id.'" data-image-zoom="'.$item->fileurl.'">Visualizza <i class="fa fa-search fa-fw"></i></a>';
@@ -145,14 +145,15 @@ class FilesController extends ControllerBase
 
                         }
                     }
+                    $returnData[] = $item;
                 }
 
                 if ($this->request->hasPost('export')) {
                     //crea un file excel con il risultato della ricerca
-                    $this->jqGridExport($data);
+                    $this->jqGridExport($controller_data);
                 } else {
                     //crea l'array grid da passare a jqgrid
-                    $grid = ['records' => $count, 'page' => $page, 'total' => ceil(($count + 1) / $parameters['limit']), 'rows' => $data];
+                    $grid = ['records' => $count, 'page' => $page, 'total' => ceil(($count + 1) / $parameters['limit']), 'rows' => $returnData];
 
                     $this->response->setJsonContent($grid);
                     return $this->response;
