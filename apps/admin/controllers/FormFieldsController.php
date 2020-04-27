@@ -227,7 +227,6 @@ class FormFieldsController extends ControllerBase
                     }
 
                 } else {
-                    PhalconDebug::debug('qui');
                     $message = [];
                     foreach ($form->getMessages() as $message) {
                         $messages[] = $message;

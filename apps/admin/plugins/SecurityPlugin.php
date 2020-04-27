@@ -59,10 +59,9 @@ class SecurityPlugin extends Plugin
         $action = $dispatcher->getActionName();
 
         $acl = $this->getAcl();
-
+        $auth = $this->session->get('auth-identity');
         if (!$this->isPublic_resources($controller)) {
 
-            $auth = $this->session->get('auth-identity');
 
             if (!$auth) {
                 if ($this->auth->hasRemember()) {
@@ -229,12 +228,8 @@ class SecurityPlugin extends Plugin
             ],
             'order'      => 'id_padre ASC, ordine ASC',
             'columns'    => 'id, risorsa, azione, descrizione, class, header, visible, id_padre, ordine',
-            'cache'      => [
-                "key"      => "RuoliMenufind" . $id_ruolo . '-' . $livello,
-                "lifetime" => 12400
-            ]
-        ]);
 
+        ]);
         $post_types = \TipologiePost::find(
             [
                 'conditions' => 'admin_menu = 1',

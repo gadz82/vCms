@@ -146,7 +146,6 @@ class RuoliMenuController extends ControllerBase
 
                 $parameters ['order'] = 'RuoliMenu.' . $sort . ' ' . $order;
                 $parameters['group'] = 'RuoliMenu.id';
-                \PhalconDebug::debug($search);
                 //effettua la ricerca
                 $controller_data = RuoliMenu::find($parameters);
 

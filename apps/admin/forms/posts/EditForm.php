@@ -288,7 +288,7 @@ class EditForm extends Form
                             $metafield->id,
                             $params
                         );
-                        $this->fields['meta'][$meta->descrizione][$metafield->id]->setLabel($metafield->label);
+                        $this->fields['meta'][$meta->descrizione][$metafield->id]->setLabel($metafield->label)->setAttribute('grid_class', 'col-md-4 col-xs-6');
                         break;
                     case 'Testo':
                         $params = ['name' => 'meta[' . $meta->descrizione . '][' . $metafield->id . ']', 'class' => 'form-control', 'placeholder' => $metafield->label, 'rows' => '4', 'cols' => '50'];
@@ -476,6 +476,23 @@ class EditForm extends Form
             }
         }
 
+    }
+
+    public function fillCheckboxes(array $params){
+        foreach ($this->getElements() as $element) {
+            $name = $element->getName();
+            if (is_a($element, 'Phalcon\Forms\Element\Check')){
+                $string = str_replace(['][', '[', ']'], [',', ',', ','], $name);
+                $exp = explode(',', $string);
+                list($type, $key, $field) = array_filter($exp);
+                echo $type.'-'.$key.'-'.$field;
+                if(!isset($params[$type][$key]) || !isset($params[$type][$key][$field])){
+                    $params[$type][$key][$field] = 0;
+                }
+            }
+        }
+
+        return $params;
     }
 
     public function beforeValidation()

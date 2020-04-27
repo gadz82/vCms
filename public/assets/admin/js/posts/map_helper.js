@@ -73,6 +73,6 @@ var fileref = document.createElement("script");
 fileref.setAttribute("type", "text/javascript");
 fileref.setAttribute("async", true);
 fileref.setAttribute("defer", true);
-fileref.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyBIIbMrkbXb4S3aOzG84EUR9_DdDNyil5c&callback=initMap");
+fileref.setAttribute("src", "https://maps.googleapis.com/maps/api/js?key=AIzaSyAZqUgZ-jbz7NvKWwStr_mYNI-3ehup3xk&callback=initMap");
 document.getElementsByTagName('body')[0].appendChild(fileref);
 

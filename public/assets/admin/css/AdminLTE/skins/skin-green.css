@@ -175,6 +175,3 @@
 .ui-jqgrid .ui-jqgrid-labels, .ui-jqgrid th[aria-selected=true]{
 	background-color: #00a65a;
 }
-.modal_custom .modal-header, .modal_custom .modal-footer{
-	background-color: #00a65a;
-}

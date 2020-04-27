@@ -246,7 +246,15 @@
 
 			var cmH = CodeMirror.fromTextArea(document.getElementById('html_code'), {
 				mode: "text/html",
-				extraKeys: {"Ctrl-Space": "autocomplete"},
+				extraKeys: {
+					"Ctrl-Space": "autocomplete",
+					"F11": function(cm) {
+						cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+					},
+					"Esc": function(cm) {
+						if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+					}
+				},
 				lineNumbers: true,
 				theme : 'dracula'
 			});
@@ -258,7 +266,15 @@
 
 			cm = CodeMirror.fromTextArea(document.getElementById('Posts[testo]'), {
 				mode: "text/html",
-				extraKeys: {"Ctrl-Space": "autocomplete"},
+				extraKeys: {
+					"Ctrl-Space": "autocomplete",
+					"F11": function(cm) {
+						cm.setOption("fullScreen", !cm.getOption("fullScreen"));
+					},
+					"Esc": function(cm) {
+						if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false);
+					}
+				},
 				lineNumbers: true,
 				theme : 'dracula'
 			});

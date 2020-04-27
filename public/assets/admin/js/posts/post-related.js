@@ -2,11 +2,12 @@
     init(window.jQuery, window, document);
 }(function($, window, document) {
     $(document).ready(function () {
-        $('input[name^="meta[Contenuti Correlati]["]').each(function () {
+        $('input[name^="meta[Contenuti Correlati]["], input[name^="meta[Abbina Gusto]["], input[name^="meta[Contenuti Regionali]["]').each(function () {
             var current_input = $(this),
                 id_post_type = current_input.data('id_post_type'),
                 select = $('<select class="form-control selectpicker" id="post-list-'+id_post_type+'" data-live-search="true" multiple="true"></select>');
 
+            if(current_input.attr('type') !== 'text') return;
             var searchq = {
                 id_tipologia_stato : 1,
                 id_tipologia_post : id_post_type,

@@ -162,14 +162,16 @@
 	/**
 	 * File Manager
      */
-	$("#file-manager-control").on('click', function(){
+	$("#file-manager-control").on('click', function () {
 		$('#iframe-filemanager-list').attr('src', '/admin/files/iframeFileManager');
 	});
 
-	$.receiveMessage(function(e){
-		var post = JSON.parse('{"' + decodeURI(e.data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
-		if(typeof(post.action) !== 'upload_complete'){
-			$('#iframe-filemanager-list').attr( 'src', function ( i, val ) { return val; });
+	$.receiveMessage(function (e) {
+		var post = JSON.parse('{"' + decodeURI(e.data).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+		if (typeof(post.action) !== 'upload_complete') {
+			$('#iframe-filemanager-list').attr('src', function (i, val) {
+				return val;
+			});
 		}
 	});
 	var modal = $('#modalZoom');
@@ -177,27 +179,27 @@
 		var img = $(this),
 			modalImg = modal.find('#img01');
 
-		modal.css({'display':'block'});
-		if($(this).data('zoom-src') !== undefined){
+		modal.css({'display': 'block'});
+		if ($(this).data('zoom-src') !== undefined) {
 			modalImg.attr('src', $(this).data('zoom-src'));
 		} else {
-			modalImg.attr('src', '/files/'+$(this).attr('src').split('/').pop());
+			modalImg.attr('src', '/files/' + $(this).attr('src').split('/').pop());
 		}
 	});
-	modal.on('click', '#close-zoom-modal', function(){
-		modal.css({'display':'none'});
+	modal.on('click', '#close-zoom-modal', function () {
+		modal.css({'display': 'none'});
 	});
-	modal.on('click', function(){
-		modal.css({'display':'none'});
+	modal.on('click', function () {
+		modal.css({'display': 'none'});
 	});
 	console.log(window.location);
 
-	$('ul#appSwitcher > li > a:not(.active)').on('click', function(e){
+	$('ul#appSwitcher > li > a:not(.active)').on('click', function (e) {
 		e.preventDefault();
 		var id_app = $(this).data('idapp');
 
-		if($('select[name="Posts[id_applicazione]"]').length > 0 || $('select[name="id_applicazione"]').length > 0){
-			if(window.location.pathname.includes('new') && !window.location.pathname.includes('edit')){
+		if ($('select[name="Posts[id_applicazione]"]').length > 0 || $('select[name="id_applicazione"]').length > 0) {
+			if (window.location.pathname.includes('new') && !window.location.pathname.includes('edit')) {
 				swal({
 						title: "APP SWITCH",
 						text: "Perderai eventuali dati già inseriti, vuoi procedere?",
@@ -210,12 +212,12 @@
 						closeOnConfirm: false,
 						closeOnCancel: true
 					},
-					function(isConfirm){
-						if(isConfirm){
+					function (isConfirm) {
+						if (isConfirm) {
 							callAppSwitch(true);
 						}
 					});
-			} else if(window.location.pathname.includes('edit')) {
+			} else if (window.location.pathname.includes('edit')) {
 				swal({
 					title: "APP SWITCH",
 					text: "Non puoi cambiare App mentre stai modificando un contenuto legato ad un'altra Applicazione.",
@@ -228,7 +230,7 @@
 			callAppSwitch(false);
 		}
 
-		function callAppSwitch(reload){
+		function callAppSwitch(reload) {
 
 			$.ajax({
 				url: '/admin/index/setCurrentApp',

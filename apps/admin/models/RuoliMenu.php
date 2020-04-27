@@ -95,7 +95,6 @@ class RuoliMenu extends BaseModel
      */
     public static function find($parameters = null)
     {
-        \PhalconDebug::debug($parameters);
         $key = 'ruoli_menu_find.' . md5(json_encode($parameters));
         $rs = apcu_fetch($key);
         if (!$rs) {
