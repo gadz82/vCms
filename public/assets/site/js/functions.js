@@ -11,7 +11,7 @@ $.fn.inlineStyle = function (prop) {
 	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
 		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
 		window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-									|| window[vendors[x]+'CancelRequestAnimationFrame'];
+			|| window[vendors[x]+'CancelRequestAnimationFrame'];
 	}
 
 	if (!window.requestAnimationFrame)
@@ -19,7 +19,7 @@ $.fn.inlineStyle = function (prop) {
 			var currTime = new Date().getTime();
 			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
 			var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-			  timeToCall);
+				timeToCall);
 			lastTime = currTime + timeToCall;
 			return id;
 		};
@@ -324,7 +324,7 @@ var SEMICOLON = SEMICOLON || {};
 					maxHeight = elementChild.outerHeight();
 				} else {
 					if (elementChild.outerHeight() > maxHeight)
-					maxHeight = elementChild.outerHeight();
+						maxHeight = elementChild.outerHeight();
 				}
 			});
 
@@ -339,7 +339,7 @@ var SEMICOLON = SEMICOLON || {};
 					var maxHeight = 0;
 					$testimonialsGridEl.each( function(){
 						$(this).find("li > .testimonial").each(function(){
-						   if ($(this).height() > maxHeight) { maxHeight = $(this).height(); }
+							if ($(this).height() > maxHeight) { maxHeight = $(this).height(); }
 						});
 						$(this).find("li").height(maxHeight);
 						maxHeight = 0;
@@ -666,10 +666,10 @@ var SEMICOLON = SEMICOLON || {};
 				loadingClass : 'css3-spinner',
 				loadingHtml : loaderStyleHtml,
 				unSupportCss : [
-								 'animation-duration',
-								 '-webkit-animation-duration',
-								 '-o-animation-duration'
-							   ],
+					'animation-duration',
+					'-webkit-animation-duration',
+					'-o-animation-duration'
+				],
 				overlay : false,
 				overlayClass : 'animsition-overlay-slide',
 				overlayParentElement : 'body',
@@ -1084,7 +1084,7 @@ var SEMICOLON = SEMICOLON || {};
 		menufunctions: function(){
 
 			$( '#primary-menu ul li:has(ul)' ).addClass('sub-menu');
-			$( '.top-links ul li:has(ul) > a, #primary-menu.with-arrows > ul > li:has(ul) > a > div, #primary-menu.with-arrows > div > ul > li:has(ul) > a > div, #page-menu nav ul li:has(ul) > a > div' ).append( '<i class="icon-angle-down"></i>' );
+			$( '.top-links ul li:has(ul) > a, #primary-menu.with-arrows > ul > li:has(ul) > a > div, #primary-menu.with-arrows > div > ul > li:has(ul) > a > div, #page-menu nav ul li:has(ul) > a > div' ).append( '<i class="fa fa-angle-down"></i>' );
 			$( '.top-links > ul' ).addClass( 'clearfix' );
 
 			if( $body.hasClass('device-lg') || $body.hasClass('device-md') ) {
@@ -1128,7 +1128,7 @@ var SEMICOLON = SEMICOLON || {};
 					console.log('menufunctions: Superfish not defined.');
 				}
 
-				$( '#primary-menu ul li:has(ul)' ).append('<a href="#" class="wn-submenu-trigger"><i class="icon-angle-down"></i></a>');
+				$( '#primary-menu ul li:has(ul)' ).append('<a href="#" class="wn-submenu-trigger"><i class="fa fa-angle-down"></i></a>');
 
 				$( '#primary-menu ul li.sub-menu' ).children('a.wn-submenu-trigger').click( function(e){
 					$(this).parent().toggleClass('open');
@@ -1422,7 +1422,12 @@ var SEMICOLON = SEMICOLON || {};
 				if (!$(event.target).closest('#top-search').length) { $body.toggleClass('top-search-open', false); }
 				if (!$(event.target).closest('#top-cart').length) { $topCart.toggleClass('top-cart-open', false); }
 				if (!$(event.target).closest('#page-menu').length) { $pagemenu.toggleClass('pagemenu-active', false); }
-				if (!$(event.target).closest('#side-panel').length) { $body.toggleClass('side-panel-open', false); }
+				if (!$(event.target).closest('#side-panel').length) {
+					$body.toggleClass('side-panel-open', false);
+					if( $body.hasClass('device-touch') && $body.hasClass('side-push-panel') ) {
+						$body.removeClass("ohidden");
+					}
+				}
 				if (!$(event.target).closest('#primary-menu').length) { $('#primary-menu.on-click > ul').find('.show').removeClass('d-block'); }
 				if (!$(event.target).closest('#primary-menu.mobile-menu-off-canvas > ul').length) { $('#primary-menu.mobile-menu-off-canvas > ul').toggleClass('d-block', false); }
 				if (!$(event.target).closest('#primary-menu.mobile-menu-off-canvas > div > ul').length) { $('#primary-menu.mobile-menu-off-canvas > div > ul').toggleClass('d-block', false); }
@@ -1949,12 +1954,12 @@ var SEMICOLON = SEMICOLON || {};
 				$portfolioAjaxLoader.fadeIn();
 				var portfolioDataLoader = $('#' + portPostId).attr('data-loader');
 				$portfolioDetailsContainer.load(portfolioDataLoader, { portid: portPostId, portnext: portNext, portprev: portPrev },
-				function(){
-					SEMICOLON.portfolio.initializeAjax(portPostId);
-					SEMICOLON.portfolio.openItem();
-					$portfolioItems.removeClass('portfolio-active');
-					$('#' + portPostId).addClass('portfolio-active');
-				});
+					function(){
+						SEMICOLON.portfolio.initializeAjax(portPostId);
+						SEMICOLON.portfolio.openItem();
+						$portfolioItems.removeClass('portfolio-active');
+						$('#' + portPostId).addClass('portfolio-active');
+					});
 			}
 		},
 
@@ -2202,8 +2207,8 @@ var SEMICOLON = SEMICOLON || {};
 							slider.parent().removeClass('preloader2');
 							var t = setTimeout( function(){ $('.grid-container').isotope('layout'); }, 1200 );
 							SEMICOLON.initialize.lightbox();
-							$('.flex-prev').html('<i class="icon-angle-left"></i>');
-							$('.flex-next').html('<i class="icon-angle-right"></i>');
+							$('.flex-prev').html('<i class="fa fa-angle-left"></i>');
+							$('.flex-next').html('<i class="fa fa-angle-right"></i>');
 							SEMICOLON.portfolio.portfolioDescMargin();
 						},
 						after: function(){
@@ -2512,7 +2517,7 @@ var SEMICOLON = SEMICOLON || {};
 					if( !elementEasing ) { elementEasing = 'swing'; }
 
 					element.find( 'ul li:has(ul)' ).addClass('sub-menu');
-					element.find( 'ul li:has(ul) > a' ).append( ' <i class="icon-angle-down"></i>' );
+					element.find( 'ul li:has(ul) > a' ).append( ' <i class="fa fa-angle-down"></i>' );
 
 					if( element.hasClass('on-hover') ){
 						element.find( 'ul li:has(ul):not(.active)' ).hover( function(e){
@@ -2621,7 +2626,7 @@ var SEMICOLON = SEMICOLON || {};
 					center: elementCenter,
 					lazyLoad: elementLazy,
 					nav: elementNav,
-					navText: ['<i class="icon-angle-left"></i>','<i class="icon-angle-right"></i>'],
+					navText: ['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],
 					autoplay: elementAutoPlay,
 					autoplayTimeout: elementAutoPlayTime,
 					autoplayHoverPause: true,
@@ -2692,7 +2697,7 @@ var SEMICOLON = SEMICOLON || {};
 			toastr.options.positionClass = notifyPosition;
 			toastr.options.timeOut = Number( notifyTimeout );
 			toastr.options.closeButton = notifyCloseButton;
-			toastr.options.closeHtml = '<button><i class="icon-remove"></i></button>';
+			toastr.options.closeHtml = '<button><i class="fa fa-times"></i></button>';
 
 			if( notifyType == 'warning' ) {
 				toastr.warning(notifyMsg);
@@ -2833,24 +2838,6 @@ var SEMICOLON = SEMICOLON || {};
 			});
 			if( SEMICOLON.isMobile.any() ){
 				$body.addClass('device-touch');
-
-				var currentMenu;
-				$pagemenu.find('nav ul li a').off().on('click', function(e){
-					console.log($(this).attr('href'));
-					if($(this).attr('href') == '#'){
-						currentMenu = $(this).parent();
-						e.preventDefault();
-					} else {
-						var candidateCurrent = $(this).parent().parent().parent();
-						if(candidateCurrent.html() == currentMenu.html()){
-							return true;
-						} else {
-							e.preventDefault();
-							currentMenu = candidateCurrent;
-						}
-					}
-					return;
-				});
 			}
 			// var el = {
 			//     darkLogo : $("<img>", {src: defaultDarkLogo}),
@@ -3078,7 +3065,7 @@ var SEMICOLON = SEMICOLON || {};
 				var form = $(this),
 					submit = form.find('button[type="submit"]'),
 					loader = $(' <i class="fa fa-spinner fa-lg fa-spin fa-fw"></i>'),
-				 	userName = $("#login-form-username"),
+					userName = $("#login-form-username"),
 					password = $("#login-form-password"); //email field
 				form.find('.form_msg').empty();
 				submit.after(loader);

@@ -111,65 +111,6 @@ class PostsMeta extends BaseModel
     public $attivo;
 
     /**
-     * Allows to query a set of records that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return PostsMeta[]|PostsMeta
-     */
-    public static function find($parameters = null)
-    {
-        return parent::find($parameters);
-    }
-
-    public static function getMetaValue(PostsMeta $postsMeta)
-    {
-        switch ($postsMeta->Meta->TipologieMeta->descrizione) {
-            case "Intero":
-                $meta_value = $postsMeta->meta_value_int;
-                break;
-            case "Decimale":
-                $meta_value = $postsMeta->meta_value_decimal;
-                break;
-            case "Stringa":
-                $meta_value = $postsMeta->meta_value_varchar;
-                break;
-            case "Testo":
-                $meta_value = $postsMeta->meta_value_text;
-                break;
-            case "Date/Time":
-                $meta_value = $postsMeta->meta_value_datetime;
-                break;
-            case "Select":
-                $meta_value = $postsMeta->meta_value_varchar;
-                break;
-            case "Checkbox":
-                $meta_value = $postsMeta->meta_value_int;
-                break;
-            case "File":
-                $meta_value = $postsMeta->meta_value_files;
-                break;
-            case "File Collection":
-                $meta_value = $postsMeta->meta_value_varchar;
-                break;
-            case "Html":
-                $meta_value = $postsMeta->meta_value_text;
-                break;
-        }
-        return $meta_value;
-    }
-
-    /**
-     * Allows to query the first record that match the specified conditions
-     *
-     * @param mixed $parameters
-     * @return PostsMeta
-     */
-    public static function findFirst($parameters = null)
-    {
-        return parent::findFirst($parameters);
-    }
-
-    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -190,6 +131,17 @@ class PostsMeta extends BaseModel
     public function getSource()
     {
         return 'posts_meta';
+    }
+
+    /**
+     * Allows to query a set of records that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return PostsMeta[]|PostsMeta
+     */
+    public static function find($parameters = null)
+    {
+        return parent::find($parameters);
     }
 
     public function beforeUpdate()
@@ -240,6 +192,43 @@ class PostsMeta extends BaseModel
         }
     }
 
+    public static function getMetaValue(PostsMeta $postsMeta)
+    {
+        switch ($postsMeta->Meta->TipologieMeta->descrizione) {
+            case "Intero":
+                $meta_value = $postsMeta->meta_value_int;
+                break;
+            case "Decimale":
+                $meta_value = $postsMeta->meta_value_decimal;
+                break;
+            case "Stringa":
+                $meta_value = $postsMeta->meta_value_varchar;
+                break;
+            case "Testo":
+                $meta_value = $postsMeta->meta_value_text;
+                break;
+            case "Date/Time":
+                $meta_value = $postsMeta->meta_value_datetime;
+                break;
+            case "Select":
+                $meta_value = $postsMeta->meta_value_varchar;
+                break;
+            case "Checkbox":
+                $meta_value = $postsMeta->meta_value_int;
+                break;
+            case "File":
+                $meta_value = $postsMeta->meta_value_files;
+                break;
+            case "File Collection":
+                $meta_value = $postsMeta->meta_value_varchar;
+                break;
+            case "Html":
+                $meta_value = $postsMeta->meta_value_text;
+                break;
+        }
+        return $meta_value;
+    }
+
     public function setMetaValue(PostsMeta $postMeta, $tipologia_meta, $valore)
     {
         switch ($tipologia_meta) {
@@ -265,7 +254,7 @@ class PostsMeta extends BaseModel
                 $postMeta->meta_value_varchar = $valore;
                 break;
             case "Checkbox":
-                $postMeta->meta_value_int = (int)$valore;
+                $postMeta->meta_value_int = ($valore === 'on' || $valore === '1') ? '1' : new \Phalcon\Db\RawValue("NULL");
                 break;
             case "File":
                 $postMeta->meta_value_files = $valore;
@@ -275,6 +264,17 @@ class PostsMeta extends BaseModel
                 break;
         }
         return $postMeta;
+    }
+
+    /**
+     * Allows to query the first record that match the specified conditions
+     *
+     * @param mixed $parameters
+     * @return PostsMeta
+     */
+    public static function findFirst($parameters = null)
+    {
+        return parent::findFirst($parameters);
     }
 
     /**
